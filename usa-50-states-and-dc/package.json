@@ -9,8 +9,11 @@
   },
   "author": "Mike Fogel <mike@fogel.ca>",
   "license": "ISC",
-  "devDependencies": {},
   "dependencies": {
-    "mapzen-whosonfirst": "git://github.com/mfogel/js-mapzen-whosonfirst.git#as-node-module"
+    "bluebird": "^3.5.0",
+    "mapzen-whosonfirst": "git://github.com/mfogel/js-mapzen-whosonfirst.git#as-node-module",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
+    "winston": "^2.3.1"
   }
 }

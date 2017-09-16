@@ -1,0 +1,16 @@
+{
+  "name": "usa-50-states-and-dc-map-generator",
+  "version": "1.0.0",
+  "description": "Generate geojson and topojson maps of the 50 states and federal district of the USA",
+  "main": "generate.js",
+  "scripts": {
+    "build": "node generate.js",
+    "test": "standard"
+  },
+  "author": "Mike Fogel <mike@fogel.ca>",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "mapzen-whosonfirst": "git://github.com/mfogel/js-mapzen-whosonfirst.git#as-node-module"
+  }
+}

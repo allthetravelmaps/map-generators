@@ -27,6 +27,7 @@ const outputFilename = commander.out
 const wofIdsFile = 'wof-ids'
 const alternateGeom = 'uscensus-display-terrestrial-zoom-10'
 const concurrency = 4
+const tjsonSimplificationCutoff = 0.01 // choosen to get a file size of ~100k
 
 const parseWofIdsFile = function (contents) {
   winston.info('Reading and parsing %s ', wofIdsFile)
@@ -39,18 +40,27 @@ const getWofGeojson = function (wofId) {
   return request.get(url, {json: true})
 }
 
-const mergeIntoTopojson = function (geojsons) {
-  winston.info('Merging together %d geojsons into one topojson', geojsons.length)
-  return topojson.topology(geojsons)
+const mergeIntoTopojson = function (gjsons) {
+  winston.info('Merging together %d geojsons into one topojson', gjsons.length)
+  // Quantizatiing after composing topojson to avoid possible mismatches AMAP
+  let tjson = topojson.topology(gjsons)
+  return topojson.quantize(tjson, 1e6)
 }
 
-const writeOutTopojson = function (topojson) {
+const simplifyTopojson = function (tjson) {
+  winston.info('Simplifying topojson')
+  tjson = topojson.presimplify(tjson)
+  return topojson.simplify(tjson, tjsonSimplificationCutoff)
+}
+
+const writeOutTopojson = function (tjson) {
   winston.info('Writing out topojson to %s', outputFilename)
-  return fs.writeFileAsync(outputFilename, JSON.stringify(topojson))
+  return fs.writeFileAsync(outputFilename, JSON.stringify(tjson))
 }
 
 fs.readFileAsync(wofIdsFile, 'utf8')
   .then(parseWofIdsFile)
   .map(getWofGeojson, {concurrency: concurrency})
   .then(mergeIntoTopojson)
+  .then(simplifyTopojson)
   .then(writeOutTopojson)

@@ -22,10 +22,12 @@ const Cache = require('async-disk-cache')
 const cache = new Cache('wof-geojson')
 
 const defaultFilename = 'usa-50-states-and-dc.topojson'
+const defaultMinFeature = '1'
 commander
   .version('0.1.0')
-  .option('-o, --out [filename]', `Output filename [${defaultFilename}]`, defaultFilename)
+  .option('-o, --out <filename>', `Output filename [${defaultFilename}]`, defaultFilename)
   .option('-c, --clear', 'Clear cache of WOF geojson')
+  .option('-m, --min <1|10|100>', `Approx. min feature size, in km^2 [${defaultMinFeature}]`, defaultMinFeature)
   .parse(process.argv)
 
 const outputFilename = commander.out
@@ -33,9 +35,27 @@ const wofIdsFile = 'wof-ids'
 const wofAlternateGeom = 'uscensus-display-terrestrial-zoom-10'
 const concurrency = 4
 
-// these two are choosen to get a file size of ~100k
-const tjsonSimplificationCutoff = 0.03
-const tjsonQuantization = 1e4 // as big as possible without noticing it
+// If given a min feature size, ensure it's one of our allowed values
+// Is this validation/parsing of input really not built into commander already?
+if (['1', '10', '100'].indexOf(commander.min) === -1) {
+  // copying commander error format
+  console.error()
+  console.error("  error: invalid value `%s' for argument `%s'", commander.min, 'min')
+  console.error()
+  process.exit(1)
+}
+
+const tjsonSimplification = {
+  1: 0.01 * 0.01,
+  10: 0.03 * 0.03,
+  100: 0.1 * 0.1
+}[commander.min]
+
+const tjsonQuantization = {
+  1: 1e5,
+  10: 1e4,
+  100: 1e4
+}[commander.min]
 
 function readWofIdsFile (contents) {
   winston.info('Reading WOF Ids from %s ', wofIdsFile)
@@ -80,10 +100,9 @@ function buildTopojson (gjsons) {
   // Deferring quantizatiing till after composition and simplification
   let tjson = topojson.topology(gjsons)
 
-  winston.info('Simplifying topojson')
+  winston.info('Simplifying topojson to features of at least ~%s km^2', commander.min)
   tjson = topojson.presimplify(tjson)
-  const cutoffWeight = topojson.quantile(tjson, tjsonSimplificationCutoff)
-  tjson = topojson.simplify(tjson, cutoffWeight)
+  tjson = topojson.simplify(tjson, tjsonSimplification)
   tjson = topojson.quantize(tjson, tjsonQuantization)
   return tjson
 }

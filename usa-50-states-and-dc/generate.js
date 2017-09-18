@@ -7,7 +7,6 @@
  *                  Defaults to 'usa-50-states-and-dc.topojson'.
  */
 
-const Promise = require('bluebird')
 const commander = require('commander')
 const process = require('process')
 const request = require('request-promise')
@@ -15,12 +14,17 @@ const topojson = require('topojson')
 const winston = require('winston')
 const wof = require('mapzen-whosonfirst')
 
+const Promise = require('bluebird')
 const fs = Promise.promisifyAll(require('fs'))
+
+const Cache = require('async-disk-cache')
+const cache = new Cache('wof-geojson')
 
 const defaultFilename = 'usa-50-states-and-dc.topojson'
 commander
   .version('0.1.0')
   .option('-o, --out [filename]', `Output filename [${defaultFilename}]`, defaultFilename)
+  .option('-c, --clear', 'Clear cache of WOF geojson')
   .parse(process.argv)
 
 const outputFilename = commander.out
@@ -34,10 +38,23 @@ const parseWofIdsFile = function (contents) {
   return contents.trim().split('\n')
 }
 
-const getWofGeojson = function (wofId) {
-  const url = wof.uri.id2abspath(wofId, {alt: true, source: alternateGeom})
-  winston.info('Calling %s', url)
-  return request.get(url, {json: true})
+const getCachedWofGeojson = function (wofId) {
+  return cache.get(wofId)
+    .then(cacheEntry => {
+      if (cacheEntry.isCached) {
+        winston.info('Using cached geojson for %s', wofId)
+        return cacheEntry.value
+      }
+
+      winston.info('Calling out to WOF for %s', wofId)
+      const url = wof.uri.id2abspath(wofId, {alt: true, source: alternateGeom})
+      return request.get(url).then(gjsonStr => {
+        winston.info('Filling cache for %s', wofId)
+        cache.set(wofId, gjsonStr)
+        return gjsonStr
+      })
+    })
+    .then(gjsonStr => JSON.parse(gjsonStr))
 }
 
 const mergeIntoTopojson = function (gjsons) {
@@ -58,9 +75,17 @@ const writeOutTopojson = function (tjson) {
   return fs.writeFileAsync(outputFilename, JSON.stringify(tjson))
 }
 
-fs.readFileAsync(wofIdsFile, 'utf8')
+// clear cache if requested
+let cacheCleared
+if (commander.clear) {
+  winston.info('Clearing cache of WOF geojson')
+  cacheCleared = cache.clear()
+}
+
+Promise.resolve(cacheCleared)
+  .then(() => fs.readFileAsync(wofIdsFile, 'utf8'))
   .then(parseWofIdsFile)
-  .map(getWofGeojson, {concurrency: concurrency})
+  .map(getCachedWofGeojson, {concurrency: concurrency})
   .then(mergeIntoTopojson)
   .then(simplifyTopojson)
   .then(writeOutTopojson)

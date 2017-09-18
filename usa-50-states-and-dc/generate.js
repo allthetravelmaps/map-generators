@@ -2,9 +2,10 @@
 /**
  * Generate topojson file for the 50 states and DC.
  *
- * Optional arguments:
- *  -o <filename> : Output filename to write resulting topojson to.
- *                  Defaults to 'usa-50-states-and-dc.topojson'.
+ * Designed to generate an output file of around 100kb,
+ * with as much detail retained as practical.
+ *
+ * Run 'generate.js --help' for available options.
  */
 
 const commander = require('commander')
@@ -29,9 +30,12 @@ commander
 
 const outputFilename = commander.out
 const wofIdsFile = 'wof-ids'
-const alternateGeom = 'uscensus-display-terrestrial-zoom-10'
+const wofAlternateGeom = 'uscensus-display-terrestrial-zoom-10'
 const concurrency = 4
-const tjsonSimplificationCutoff = 0.01 // choosen to get a file size of ~100k
+
+// these two are choosen to get a file size of ~100k
+const tjsonSimplificationCutoff = 0.03
+const tjsonQuantization = 1e4 // as big as possible without noticing it
 
 function readWofIdsFile (contents) {
   winston.info('Reading WOF Ids from %s ', wofIdsFile)
@@ -50,7 +54,7 @@ function getCachedWofGeojson (wofId) {
       }
 
       winston.info('Calling out to WOF for %s', wofId)
-      const url = wof.uri.id2abspath(wofId, {alt: true, source: alternateGeom})
+      const url = wof.uri.id2abspath(wofId, {alt: true, source: wofAlternateGeom})
       return request
         .get(url)
         .then(gjsonStr => {
@@ -59,17 +63,28 @@ function getCachedWofGeojson (wofId) {
           return gjsonStr
         })
     })
-    .then(gjsonStr => JSON.parse(gjsonStr))
+    .then(gjsonStr => {
+      const gjson = JSON.parse(gjsonStr)
+      // pass on only the minimal parts we need
+      return {
+        type: gjson['type'],
+        id: gjson['id'],
+        geometry: gjson['geometry']
+      }
+    })
 }
 
 function buildTopojson (gjsons) {
   winston.info('Merging together %d geojsons into one topojson', gjsons.length)
+
   // Deferring quantizatiing till after composition and simplification
   let tjson = topojson.topology(gjsons)
+
   winston.info('Simplifying topojson')
-  // tjson = topojson.presimplify(tjson)
-  // tjson = topojson.simplify(tjson, tjsonSimplificationCutoff)
-  // tjson = topojson.quantize(tjson, 1e6)
+  tjson = topojson.presimplify(tjson)
+  const cutoffWeight = topojson.quantile(tjson, tjsonSimplificationCutoff)
+  tjson = topojson.simplify(tjson, cutoffWeight)
+  tjson = topojson.quantize(tjson, tjsonQuantization)
   return tjson
 }
 

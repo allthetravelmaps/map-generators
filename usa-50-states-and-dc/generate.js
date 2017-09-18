@@ -33,13 +33,16 @@ const alternateGeom = 'uscensus-display-terrestrial-zoom-10'
 const concurrency = 4
 const tjsonSimplificationCutoff = 0.01 // choosen to get a file size of ~100k
 
-const parseWofIdsFile = function (contents) {
-  winston.info('Reading and parsing %s ', wofIdsFile)
-  return contents.trim().split('\n')
+function readWofIdsFile (contents) {
+  winston.info('Reading WOF Ids from %s ', wofIdsFile)
+  return fs
+    .readFileAsync(wofIdsFile, 'utf8')
+    .then(contents => contents.trim().split('\n'))
 }
 
-const getCachedWofGeojson = function (wofId) {
-  return cache.get(wofId)
+function getCachedWofGeojson (wofId) {
+  return cache
+    .get(wofId)
     .then(cacheEntry => {
       if (cacheEntry.isCached) {
         winston.info('Using cached geojson for %s', wofId)
@@ -48,29 +51,29 @@ const getCachedWofGeojson = function (wofId) {
 
       winston.info('Calling out to WOF for %s', wofId)
       const url = wof.uri.id2abspath(wofId, {alt: true, source: alternateGeom})
-      return request.get(url).then(gjsonStr => {
-        winston.info('Filling cache for %s', wofId)
-        cache.set(wofId, gjsonStr)
-        return gjsonStr
-      })
+      return request
+        .get(url)
+        .then(gjsonStr => {
+          winston.info('Filling cache for %s', wofId)
+          cache.set(wofId, gjsonStr)
+          return gjsonStr
+        })
     })
     .then(gjsonStr => JSON.parse(gjsonStr))
 }
 
-const mergeIntoTopojson = function (gjsons) {
+function buildTopojson (gjsons) {
   winston.info('Merging together %d geojsons into one topojson', gjsons.length)
-  // Quantizatiing after composing topojson to avoid possible mismatches AMAP
+  // Deferring quantizatiing till after composition and simplification
   let tjson = topojson.topology(gjsons)
-  return topojson.quantize(tjson, 1e6)
-}
-
-const simplifyTopojson = function (tjson) {
   winston.info('Simplifying topojson')
-  tjson = topojson.presimplify(tjson)
-  return topojson.simplify(tjson, tjsonSimplificationCutoff)
+  // tjson = topojson.presimplify(tjson)
+  // tjson = topojson.simplify(tjson, tjsonSimplificationCutoff)
+  // tjson = topojson.quantize(tjson, 1e6)
+  return tjson
 }
 
-const writeOutTopojson = function (tjson) {
+function writeOutTopojson (tjson) {
   winston.info('Writing out topojson to %s', outputFilename)
   return fs.writeFileAsync(outputFilename, JSON.stringify(tjson))
 }
@@ -83,9 +86,7 @@ if (commander.clear) {
 }
 
 Promise.resolve(cacheCleared)
-  .then(() => fs.readFileAsync(wofIdsFile, 'utf8'))
-  .then(parseWofIdsFile)
+  .then(readWofIdsFile)
   .map(getCachedWofGeojson, {concurrency: concurrency})
-  .then(mergeIntoTopojson)
-  .then(simplifyTopojson)
+  .then(buildTopojson)
   .then(writeOutTopojson)

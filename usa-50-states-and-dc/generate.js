@@ -2,14 +2,9 @@
 /**
  * Generate topojson file for the 50 states and DC.
  *
- * Designed to generate an output file of around 100kb,
- * with as much detail retained as practical.
- *
  * Run 'generate.js --help' for available options.
  */
 
-const commander = require('commander')
-const process = require('process')
 const request = require('request-promise')
 const topojson = require('topojson')
 const winston = require('winston')
@@ -21,48 +16,63 @@ const fs = Promise.promisifyAll(require('fs'))
 const Cache = require('async-disk-cache')
 const cache = new Cache('wof-geojson')
 
-function parseCommandOptions (argv) {
-  const defaultOpts = {
-    outputFile: 'out.topojson',
-    minFeatureSize: '1',
-    wofIdsFile: 'wof-ids',
-    wofAlternateGeom: 'uscensus-display-terrestrial-zoom-10',
-    networkConcurrency: 4
-  }
-  const allowedMinFeatureSizes = ['1', '10', '100']
-
-  commander
-    .version('0.1.0')
-    .option('-c, --clear-cache', 'Clear cache of WOF geojson')
-    .option('-n, --network-concurrency <concurrency>',
-            `Concurrency of network requests to WOF [${defaultOpts['networkConcurrency']}]`,
-             defaultOpts['networkConcurrency'])
-    .option(`-m, --min-feature-size <${allowedMinFeatureSizes.join('|')}>`,
-            `Approx. min feature size, in km^2 [${defaultOpts['minFeatureSize']}]`,
-            defaultOpts['minFeatureSize'])
-    .option('-o, --output-filename-topojson <filename>',
-            `Output filename of Topojson [${defaultOpts['outputFile']}]`,
-            defaultOpts['outputFile'])
-    .option('-i, --input-filename-wof-ids <filename>',
-            `Input filename of WOF ids [${defaultOpts['wofIdsFile']}]`,
-            defaultOpts['wofIdsFile'])
-    .option('-w, --wof-alternate-geometry <altnerate-geometry>',
-            `WOF alternate geoemtry [${defaultOpts['wofAlternateGeom']}]`,
-            defaultOpts['wofAlternateGeom'])
-    .parse(process.argv)
-
-  // If given a min feature size, ensure it's one of our allowed values
-  // Is this validation/parsing of input really not built into commander already?
-  if (!allowedMinFeatureSizes.includes(commander.minFeatureSize)) {
-    // copying commander error format
-    console.error()
-    console.error("  error: invalid value `%s' for argument `%s'", commander.minFeatureSize, 'min')
-    console.error()
-    process.exit(1)
-  }
-
-  return commander
-}
+const argv = require('yargs')
+  .usage('Usage: $0 [options]')
+  .help('h')
+  .alias('h', 'help')
+  .group('h', 'General Options')
+  .version('v')
+  .alias('v', 'version')
+  .group('v', 'General Options')
+  .option('c', {
+    alias: 'clear-cache',
+    boolean: true,
+    desc: 'Clear local cache of WOF geojson',
+    group: 'Processing Options'
+  })
+  .option('n', {
+    alias: 'network-concurrency',
+    default: 4,
+    desc: 'Concurrency of network requests to WOF',
+    group: 'Processing Options',
+    requiresArg: true,
+    type: 'number'
+  })
+  .option('i', {
+    alias: 'input-filename-wof-ids',
+    default: 'wof-ids',
+    desc: 'Input filename to read WOF ids from',
+    group: 'Input/Output Files',
+    requiresArg: true,
+    type: 'string'
+  })
+  .option('o', {
+    alias: 'output-filename-topojson',
+    default: 'out.topojson',
+    desc: 'Output filename to write topojson to',
+    group: 'Input/Output Files',
+    requiresArg: true,
+    type: 'string'
+  })
+  .option('m', {
+    alias: 'min-feature-size',
+    choices: [1, 10, 100],
+    default: 1,
+    desc: 'Approx. min feature size, in km^2',
+    group: 'Geometry Options',
+    nargs: 1,
+    type: 'number'
+  })
+  .option('w', {
+    alias: 'wof-alternate-geometry',
+    default: 'uscensus-display-terrestrial-zoom-10',
+    desc: 'WOF alternate geometry',
+    group: 'Geometry Options',
+    requiresArg: true,
+    type: 'string'
+  })
+  .strict()
+  .argv
 
 async function readWofIdsFile (filename) {
   winston.info('Reading WOF Ids from %s ', filename)
@@ -122,22 +132,20 @@ async function writeOutTopojson (tjson, filename) {
   return fs.writeFileAsync(filename, JSON.stringify(tjson))
 }
 
-async function main () {
-  let commander = parseCommandOptions(process.argv)
-
-  if (commander.clearCache) {
+async function main (argv) {
+  if (argv.clearCache) {
     winston.info('Clearing cache of WOF geojson')
     await cache.clear()
   }
 
-  const wofIds = await readWofIdsFile(commander.inputFilenameWofIds)
+  const wofIds = await readWofIdsFile(argv.inputFilenameWofIds)
   const gjsons = await Promise.map(wofIds, async wofId => {
-    const gjsonStr = await getCachedWofGeojsonStr(wofId, commander.wofAlternateGeometry)
+    const gjsonStr = await getCachedWofGeojsonStr(wofId, argv.wofAlternateGeometry)
     return parseGeojson(gjsonStr)
-  }, {concurrency: parseInt(commander.networkConcurrency)}).all()
+  }, {concurrency: parseInt(argv.networkConcurrency)}).all()
 
-  const tjson = buildTopojson(gjsons, commander.minFeatureSize)
-  return writeOutTopojson(tjson, commander.outputFilenameTopojson)
+  const tjson = buildTopojson(gjsons, argv.minFeatureSize)
+  return writeOutTopojson(tjson, argv.outputFilenameTopojson)
 }
 
-main()
+main(argv)

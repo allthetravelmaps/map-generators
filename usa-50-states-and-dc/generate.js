@@ -23,11 +23,13 @@ const cache = new Cache('wof-geojson')
 
 const defaultFilename = 'usa-50-states-and-dc.topojson'
 const defaultMinFeature = '1'
+const minFeatureOpts = ['1', '10', '100']
 commander
   .version('0.1.0')
   .option('-o, --out <filename>', `Output filename [${defaultFilename}]`, defaultFilename)
   .option('-c, --clear', 'Clear cache of WOF geojson')
-  .option('-m, --min <1|10|100>', `Approx. min feature size, in km^2 [${defaultMinFeature}]`, defaultMinFeature)
+  .option(`-m, --min <${minFeatureOpts.join('|')}>`,
+          `Approx. min feature size, in km^2 [${defaultMinFeature}]`, defaultMinFeature)
   .parse(process.argv)
 
 const outputFilename = commander.out
@@ -37,7 +39,7 @@ const concurrency = 4
 
 // If given a min feature size, ensure it's one of our allowed values
 // Is this validation/parsing of input really not built into commander already?
-if (['1', '10', '100'].indexOf(commander.min) === -1) {
+if (!minFeatureOpts.includes(commander.min)) {
   // copying commander error format
   console.error()
   console.error("  error: invalid value `%s' for argument `%s'", commander.min, 'min')

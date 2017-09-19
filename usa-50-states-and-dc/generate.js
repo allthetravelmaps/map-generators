@@ -59,47 +59,37 @@ const tjsonQuantization = {
   100: 1e4
 }[commander.min]
 
-function readWofIdsFile (contents) {
+async function readWofIdsFile () {
   winston.info('Reading WOF Ids from %s ', wofIdsFile)
-  return fs
-    .readFileAsync(wofIdsFile, 'utf8')
-    .then(contents => contents.trim().split('\n'))
+  const contents = await fs.readFileAsync(wofIdsFile, 'utf8')
+  return contents.trim().split('\n')
 }
 
-function getCachedWofGeojson (wofId) {
-  return cache
-    .get(wofId)
-    .then(cacheEntry => {
-      if (cacheEntry.isCached) {
-        winston.info('Using cached geojson for %s', wofId)
-        return cacheEntry.value
-      }
+async function getCachedWofGeojsonStr (wofId) {
+  const cacheEntry = await cache.get(wofId)
+  if (cacheEntry.isCached) {
+    winston.info('Using cached geojson for %s', wofId)
+    return cacheEntry.value
+  }
 
-      winston.info('Calling out to WOF for %s', wofId)
-      const url = wof.uri.id2abspath(wofId, {alt: true, source: wofAlternateGeom})
-      return request
-        .get(url)
-        .then(gjsonStr => {
-          winston.info('Filling cache for %s', wofId)
-          cache.set(wofId, gjsonStr)
-          return gjsonStr
-        })
-    })
-    .then(gjsonStr => {
-      const gjson = JSON.parse(gjsonStr)
-      // pass on only the minimal parts we need
-      return {
-        type: gjson['type'],
-        id: gjson['id'],
-        geometry: gjson['geometry']
-      }
-    })
+  winston.info('Calling out to WOF for %s', wofId)
+  const url = wof.uri.id2abspath(wofId, {alt: true, source: wofAlternateGeom})
+  const gjsonStr = await request.get(url)
+
+  winston.info('Filling cache for %s', wofId)
+  await cache.set(wofId, gjsonStr)
+  return gjsonStr
+}
+
+function parseGeojson (gjsonStr) {
+  const gjson = JSON.parse(gjsonStr)
+  // pass on only the minimal parts we need
+  const {type, id, geometry} = gjson
+  return {type, id, geometry}
 }
 
 function buildTopojson (gjsons) {
   winston.info('Merging together %d geojsons into one topojson', gjsons.length)
-
-  // Deferring quantizatiing till after composition and simplification
   let tjson = topojson.topology(gjsons)
 
   winston.info('Simplifying topojson to features of at least ~%s km^2', commander.min)
@@ -109,20 +99,26 @@ function buildTopojson (gjsons) {
   return tjson
 }
 
-function writeOutTopojson (tjson) {
+async function writeOutTopojson (tjson) {
   winston.info('Writing out topojson to %s', outputFilename)
   return fs.writeFileAsync(outputFilename, JSON.stringify(tjson))
 }
 
-// clear cache if requested
-let cacheCleared
-if (commander.clear) {
-  winston.info('Clearing cache of WOF geojson')
-  cacheCleared = cache.clear()
+async function main () {
+  // clear cache if requested
+  if (commander.clear) {
+    winston.info('Clearing cache of WOF geojson')
+    await cache.clear()
+  }
+
+  const wofIds = await readWofIdsFile()
+  const gjsons = await Promise.map(wofIds, async wofId => {
+    const gjsonStr = await getCachedWofGeojsonStr(wofId)
+    return parseGeojson(gjsonStr)
+  }, {concurrency: concurrency}).all()
+
+  const tjson = buildTopojson(gjsons)
+  return writeOutTopojson(tjson)
 }
 
-Promise.resolve(cacheCleared)
-  .then(readWofIdsFile)
-  .map(getCachedWofGeojson, {concurrency: concurrency})
-  .then(buildTopojson)
-  .then(writeOutTopojson)
+main()

@@ -40,7 +40,7 @@ const argv = require('yargs')
   })
   .option('i', {
     alias: 'input-filename-wof-ids',
-    default: 'wof-ids',
+    demandOption: true,
     desc: 'Input filename to read WOF ids from',
     group: 'Input/Output Files',
     requiresArg: true,
@@ -65,34 +65,36 @@ const argv = require('yargs')
   })
   .option('w', {
     alias: 'wof-alternate-geometry',
-    default: 'uscensus-display-terrestrial-zoom-10',
     desc: 'WOF alternate geometry',
     group: 'Geometry Options',
     requiresArg: true,
     type: 'string'
   })
+  .showHelpOnFail(false, 'Specify --help for available options')
   .strict()
   .argv
 
 async function readWofIdsFile (filename) {
   winston.info('Reading WOF Ids from %s ', filename)
   const contents = await fs.readFileAsync(filename, 'utf8')
-  return contents.trim().split('\n')
+  return contents.trim().split('\n').filter(x => !x.startsWith('#'))
 }
 
 async function getCachedWofGeojsonStr (wofId, wofAlternateGeom) {
-  const cacheEntry = await cache.get(wofId)
+  const cacheKey = [wofId, wofAlternateGeom].join('-')
+  const cacheEntry = await cache.get(cacheKey)
   if (cacheEntry.isCached) {
     winston.info('Using cached geojson for %s', wofId)
     return cacheEntry.value
   }
 
   winston.info('Calling out to WOF for %s', wofId)
-  const url = wof.uri.id2abspath(wofId, {alt: true, source: wofAlternateGeom})
+  const urlOpts = (wofAlternateGeom ? {alt: true, source: wofAlternateGeom} : {})
+  const url = wof.uri.id2abspath(wofId, urlOpts)
   const gjsonStr = await request.get(url)
 
   winston.info('Filling cache for %s', wofId)
-  await cache.set(wofId, gjsonStr)
+  await cache.set(cacheKey, gjsonStr)
   return gjsonStr
 }
 

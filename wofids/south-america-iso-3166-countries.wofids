@@ -1,0 +1,22 @@
+# https://www.iso.org/obp/ui/
+# https://en.wikipedia.org/wiki/ISO_3166-1
+# https://www.countries-ofthe-world.com/countries-of-south-america.html
+
+# mainland countries
+85632505 # Argentina
+85632623 # Bolivia
+85633009 # Brazil
+85633057 # Chile
+85632519 # Colombia
+85632261 # Ecuador
+85632397 # Guyana
+85632355 # Paraguay
+85632521 # Peru
+85632443 # Suriname
+85632511 # Uruguay
+85632317 # Venezuela
+
+# territories, dependencies
+85632211 # Falkland Islands
+85671195 # French Guiana
+85632301 # South Georgia & South Sandwich Islands

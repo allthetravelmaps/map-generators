@@ -1,0 +1,52 @@
+# https://www.iso.org/obp/ui/
+# https://en.wikipedia.org/wiki/ISO_3166-1
+# https://www.countries-ofthe-world.com/countries-of-north-america.html
+
+# 'northern' north america
+85633041 # Canada
+85633793 # USA
+85633293 # Mexico
+
+# central america
+85632571 # Belize
+85632487 # Costa Rica
+85632545 # El Salvador
+85632385 # Guatemala
+85632323 # Honduras
+85632599 # Nicaragua
+85632179 # Panama
+
+# caribbean
+85632529 # Antigua and Barbuda
+85632339 # The Bahamas
+85632491 # Barbados
+85632675 # Cuba
+85632503 # Dominica
+85632713 # Dominican Republic
+85632335 # Grenada
+85632433 # Hati
+85632215 # Jamaica
+85632551 # Saint Kitts and Nevis
+85632369 # Saint Lucia
+85632569 # Saint Vincent and the Grenadines
+85632271 # Trinidad and Tobago
+
+# territories, dependencies
+85632283 # Anguilla
+85632295 # Aruba
+85632731 # Bermuda
+85632629 # British Virgin Islands
+136251281 # Caribbean Netherlands (Bonaire, Saba, Sint Eustatius)
+85632611 # Cayman Islands
+85632441 # Curacao
+85632335 # Greenland
+85671209 # Guadeloupe
+85671191 # Martinique
+85632677 # Montserrat
+85633729 # Puerto Rico
+85632199 # Saint Barthelemy
+85632737 # Saint Martin
+85632371 # Saint Pierre and Miquelon
+85632185 # Sint Maarten
+85632205 # Turks and Caicos Islands
+85632169 # US Virgin Islands

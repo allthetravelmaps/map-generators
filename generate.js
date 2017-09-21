@@ -79,7 +79,7 @@ async function readWofIdsFile (filename) {
   const contentStr = await fs.readFileAsync(filename, 'utf8')
   const contents = contentStr
     .trim().split('\n')
-    .map(x => x.substring(0, x.indexOf('#')).trim())
+    .map(x => x.substring(0, x.includes('#') ? x.indexOf('#') : x.length).trim())
     .filter(x => x)
   winston.info('Read %d WOF Ids', contents.length)
   return contents

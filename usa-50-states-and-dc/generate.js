@@ -81,7 +81,7 @@ async function readWofIdsFile (filename) {
 }
 
 async function getCachedWofGeojsonStr (wofId, wofAlternateGeom) {
-  const cacheKey = [wofId, wofAlternateGeom].join('-')
+  const cacheKey = `${wofId}${wofAlternateGeom ? `.${wofAlternateGeom}` : ''}`
   const cacheEntry = await cache.get(cacheKey)
   if (cacheEntry.isCached) {
     winston.info('Using cached geojson for %s', wofId)
@@ -143,7 +143,11 @@ async function main (argv) {
   const wofIds = await readWofIdsFile(argv.inputFilenameWofIds)
   const gjsons = await Promise.map(wofIds, async wofId => {
     const gjsonStr = await getCachedWofGeojsonStr(wofId, argv.wofAlternateGeometry)
-    return parseGeojson(gjsonStr)
+    try {
+      return parseGeojson(gjsonStr)
+    } catch (e) {
+      throw Error(`Unable to parse json for ${wofId}`)
+    }
   }, {concurrency: parseInt(argv.networkConcurrency)}).all()
 
   const tjson = buildTopojson(gjsons, argv.minFeatureSize)

@@ -76,8 +76,13 @@ const argv = require('yargs')
 
 async function readWofIdsFile (filename) {
   winston.info('Reading WOF Ids from %s ', filename)
-  const contents = await fs.readFileAsync(filename, 'utf8')
-  return contents.trim().split('\n').filter(x => !x.startsWith('#'))
+  const contentStr = await fs.readFileAsync(filename, 'utf8')
+  const contents = contentStr
+    .trim().split('\n')
+    .map(x => x.substring(0, x.indexOf('#')).trim())
+    .filter(x => x)
+  winston.info('Read %d WOF Ids', contents.length)
+  return contents
 }
 
 async function getCachedWofGeojsonStr (wofId, wofAlternateGeom) {

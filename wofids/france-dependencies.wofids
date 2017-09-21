@@ -1,0 +1,17 @@
+# Dependencies of France that are iso-3166 recognized
+# French empire wofid 136253037
+# https://en.wikipedia.org/wiki/Overseas_France#Overview
+
+85632689 # Clipperton Island
+85671195 # French Guiana
+85632653 # French Polynesia
+85632549 # French Southern and Antarctic Lands
+85671209 # Guadeloupe
+85671191 # Martinique
+85671203 # Mayotte
+85632473 # New Caledonia
+85671199 # Reunion
+85632199 # Saint Barthelemy 
+85632737 # Saint Martin
+85632371 # Saint Pierre and Miquelon
+85632585 # Wallis and Futuna

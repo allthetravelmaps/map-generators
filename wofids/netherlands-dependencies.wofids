@@ -1,0 +1,9 @@
+# Dependencies of Netherlands that are iso-3166 recognized
+# Netherlands empire wofid 136253051
+#
+# https://en.wikipedia.org/wiki/Kingdom_of_the_Netherlands#Constituent_countries
+
+85632295 # Aruba
+136251281 # Caribbean Netherlands (Bonaire, Saba, Sint Eustatius)
+85632441 # Curacao
+85632185 # Sint Maarten

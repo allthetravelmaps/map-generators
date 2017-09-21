@@ -1,0 +1,9 @@
+# Dependencies of USA that are iso-3166 recognized
+# US empire wofid 136253057
+#
+# https://en.wikipedia.org/wiki/Territories_of_the_United_States#Classification_of_current_U.S._territories
+#
+# INCOMPLETE?
+
+85633729 # Puerto Rico
+85632169 # US Virgin Islands

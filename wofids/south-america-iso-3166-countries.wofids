@@ -1,8 +1,7 @@
-# https://www.iso.org/obp/ui/
+# https://www.iso.org/obp/ui/#search/code
 # https://en.wikipedia.org/wiki/ISO_3166-1
 # https://www.countries-ofthe-world.com/countries-of-south-america.html
 
-# mainland countries
 85632505 # Argentina
 85632623 # Bolivia
 85633009 # Brazil
@@ -15,8 +14,3 @@
 85632443 # Suriname
 85632511 # Uruguay
 85632317 # Venezuela
-
-# territories, dependencies
-85632211 # Falkland Islands
-85671195 # French Guiana
-85632301 # South Georgia & South Sandwich Islands

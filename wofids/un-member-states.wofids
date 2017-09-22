@@ -1,7 +1,19 @@
 # https://en.wikipedia.org/wiki/List_of_sovereign_states
 # https://www.countries-ofthe-world.com/
 
-# europe
+# UN Observer Status
+85633739 # Palestine
+85632187 # Vatican City (Holy See)
+
+# UN specialized agency membership only
+85632481 # Cook Islands
+85633259 # Kosovo
+85632493 # Niue
+85632403 # Taiwan
+
+# UN Full Members follow
+
+# Europe
 85632405 # Albania
 85632343 # Andorra
 85632773 # Armenia
@@ -25,7 +37,6 @@
 85633249 # Iceland
 85633241 # Ireland
 85633253 # Italy
-85633259 # Kosovo
 85633279 # Latvia
 85633267 # Liechtenstein
 85633269 # Lithuania
@@ -51,36 +62,33 @@
 85632393 # Turkey
 85633805 # Ukraine
 85633159 # United Kingdom (UK)
-85632187 # Vatican City (Holy See)
 
-# mainland northamerica
-85633041 # Canada
-85633793 # USA
-85633293 # Mexico
-85632571 # Belize
-85632487 # Costa Rica
-85632545 # El Salvador
-85632385 # Guatemala
-85632323 # Honduras
-85632599 # Nicaragua
-85632179 # Panama
-
-# caribbean
+# North America
 85632529 # Antigua and Barbuda
-85632339 # The Bahamas
 85632491 # Barbados
+85632339 # The Bahamas
+85632571 # Belize
+85633041 # Canada
+85632487 # Costa Rica
 85632675 # Cuba
 85632503 # Dominica
 85632713 # Dominican Republic
+85632545 # El Salvador
 85632335 # Grenada
+85632385 # Guatemala
 85632433 # Hati
+85632599 # Nicaragua
+85632323 # Honduras
 85632215 # Jamaica
+85633293 # Mexico
+85632179 # Panama
 85632551 # Saint Kitts and Nevis
 85632369 # Saint Lucia
 85632569 # Saint Vincent and the Grenadines
 85632271 # Trinidad and Tobago
+85633793 # USA
 
-# south america
+# South America
 85632505 # Argentina
 85632623 # Bolivia
 85633009 # Brazil
@@ -94,7 +102,7 @@
 85632511 # Uruguay
 85632317 # Venezuela
 
-# africa
+# Africa
 85632451 # Algeria
 85632281 # Angola
 85632247 # Benin
@@ -149,3 +157,63 @@
 85632625 # Uganda
 85632559 # Zambia
 85632243 # Zimbabwe
+
+# Asia
+85632229 # Afghanistan
+85632167 # Bahrain
+85632475 # Bangladesh
+85632171 # Bhutan
+85632749 # Brunei
+85632359 # Cambodia
+85632695 # China
+85632469 # India
+85632203 # Indonesia
+85632361 # Iran
+85632191 # Iraq
+85632315 # Israel
+85632429 # Japan
+85632425 # Jordan
+85632307 # Kazakhstan
+85632401 # Kuwait
+85632761 # Kyrgyzstan
+85632241 # Laos
+85632533 # Lebanon
+85632739 # Malaysia
+85632305 # Maldives
+85632439 # Mongolia
+85632181 # Myanmar (Burma)
+85632465 # Nepal
+85632639 # North Korea
+85632207 # Oman
+85632659 # Pakistan
+85632509 # Philippines
+85632299 # Qatar
+85632253 # Saudi Arabia
+85632605 # Singapore
+85632231 # South Korea
+85632313 # Sri Lanka
+85632413 # Syria
+85632513 # Tajikistan
+85632293 # Thailand
+85632583 # Timor-Leste
+85632671 # Turkmenistan
+85632573 # United Arab Emirates (UAE)
+85632645 # Uzbekistan
+85632763 # Vietnam
+85632499 # Yemen
+
+# Cceania
+85632793 # Australia
+85632755 # Fiji
+85632709 # Kiribati
+85632663 # Marshall Islands
+85632431 # Micronesia
+85632747 # Nauru
+85633345 # New Zealand
+85632331 # Palau
+85632347 # Papua New Guinea
+85632681 # Samoa
+85632591 # Solomon Islands
+85632455 # Tonga
+85632607 # Tuvalu
+85632263 # Vanuatu

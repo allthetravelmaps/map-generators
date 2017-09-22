@@ -130,6 +130,7 @@ function buildTopojson (gjsons, minFeatureSize) {
   winston.info('Simplifying topojson to features of at least ~%s km^2', minFeatureSize)
   tjson = topojson.presimplify(tjson)
   tjson = topojson.simplify(tjson, tjsonSimplification)
+  tjson = topojson.filter(tjson, topojson.filterWeight(tjson, tjsonSimplification))
   tjson = topojson.quantize(tjson, tjsonQuantization)
   return tjson
 }

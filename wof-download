@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# Download a specified WOF record to a given output directory.
+
+# required libs:
+# https://github.com/whosonfirst/py-mapzen-whosonfirst-uri
+# https://github.com/whosonfirst/py-mapzen-whosonfirst-sources
+wofId2PathBin=wof-id2path
+
+wofSource=''
+wofFunction=''
+wofExtras=''
+outputDir=''
+clobber=false
+wofDataRoot="https://whosonfirst.mapzen.com/data"
+
+usage() {
+  echo "Usage: $0 [-s <wofSource>] [-f <wofFunction>] [-e <wofExtras>]"
+  echo "          [-o <outputDirectory> [-c] [-h] wofId"
+  echo "  -c  Clobber over any existing files (default: false)"
+  echo "  -h  Display this help message"
+  echo "Writes the path to the downloaded file to stdout."
+}
+
+while getopts 's:f:e:o:ch' opt; do
+  case $opt in
+    s)
+      wofSource="$OPTARG"
+      ;;
+    f)
+      wofFunction="$OPTARG"
+      ;;
+    e)
+      wofExtras="$OPTARG"
+      ;;
+    o)
+      outputDir="$OPTARG"
+      ;;
+    c)
+      clobber=true
+      ;;
+    h)
+      usage
+      exit 0
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+wofId="${!OPTIND}"
+if [ ! "$wofId" ]; then
+  echo "$0: missing required parameter -- wofId" >&2
+  usage
+  exit 1
+fi
+
+if [[ -z "$wofFunction" && ! -z "$wofExtras" || ! -z "$wofFunction" && -z "$wofExtras" ]]; then
+  echo "$0: illegal error combination -- requires both or neither of wofFunction and wofExtra" >&2
+  usage
+  exit 1
+fi
+
+wofOpts="${wofSource:+-A -S} $wofSource ${wofFunction:+-F} $wofFunction ${wofExtras:+-E} $wofExtras"
+wofFile=$("$wofId2PathBin" $wofOpts "$wofId")
+wofUrl=$("$wofId2PathBin" -a --abspath-root="$wofDataRoot" $wofOpts "$wofId")
+
+downloadTo="${outputDir:-.}/${wofFile}"
+downloadFrom="$wofUrl"
+
+if [[ $clobber = true || ! -f "$downloadTo" ]]; then
+  curl -s -S -o "$downloadTo" "$downloadFrom"
+fi
+
+echo $downloadTo

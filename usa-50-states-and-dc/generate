@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+workingDir="${BASH_SOURCE%/*}"
+buildDir="${workingDir}/build"
+wofIdsFile="${workingDir}/wofIds"
+
+cleanFirst=false
+downloadConcurrency=6 # copying chrome, max connections per hostname
+wofDownloadOpts="-o $buildDir -s uscensus -f display -e terrestrial-zoom-10"
+
+# dependencies
+mapshaperBin=mapshaper    # https://github.com/mbloch/mapshaper
+parallelBin=parallel      # https://www.gnu.org/software/parallel/
+topojsonBin=topojson      # https://github.com/topojson/topojson
+wofDownloadBin="${workingDir}/../wof-download"
+
+usage() {
+  echo "Usage: $0 [-c] [-h]"
+  echo "  -c  Clean out build directory first"
+  echo "  -h  Display this help message"
+}
+
+while getopts 'ch' opt; do
+  case $opt in
+    c)
+      cleanFirst=true
+      ;;
+    h)
+      usage
+      exit 0
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+mkdir -p "$buildDir"
+
+if [ "$cleanFirst" = true ]; then
+  echo "Cleaning out build dir $buildDir"
+  # avoid dangerously broad deletes (ie rm -rf)
+  find "$buildDir" -type f -d 1 -delete
+fi
+
+wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
+wofIdsCount=$(echo "$wofIds" | wc -l | tr -d '[:space:]')
+
+echo "Downloading (if not already cached) $wofIdsCount WOF geojson files, $downloadConcurrency at a time"
+wofPaths=$(parallel -j "$downloadConcurrency" "$wofDownloadBin" $wofDownloadOpts ::: $wofIds)
+
+echo $wofPaths

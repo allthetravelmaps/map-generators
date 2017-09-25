@@ -1,6 +1,7 @@
 # use alt geom uscensus-display-terrestrial-zoom-10
 # DC gets badly distorted by 100km^2
-85688675
+
+85688675 # Alabama
 85688573
 85688719
 85688549

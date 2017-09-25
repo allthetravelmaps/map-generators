@@ -2,9 +2,10 @@
 
 # Download a specified WOF record to a given output directory.
 
-# required libs:
-# https://github.com/whosonfirst/py-mapzen-whosonfirst-uri
-# https://github.com/whosonfirst/py-mapzen-whosonfirst-sources
+# The mapzen python packaging system is a work in progress.
+# Easiest way to get this working on your system as of 2017/09/25:
+#   pip install https://github.com/whosonfirst/py-mapzen-whosonfirst-uri/tarball/master
+#   pip install https://github.com/whosonfirst/py-mapzen-whosonfirst-sources/tarball/master
 wofId2PathBin=wof-id2path
 
 wofSource=''

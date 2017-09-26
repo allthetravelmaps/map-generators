@@ -1,3 +1,4 @@
 node_modules
-out.topojson
 build
+*.*-*.meta.json
+*.*-*.map.topojson

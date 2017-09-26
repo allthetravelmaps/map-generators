@@ -3,11 +3,17 @@
 workingDir="${BASH_SOURCE%/*}"
 buildDir="${workingDir}/build"
 wofIdsFile="${workingDir}/wofIds"
-outputFile="${workingDir}/out.topojson"
 
 cleanFirst=false
 downloadConcurrency=6 # copying chrome, max connections per hostname
-wofDownloadOpts="-o $buildDir -s uscensus -f display -e terrestrial-zoom-10"
+wofAltOpts="-s uscensus -f display -e terrestrial-zoom-10"
+quantization=1e5 # upper bound: ~1m
+simplification=0.001 # upper bound: ~10km^2
+
+title="States of the USA"
+titleSlug='states-of-the-usa'
+description="The 50 states, and the District of Columbia, of the United States of America."
+license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
 
 # dependencies
 jqBin=jq                  # https://stedolan.github.io/jq/
@@ -46,21 +52,39 @@ if [ "$cleanFirst" = true ]; then
   find "$buildDir" -type f -d 1 -delete
 fi
 
+echo "Setting creation timestamp"
+now=$(date -u +%s)
+nowSlug=$(date -r $now -u +"%Y%m%d-%H%M%S")
+outputMapFilename="$titleSlug.$nowSlug.map.topojson"
+outputMetaFilename="$titleSlug.$nowSlug.meta.json"
+
 wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
 wofIdsCount=$(echo "$wofIds" | wc -l | tr -d '[:space:]')
 
-echo "Downloading (if not already cached) $wofIdsCount WOF geojson files, $downloadConcurrency at a time"
-wofPaths=$($parallelBin -j "$downloadConcurrency" "$wofDownloadBin" $wofDownloadOpts ::: $wofIds)
+echo "Downloading (if not already cached) 2x$wofIdsCount WOF geojson files, $downloadConcurrency at a time"
+wofDefaultGeomPaths=$($parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -o "$buildDir" ::: $wofIds)
+wofAltGeomPaths=$($parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -o "$buildDir" $wofAltOpts ::: $wofIds)
 
-# TODO: set properties.id, properties.name?
-echo "Combining geojson files to form one topojson"
+echo "Building meta file"
+metaJson=$($jqBin -n "{title: \"$title\", titleSlug: \"$titleSlug\", description: \"$description\",
+                       generatedAt: $now | todate, license: \"$license\", objects: {}}")
+for wofPath in $wofDefaultGeomPaths; do
+  wofId=$(jq '.id' "$wofPath")
+  wofNameQuoted=$(jq '.properties."wof:name"' "$wofPath")
+  metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
+done
+
+echo "Combining downloaded geojson files to form map topojson file"
 geo2topoArgs=""
-for wofPath in $wofPaths; do
+for wofPath in $wofAltGeomPaths; do
   wofId=$(jq '.id' "$wofPath")
   wofTrimmedPath="$buildDir/$wofId.trimmed.geojson"
   $jqBin -c '{id, type, geometry}' "$wofPath" > "$wofTrimmedPath"
   geo2topoArgs+=" $wofId=$wofTrimmedPath"
 done
 
-echo "Writing results to '$outputFile'"
-$geo2topoBin $geo2topoArgs > "$outputFile"
+echo "Writing meta file out to '$outputMetaFilename'"
+echo $metaJson | $jqBin -c . > "$outputMetaFilename"
+
+echo "Writing map file out to '$outputMapFilename'"
+$geo2topoBin $geo2topoArgs > "$outputMapFilename"

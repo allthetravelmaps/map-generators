@@ -7,8 +7,6 @@ wofIdsFile="${workingDir}/wofIds"
 cleanFirst=false
 downloadConcurrency=6 # copying chrome, max connections per hostname
 wofAltOpts="-s uscensus -f display -e terrestrial-zoom-10"
-quantization=1e5 # upper bound: ~1m
-simplification=0.001 # upper bound: ~10km^2
 
 title="States of the USA"
 titleSlug='states-of-the-usa'
@@ -16,11 +14,30 @@ description="The 50 states, and the District of Columbia, of the United States o
 license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
 
 # dependencies
-jqBin=jq                  # https://stedolan.github.io/jq/
-mapshaperBin=mapshaper    # https://github.com/mbloch/mapshaper
-parallelBin=parallel      # https://www.gnu.org/software/parallel/
-geo2topoBin=geo2topo      # https://github.com/topojson/topojson
+geojsonMergeBin=geojson-merge    # https://github.com/mapbox/geojson-merge
+geojsonExtentBin=geojson-extent  # https://github.com/mapbox/geojson-extent
+jqBin=jq                         # https://stedolan.github.io/jq/
+ndjsonSplitBin=ndjson-split      # https://github.com/mbostock/ndjson-cli
+parallelBin=parallel             # https://www.gnu.org/software/parallel/
 wofDownloadBin="${workingDir}/../wof-download"
+
+# https://github.com/topojson/topojson
+geo2topoBin=geo2topo
+topo2geoBin=topo2geo
+topoquantizeBin=topoquantize
+toposimplifyBin=toposimplify
+
+# https://github.com/d3/d3-geo
+# https://github.com/d3/d3-geo-projection
+geo2svgBin=geo2svg
+geoprojectBin=geoproject
+geostitchBin=geostitch
+
+# scaling, simplification
+pixels=960
+simplification=1
+quantization=1000
+subPixelPercision=0
 
 usage() {
   echo "Usage: $0 [-c] [-h]"
@@ -55,7 +72,7 @@ fi
 echo "Setting creation timestamp"
 now=$(date -u +%s)
 nowSlug=$(date -r $now -u +"%Y%m%d-%H%M%S")
-outputMapFilename="$titleSlug.$nowSlug.map.topojson"
+outputMapFilename="$titleSlug.$nowSlug.map.svg"
 outputMetaFilename="$titleSlug.$nowSlug.meta.json"
 
 wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
@@ -74,17 +91,31 @@ for wofPath in $wofDefaultGeomPaths; do
   metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
 done
 
-echo "Combining downloaded geojson files to form map topojson file"
-geo2topoArgs=""
-for wofPath in $wofAltGeomPaths; do
-  wofId=$(jq '.id' "$wofPath")
-  wofTrimmedPath="$buildDir/$wofId.trimmed.geojson"
-  $jqBin -c '{id, type, geometry}' "$wofPath" > "$wofTrimmedPath"
-  geo2topoArgs+=" $wofId=$wofTrimmedPath"
-done
+echo "Merging, projecting, translating, and scaling geojson"
+# grouping features all together in one feature collection because geoproject's fitSize() doesn't work with ndjson
+geojson=$($geojsonMergeBin $wofAltGeomPaths | $geostitchBin | $geoprojectBin "d3.geoAlbersUsa()")
 
-echo "Writing meta file out to '$outputMetaFilename'"
+# move top left to [0, 0], scale it appropriately
+read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')
+geojson=$(echo $geojson \
+          | $geoprojectBin "d3.geoIdentity().translate([-$xmin, -$ymin])" \
+          | $geoprojectBin "d3.geoIdentity().scale($pixels/Math.max($xmax-$xmin, $ymax-$ymin))")
+
+# get our final dimens
+read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')
+
+echo "Converting geojson to topojson, simplifying and quantizing, then convert through geojson & ndjson to svg"
+svg=$(echo $geojson \
+      | $geo2topoBin "$topojsonLayer=-" \
+      | $toposimplifyBin -f -p $simplification \
+      | $topoquantizeBin $quantization \
+      | $topo2geoBin "$topojsonLayer=-" \
+      | $ndjsonSplitBin 'd.features' \
+      | $geo2svgBin -n -w "$xmax" -h "$ymax" -p "$subPixelPercision")
+
+echo "Writing map svg and meta json output to:"
+echo "  $outputMapFilename"
+echo "  $outputMetaFilename"
+
 echo $metaJson | $jqBin -c . > "$outputMetaFilename"
-
-echo "Writing map file out to '$outputMapFilename'"
-$geo2topoBin $geo2topoArgs > "$outputMapFilename"
+echo $svg > "$outputMapFilename"

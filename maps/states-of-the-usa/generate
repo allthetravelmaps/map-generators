@@ -4,7 +4,6 @@ workingDir="${BASH_SOURCE%/*}"
 buildDir="${workingDir}/build"
 wofIdsFile="${workingDir}/wofIds"
 
-cleanFirst=false
 downloadConcurrency=6 # copying chrome, max connections per hostname
 wofAltOpts="-s uscensus -f display -e terrestrial-zoom-10"
 
@@ -45,10 +44,18 @@ usage() {
   echo "  -h  Display this help message"
 }
 
+clean () {
+  echo "Cleaning out build dir $buildDir"
+  # avoid dangerously broad deletes (ie rm -rf)
+  find "$buildDir" -type f -d 1 -delete
+}
+
+mkdir -p "$buildDir"
+
 while getopts 'ch' opt; do
   case $opt in
     c)
-      cleanFirst=true
+      clean
       ;;
     h)
       usage
@@ -60,14 +67,6 @@ while getopts 'ch' opt; do
       ;;
   esac
 done
-
-mkdir -p "$buildDir"
-
-if [ "$cleanFirst" = true ]; then
-  echo "Cleaning out build dir $buildDir"
-  # avoid dangerously broad deletes (ie rm -rf)
-  find "$buildDir" -type f -d 1 -delete
-fi
 
 echo "Setting creation timestamp"
 now=$(date -u +%s)

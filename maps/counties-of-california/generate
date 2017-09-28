@@ -10,7 +10,8 @@ titleSlug='counties-of-california'
 description="The 58 counties of California."
 license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
 
-wofDownloadBin="${binDir}/wof-download"
+geojsonIntersectBin="$binDir/geojson-intersect"
+wofDownloadBin="$binDir/wof-download"
 downloadConcurrency=6 # copying chrome, max connections per hostname
 
 # dependencies
@@ -55,6 +56,11 @@ wofIdsCount=$(echo "$wofIds" | wc -l | tr -d '[:space:]')
 echo "Downloading (if not already cached) $wofIdsCount WOF geojson files, $downloadConcurrency at a time"
 wofGeomPaths=$($parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -o "$buildDir" ::: $wofIds)
 
+echo "Downloading WOF geojson for california"
+caWofId=85688637
+caWofOpts="-s uscensus -f display -e terrestrial-zoom-10"
+caGeomPath=$("$wofDownloadBin" -o "$buildDir" $caWofOpts $caWofId)
+
 echo "Building meta file"
 metaJson=$($jqBin -n "{title: \"$title\", titleSlug: \"$titleSlug\", description: \"$description\",
                        generatedAt: $now | todate, license: \"$license\", objects: {}}")
@@ -64,9 +70,29 @@ for wofPath in $wofGeomPaths; do
   metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
 done
 
+echo "Intersecting each county geojson with CA geojson to get a good coastline"
+trimmedGeomPaths=''
+for wofPath in $wofGeomPaths; do
+  wofId=$(jq '.id' "$wofPath")
+  trimmedGeomPath="$buildDir/$wofId.trimmed.geojson"
+  goodTypes='["Polygon", "MultiPolygon", "GeometryCollection", "Feature"]'
+  # Make sure not to loose our wofId
+  # Doing the intersection sometimes gives us some bunk shapes, filter them out
+  # Note that jq 1.5 (latest as of 2017/09/28) lacks support for a sql-like IN
+  # operator, but that will be landing in 1.6.
+  # https://github.com/stedolan/jq/issues/1322
+  $geojsonMergeBin $wofPath $caGeomPath \
+          | $geojsonIntersectBin \
+          | $jqBin ".id |= $wofId" \
+          | $jqBin 'delpaths([paths(.type? | . == "Point" or . == "MultiPoint" or . == "LineString" or . == "MultiLineString")])' \
+          > $trimmedGeomPath
+  trimmedGeomPaths+=" $trimmedGeomPath"
+done
+
 echo "Merging, projecting, translating, and scaling geojson"
 # grouping features all together in one feature collection because geoproject's fitSize() doesn't work with ndjson
-geojson=$($geojsonMergeBin $wofGeomPaths | $geostitchBin | $geoprojectBin "d3.geoAlbersUsa()")
+# TODO fixme wrong projection! Prob use http://spatialreference.org/ref/epsg/nad83-california-albers/ ?
+geojson=$($geojsonMergeBin $trimmedGeomPaths | $geostitchBin | $geoprojectBin "d3.geoAlbersUsa()")
 
 # move top left to [0, 0], scale it appropriately
 read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')

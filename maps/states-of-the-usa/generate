@@ -2,15 +2,17 @@
 
 workingDir="${BASH_SOURCE%/*}"
 buildDir="${workingDir}/build"
-wofIdsFile="${workingDir}/wofIds"
-
-downloadConcurrency=6 # copying chrome, max connections per hostname
-wofAltOpts="-s uscensus -f display -e terrestrial-zoom-10"
+binDir="${workingDir}/../../bin"
+includesDir="${workingDir}/../../includes"
 
 title="States of the USA"
 titleSlug='states-of-the-usa'
 description="The 50 states, and the District of Columbia, of the United States of America."
 license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
+
+wofDownloadBin="${binDir}/wof-download"
+downloadConcurrency=6 # copying chrome, max connections per hostname
+wofAltOpts="-s uscensus -f display -e terrestrial-zoom-10"
 
 # dependencies
 geojsonMergeBin=geojson-merge    # https://github.com/mapbox/geojson-merge
@@ -18,7 +20,6 @@ geojsonExtentBin=geojson-extent  # https://github.com/mapbox/geojson-extent
 jqBin=jq                         # https://stedolan.github.io/jq/
 ndjsonSplitBin=ndjson-split      # https://github.com/mbostock/ndjson-cli
 parallelBin=parallel             # https://www.gnu.org/software/parallel/
-wofDownloadBin="${workingDir}/../../wof-download"
 
 # https://github.com/topojson/topojson
 geo2topoBin=geo2topo
@@ -38,35 +39,9 @@ simplification=1
 quantization=1000
 subPixelPercision=0
 
-usage() {
-  echo "Usage: $0 [-c] [-h]"
-  echo "  -c  Clean out build directory first"
-  echo "  -h  Display this help message"
-}
-
-clean () {
-  echo "Cleaning out build dir $buildDir"
-  # avoid dangerously broad deletes (ie rm -rf)
-  find "$buildDir" -type f -d 1 -delete
-}
-
-mkdir -p "$buildDir"
-
-while getopts 'ch' opt; do
-  case $opt in
-    c)
-      clean
-      ;;
-    h)
-      usage
-      exit 0
-      ;;
-    *)
-      usage
-      exit 1
-      ;;
-  esac
-done
+clean=false
+source "$includesDir/process-opts.bash"
+source "$includesDir/manage-build-dir.bash"
 
 echo "Setting creation timestamp"
 now=$(date -u +%s)
@@ -74,7 +49,8 @@ nowSlug=$(date -r $now -u +"%Y%m%d-%H%M%S")
 outputMapFilename="$titleSlug.$nowSlug.map.svg"
 outputMetaFilename="$titleSlug.$nowSlug.meta.json"
 
-wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
+echo "Loading wofids"
+wofIds=$(cat "$workingDir/wofIds" |  sed -e 's/#.*$//' -e '/^$/d')
 wofIdsCount=$(echo "$wofIds" | wc -l | tr -d '[:space:]')
 
 echo "Downloading (if not already cached) 2x$wofIdsCount WOF geojson files, $downloadConcurrency at a time"

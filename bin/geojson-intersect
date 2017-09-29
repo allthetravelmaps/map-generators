@@ -13,6 +13,18 @@
 const process = require('process')
 const turf = require('turf')
 
+const argv = require('yargs')
+  .usage('Usage: $0 [options]')
+  .alias('h', 'help')
+  .alias('v', 'version')
+  .option('p', {
+    alias: 'polygons-only',
+    boolean: true,
+    desc: 'Include only [multi]polygons in output'
+  })
+  .strict()
+  .argv
+
 process.stdin.setEncoding('utf-8')
 
 let input = ''
@@ -25,7 +37,10 @@ process.stdin.on('readable', () => {
 
 process.stdin.on('end', () => {
   const jsons = parseOutTwoJsons(input)
-  const jsonOut = jsons.reduce(turf.intersect)
+  let jsonOut = jsons.reduce(turf.intersect)
+  if (argv.polygonsOnly) {
+    jsonOut = removeNonPolygons(jsonOut)
+  }
   writeOutput(jsonOut)
 })
 
@@ -40,6 +55,17 @@ function parseOutTwoJsons (inputStr) {
     throw Error('Input geojson must be of type FeatureCollection')
   }
   return jsonIn.features
+}
+
+function removeNonPolygons (gjson) {
+  const isTypeAllowed = (geom) => ['Polygon', 'MultiPolygon'].includes(geom.type)
+  if (!gjson) return gjson
+  if (gjson.geometry.type !== 'GeometryCollection') {
+    if (isTypeAllowed(gjson.geometry)) return gjson
+    else return null
+  }
+  gjson.geometry.geometries = gjson.geometry.geometries.filter(isTypeAllowed)
+  return gjson
 }
 
 function writeOutput (jsonOut) {

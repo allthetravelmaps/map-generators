@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/travelmapaddict/map-generators#readme",
   "dependencies": {
-    "turf": "^3.0.14"
+    "turf": "^3.0.14",
+    "yargs": "^9.0.1"
   }
 }

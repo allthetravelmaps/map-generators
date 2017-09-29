@@ -81,11 +81,7 @@ for wofPath in $wofGeomPaths; do
   # Note that jq 1.5 (latest as of 2017/09/28) lacks support for a sql-like IN
   # operator, but that will be landing in 1.6.
   # https://github.com/stedolan/jq/issues/1322
-  $geojsonMergeBin $wofPath $caGeomPath \
-          | $geojsonIntersectBin \
-          | $jqBin ".id |= $wofId" \
-          | $jqBin 'delpaths([paths(.type? | . == "Point" or . == "MultiPoint" or . == "LineString" or . == "MultiLineString")])' \
-          > $trimmedGeomPath
+  $geojsonMergeBin $wofPath $caGeomPath | $geojsonIntersectBin -p | $jqBin ".id |= $wofId" > $trimmedGeomPath
   trimmedGeomPaths+=" $trimmedGeomPath"
 done
 

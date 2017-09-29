@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+
+workingDir="${BASH_SOURCE%/*}"
+buildDir="${workingDir}/build"
+binDir="${workingDir}/../../bin"
+includesDir="${workingDir}/../../includes"
+
+title="Comunas de Buenos Aires"
+titleSlug='comunas-de-buenos-aires'
+description="The 15 Comunas of Buenos Aires, Argentina. The Comunas are administrative districts
+             composed of one or more barrios."
+license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
+
+wofDownloadBin="${binDir}/wof-download"
+downloadConcurrency=6 # copying chrome, max connections per hostname
+
+# dependencies
+geojsonMergeBin=geojson-merge    # https://github.com/mapbox/geojson-merge
+geojsonExtentBin=geojson-extent  # https://github.com/mapbox/geojson-extent
+jqBin=jq                         # https://stedolan.github.io/jq/
+ndjsonSplitBin=ndjson-split      # https://github.com/mbostock/ndjson-cli
+parallelBin=parallel             # https://www.gnu.org/software/parallel/
+
+# https://github.com/topojson/topojson
+geo2topoBin=geo2topo
+topo2geoBin=topo2geo
+topoquantizeBin=topoquantize
+toposimplifyBin=toposimplify
+
+# https://github.com/d3/d3-geo
+# https://github.com/d3/d3-geo-projection
+geo2svgBin=geo2svg
+geoprojectBin=geoproject
+
+# scaling, simplification
+pixels=960
+simplification=1
+quantization=1000
+subPixelPercision=0
+
+clean=false
+source "$includesDir/process-opts.bash"
+source "$includesDir/manage-build-dir.bash"
+
+echo "Setting creation timestamp"
+now=$(date -u +%s)
+nowSlug=$(date -r $now -u +"%Y%m%d-%H%M%S")
+outputMapFilename="$titleSlug.$nowSlug.map.svg"
+outputMetaFilename="$titleSlug.$nowSlug.meta.json"
+
+echo "Loading wofids"
+wofIds=$(cat "$workingDir/wofIds" |  sed -e 's/#.*$//' -e '/^$/d')
+wofIdsCount=$(echo "$wofIds" | wc -l | tr -d '[:space:]')
+
+echo "Downloading (if not already cached) $wofIdsCount WOF geojson files, $downloadConcurrency at a time"
+wofGeomPaths=$($parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -o "$buildDir" ::: $wofIds)
+
+echo "Building meta file"
+metaJson=$($jqBin -n "{title: \"$title\", titleSlug: \"$titleSlug\", description: \"$description\",
+                       generatedAt: $now | todate, license: \"$license\", objects: {}}")
+for wofPath in $wofDefaultGeomPaths; do
+  wofId=$(jq '.id' "$wofPath")
+  wofNameQuoted=$(jq '.properties."wof:name"' "$wofPath")
+  metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
+done
+
+echo "Merging, projecting, translating, and scaling geojson"
+geojson=$($geojsonMergeBin $wofGeomPaths | $geoprojectBin "d3.geoAzimuthalEqualArea().rotate([58.5033, 34.6156])")
+
+# move top left to [0, 0], scale it appropriately
+read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')
+geojson=$(echo $geojson \
+          | $geoprojectBin "d3.geoIdentity().translate([-$xmin, -$ymin])" \
+          | $geoprojectBin "d3.geoIdentity().scale($pixels/Math.max($xmax-$xmin, $ymax-$ymin))")
+
+# get our final dimens
+read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')
+
+echo "Converting geojson to topojson, simplifying and quantizing, then convert through geojson & ndjson to svg"
+topojson=$(echo $geojson \
+           | $geo2topoBin "$topojsonLayer=-" \
+           | $toposimplifyBin -f -p $simplification \
+           | $topoquantizeBin $quantization)
+svg=$(echo $topojson \
+      | $topo2geoBin "$topojsonLayer=-" \
+      | $ndjsonSplitBin 'd.features' \
+      | $geo2svgBin -n -w "$xmax" -h "$ymax" -p "$subPixelPercision")
+
+echo "Writing map svg and meta json output to:"
+echo "  $outputMapFilename"
+echo "  $outputMetaFilename"
+
+echo $metaJson | $jqBin -c . > "$outputMetaFilename"
+echo $svg > "$outputMapFilename"

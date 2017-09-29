@@ -31,7 +31,6 @@ toposimplifyBin=toposimplify
 # https://github.com/d3/d3-geo-projection
 geo2svgBin=geo2svg
 geoprojectBin=geoproject
-geostitchBin=geostitch
 
 # scaling, simplification
 pixels=960
@@ -86,9 +85,9 @@ for wofPath in $wofGeomPaths; do
 done
 
 echo "Merging, projecting, translating, and scaling geojson"
-# grouping features all together in one feature collection because geoproject's fitSize() doesn't work with ndjson
-# TODO fixme wrong projection! Prob use http://spatialreference.org/ref/epsg/nad83-california-albers/ ?
-geojson=$($geojsonMergeBin $trimmedGeomPaths | $geostitchBin | $geoprojectBin "d3.geoAlbersUsa()")
+# using http://spatialreference.org/ref/epsg/nad83-california-albers/
+geojson=$($geojsonMergeBin $trimmedGeomPaths \
+        | $geoprojectBin "d3.geoConicEqualArea().parallels([34.0, 40.5]).rotate([120, 0])")
 
 # move top left to [0, 0], scale it appropriately
 read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')

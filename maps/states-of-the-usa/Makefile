@@ -1,5 +1,9 @@
-DEFAULT_GEOMS_DIR := "default-geoms"
-ALT_GEOMS_DIR := "alt-geoms"
+DEFAULT_GEOMS_DIR := default-geoms
+ALT_GEOMS_DIR := alt-geoms
+
+TITLE_SLUG := states-of-the-usa
+META_FILENAME := $(TITLE_SLUG).meta.json
+MAP_FILENAME := $(TITLE_SLUG).map.svg
 
 .DEFAULT_GOAL := all
 
@@ -16,11 +20,11 @@ clean-default-geoms:
 
 .PHONY: clean-meta
 clean-meta:
-	rm -f ./states-of-the-usa.meta.json
+	rm -f ./$(META_FILENAME)
 
 .PHONY: clean-map
 clean-map:
-	rm -f ./states-of-the-usa.map.svg
+	rm -f ./$(MAP_FILENAME)
 
 alt-geoms:
 	./download-alt-geoms
@@ -30,11 +34,11 @@ default-geoms:
 
 .PHONY: meta
 meta: clean-meta default-geoms
-	./generate-meta
+	./generate-meta -s $(TITLE_SLUG) > ./$(META_FILENAME)
 
 .PHONY: map
 map: clean-map alt-geoms
-	./generate-map
+	./generate-map > ./$(MAP_FILENAME)
 
 .PHONY: .all
 all: meta map

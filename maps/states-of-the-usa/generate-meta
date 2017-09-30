@@ -2,23 +2,42 @@
 
 workingDir="${BASH_SOURCE%/*}"
 defaultGeomsDir="$workingDir/default-geoms"
-
-title="States of the USA"
-titleSlug='states-of-the-usa'
-description="The 50 states, and the District of Columbia, of the United States of America."
-license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
-outputMetaFilename="$titleSlug.meta.json"
+metaTemplateFile="$workingDir/meta-template.json"
 
 # https://stedolan.github.io/jq/
 jqBin=jq
 
+error () {
+  [ ! -z "$1" ] && echo "$0: $1"
+  usage 1
+}
 
-metaJson=$($jqBin -n "{title: \"$title\", titleSlug: \"$titleSlug\", description: \"$description\",
-                       license: \"$license\", objects: {}}")
+usage () {
+  echo "Usage: $0 [-s] [-h]"
+  echo "  -s  <title slug>  (required)"
+  echo "  -h  Display this help message"
+  exit "$1"
+}
+
+titleSlug=''
+while getopts "hs:" opt; do
+  case $opt in
+    s) titleSlug="$OPTARG" ;;
+    h) usage 0;;
+    *) error ;;
+  esac
+done
+
+[ -z "$titleSlug" ] && error "option is required -- s"
+
+
+metaJson=$($jqBin ".title_slug = \"$titleSlug\"" "$metaTemplateFile")
+
+# TODO: probably better to read in wofids again rather than rely on dir being correct
 for wofPath in "$defaultGeomsDir"/*; do
   wofId=$(jq '.id' "$wofPath")
   wofNameQuoted=$(jq '.properties."wof:name"' "$wofPath")
   metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
 done
 
-echo $metaJson | $jqBin -c . > "$outputMetaFilename"
+echo $metaJson

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+workingDir="${BASH_SOURCE%/*}"
+binDir="${workingDir}/../../bin"
+altGeomsDir="$workingDir/alt-geoms"
+
+# https://www.gnu.org/software/parallel/
+parallelBin=parallel
+
+wofDownloadBin="${binDir}/wof-download"
+downloadConcurrency=6 # copying chrome, max connections per hostname
+wofAltOpts="-s uscensus -f display -e terrestrial-zoom-10"
+
+wofIds=$(cat "$workingDir/wofIds" |  sed -e 's/#.*$//' -e '/^$/d')
+mkdir -p "$altGeomsDir"
+$parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -o "$altGeomsDir" $wofAltOpts ::: $wofIds

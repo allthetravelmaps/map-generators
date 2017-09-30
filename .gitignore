@@ -1,4 +1,4 @@
 node_modules
 build
-*.*-*.meta.json
-*.*-*.map.svg
+*.meta.json
+*.map.svg

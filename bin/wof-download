@@ -55,12 +55,12 @@ wofId="${!OPTIND}"
 if [ ! -z "$wofId" ]; then
   downloadTo="$outputDir/$("$wofId2PathBin" $wofOpts "$wofId")"
   downloadFrom=$("$wofId2PathBin" -a --abspath-root="$wofDataRoot" $wofOpts "$wofId")
+  mkdir -p "$outputDir"
   $curlBin -s -S -o "$downloadTo" "$downloadFrom"
   echo $downloadTo # TODO: remove me once all maps upgraded
 fi
 
 if [ ! -z "$wofIdsFile" ]; then
   wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
-  mkdir -p "$outputDir"
   $parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -d "$outputDir" "${wofOpts:+-o '$wofOpts'}" ::: $wofIds
 fi

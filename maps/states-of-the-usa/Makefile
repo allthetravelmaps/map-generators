@@ -35,7 +35,7 @@ clean-map:
 	rm -f ./$(MAP_FILENAME)
 
 alt-geoms:
-	$(WOF_DOWNLOAD_BIN) -o $(WOF_ALT_GEOMS_OPTS) -d ./$(ALT_GEOMS_DIR) -f ./$(WOF_IDS_FILE)
+	$(WOF_DOWNLOAD_BIN) -d ./$(ALT_GEOMS_DIR) -o $(WOF_ALT_GEOMS_OPTS) -f ./$(WOF_IDS_FILE)
 
 default-geoms:
 	$(WOF_DOWNLOAD_BIN) -d ./$(DEFAULT_GEOMS_DIR) -f ./$(WOF_IDS_FILE)

@@ -1,42 +1,47 @@
-DL_DIR := downloads
-GEOMS_DIR := $(DL_DIR)/geoms
-
-BIN_DIR := ../../bin
-WOF_DOWNLOAD_BIN := $(BIN_DIR)/wof-download
-GENERATE_META := $(BIN_DIR)/generate-meta
-
-WOF_IDS_FILE := wofids
-META_TEMPLATE_FILE := meta-template.json
-
-TITLE_SLUG := barrios-de-buenos-aires
-META_FILENAME := $(TITLE_SLUG).meta.json
-MAP_FILENAME := $(TITLE_SLUG).map.svg
-
+MAKEFLAGS += --warn-undefined-variables
+SHELL := bash
+.SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := all
+.DELETE_ON_ERROR:
+.SUFFIXES:
 
-.PHONY: clean
-clean: clean-meta clean-map
-	rm -rf ./$(DL_DIR)
+downloadDir := downloads
+geomsDir := $(downloadDir)/geoms
 
-.PHONY: clean-meta
-clean-meta:
-	rm -f ./$(META_FILENAME)
+binDir := ../../bin
+wofDownloadBin := $(binDir)/wof-download
+generateMeta := $(binDir)/generate-meta
 
-.PHONY: clean-map
-clean-map:
-	rm -f ./$(MAP_FILENAME)
+wofIdsFile := wofids
+metaTemplateFile := meta-template.json
+
+titleSlug := barrios-de-buenos-aires
+metaFilename := $(titleSlug).meta.json
+mapFilename := $(titleSlug).map.svg
 
 downloads:
-	$(WOF_DOWNLOAD_BIN) -d ./$(GEOMS_DIR) -f ./$(WOF_IDS_FILE)
+	$(wofDownloadBin) -d ./$(geomsDir) -f ./$(wofIdsFile)
 
 .PHONY: meta
 meta: clean-meta downloads
-	$(GENERATE_META) -t $(TITLE_SLUG) -d ./$(GEOMS_DIR) -f ./$(META_TEMPLATE_FILE) \
-		         ./$(WOF_IDS_FILE) > ./$(META_FILENAME)
+	$(generateMeta) -t $(titleSlug) -d ./$(geomsDir) -f ./$(metaTemplateFile) \
+		         ./$(wofIdsFile) > ./$(metaFilename)
 
 .PHONY: map
 map: clean-map downloads
-	./generate-map > ./$(MAP_FILENAME)
+	./generate-map > ./$(mapFilename)
 
-.PHONY: .all
+.PHONY: all
 all: meta map
+
+.PHONY: clean-meta
+clean-meta:
+	rm -f ./$(metaFilename)
+
+.PHONY: clean-map
+clean-map:
+	rm -f ./$(mapFilename)
+
+.PHONY: clean
+clean: clean-meta clean-map
+	rm -rf ./$(downloadDir)

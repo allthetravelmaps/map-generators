@@ -1,48 +1,53 @@
-BUILD_DIR := build
-DL_DIR := downloads
-COUNTY_GEOMS_DIR := $(DL_DIR)/county-geoms
-CA_GEOM_DIR := $(DL_DIR)/ca-geom
-
-BIN_DIR := ../../bin
-WOF_DOWNLOAD_BIN := $(BIN_DIR)/wof-download
-GENERATE_META := $(BIN_DIR)/generate-meta
-
-WOF_IDS_FILE := wofids
-META_TEMPLATE_FILE := meta-template.json
-CA_WOF_ID := 85688637
-CA_WOF_OPTS := "-A -S uscensus -F display -E terrestrial-zoom-10"
-
-TITLE_SLUG := counties-of-california
-META_FILENAME := $(TITLE_SLUG).meta.json
-MAP_FILENAME := $(TITLE_SLUG).map.svg
-
+MAKEFLAGS += --warn-undefined-variables
+SHELL := bash
+.SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := all
+.DELETE_ON_ERROR:
+.SUFFIXES:
 
-.PHONY: clean
-clean: clean-meta clean-map
-	rm -rf ./$(BUILD_DIR)
-	rm -rf ./$(DL_DIR)
+buildDir := build
+downloadDir := downloads
+countyGeomsDir := $(downloadDir)/county-geoms
+caGeomDir := $(downloadDir)/ca-geom
 
-.PHONY: clean-meta
-clean-meta:
-	rm -f ./$(META_FILENAME)
+binDir := ../../bin
+wofDownloadBin := $(binDir)/wof-download
+generateMeta := $(binDir)/generate-meta
 
-.PHONY: clean-map
-clean-map:
-	rm -f ./$(MAP_FILENAME)
+wofIdsFile := wofids
+metaTemplateFile := meta-template.json
+caWofId := 85688637
+caWofOpts := "-A -S uscensus -F display -E terrestrial-zoom-10"
+
+titleSlug := counties-of-california
+metaFilename := $(titleSlug).meta.json
+mapFilename := $(titleSlug).map.svg
 
 downloads:
-	$(WOF_DOWNLOAD_BIN) -d ./$(COUNTY_GEOMS_DIR) -f ./$(WOF_IDS_FILE)
-	$(WOF_DOWNLOAD_BIN) -d ./$(CA_GEOM_DIR) -o $(CA_WOF_OPTS) $(CA_WOF_ID)
+	$(wofDownloadBin) -d ./$(countyGeomsDir) -f ./$(wofIdsFile)
+	$(wofDownloadBin) -d ./$(caGeomDir) -o $(caWofOpts) $(caWofId)
 
 .PHONY: meta
 meta: clean-meta downloads
-	$(GENERATE_META) -t $(TITLE_SLUG) -d ./$(COUNTY_GEOMS_DIR) -f ./$(META_TEMPLATE_FILE) \
-		         ./$(WOF_IDS_FILE) > ./$(META_FILENAME)
+	$(generateMeta) -t $(titleSlug) -d ./$(countyGeomsDir) -f ./$(metaTemplateFile) \
+		         ./$(wofIdsFile) > ./$(metaFilename)
 
 .PHONY: map
 map: clean-map downloads
-	./generate-map > ./$(MAP_FILENAME)
+	./generate-map > ./$(mapFilename)
 
-.PHONY: .all
+.PHONY: all
 all: meta map
+
+.PHONY: clean-meta
+clean-meta:
+	rm -f ./$(metaFilename)
+
+.PHONY: clean-map
+clean-map:
+	rm -f ./$(mapFilename)
+
+.PHONY: clean
+clean: clean-meta clean-map
+	rm -rf ./$(buildDir)
+	rm -rf ./$(downloadDir)

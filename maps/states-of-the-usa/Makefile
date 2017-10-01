@@ -1,6 +1,12 @@
 DEFAULT_GEOMS_DIR := default-geoms
 ALT_GEOMS_DIR := alt-geoms
 
+BIN_DIR := ../../bin
+WOF_DOWNLOAD_BIN := $(BIN_DIR)/wof-download
+
+WOF_IDS_FILE := wofids
+WOF_ALT_GEOMS_OPTS := "-A -S uscensus -F display -E terrestrial-zoom-10"
+
 TITLE_SLUG := states-of-the-usa
 META_FILENAME := $(TITLE_SLUG).meta.json
 MAP_FILENAME := $(TITLE_SLUG).map.svg
@@ -27,10 +33,10 @@ clean-map:
 	rm -f ./$(MAP_FILENAME)
 
 alt-geoms:
-	./download-alt-geoms
+	$(WOF_DOWNLOAD_BIN) -o $(WOF_ALT_GEOMS_OPTS) -d ./$(ALT_GEOMS_DIR) -f $(WOF_IDS_FILE)
 
 default-geoms:
-	./download-default-geoms
+	$(WOF_DOWNLOAD_BIN) -d ./$(DEFAULT_GEOMS_DIR) -f $(WOF_IDS_FILE)
 
 .PHONY: meta
 meta: clean-meta default-geoms

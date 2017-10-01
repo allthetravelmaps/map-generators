@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+#
+# Download one or more WOF records to a given output directory.
 
-# Download a specified WOF record to a given output directory.
+# set -x
 
 # The mapzen python packaging system is a work in progress.
 # Easiest way to get this working on your system as of 2017/09/25:
@@ -8,71 +10,57 @@
 #   pip install https://github.com/whosonfirst/py-mapzen-whosonfirst-sources/tarball/master
 wofId2PathBin=wof-id2path
 
-wofSource=''
-wofFunction=''
-wofExtras=''
-outputDir=''
-clobber=false
-wofDataRoot="https://whosonfirst.mapzen.com/data"
+curlBin=curl # https://curl.haxx.se/
+parallelBin=parallel # https://www.gnu.org/software/parallel/
+wofDownloadBin="${BASH_SOURCE[0]}"
 
-usage() {
-  echo "Usage: $0 [-s <wofSource>] [-f <wofFunction>] [-e <wofExtras>]"
-  echo "          [-o <outputDirectory> [-c] [-h] wofId"
-  echo "  -c  Clobber over any existing files (default: false)"
-  echo "  -h  Display this help message"
-  echo "Writes the path to the downloaded file to stdout."
+wofDataRoot="https://whosonfirst.mapzen.com/data"
+downloadConcurrency=6  # copying chrome
+
+error () {
+  [ ! -z "$1" ] && echo "$0: $1" 1>&2
+  usage 1
 }
 
-while getopts 's:f:e:o:ch' opt; do
+usage() {
+  echo "Usage: $0 [options] [wofId]"
+  echo "  Options:"
+  echo "    -h               Display this help message"
+  echo "    -d <outputDir>   Required. Directory to save files to"
+  echo "    -o <wofOpts>     String of WOF opts to use with wof-id2path. Ex:"
+  echo "                     '-s uscensus -f display -e terrestrial-zoom-10'"
+  echo "    -f <wofIdsFile>  File full of WOF IDs to download"
+  exit "$1"
+}
+
+wofOpts=""
+wofIdsFile=""
+outputDir=""
+while getopts 'd:o:f:h' opt; do
   case $opt in
-    s)
-      wofSource="$OPTARG"
-      ;;
-    f)
-      wofFunction="$OPTARG"
-      ;;
-    e)
-      wofExtras="$OPTARG"
-      ;;
-    o)
-      outputDir="$OPTARG"
-      ;;
-    c)
-      clobber=true
-      ;;
-    h)
-      usage
-      exit 0
-      ;;
-    *)
-      usage
-      exit 1
-      ;;
+    d) outputDir="$OPTARG" ;;
+    o) wofOpts="$OPTARG" ;;
+    f) wofIdsFile="$OPTARG" ;;
+    h) usage 0 ;;
+    *) error ;;
   esac
 done
 
+[ -z "$outputDir" ] && error "missing required option -- -d <outputDir>"
+
 wofId="${!OPTIND}"
-if [ ! "$wofId" ]; then
-  echo "$0: missing required parameter -- wofId" >&2
-  usage
-  exit 1
+[[ -z "$wofId" && -z "$wofIdsFile" || ! -z "$wofId" && ! -z "$wofIdsFile" ]] \
+   && error "exactly one of '-f <wofIdsFile>' or <wofId> positional parameter required"
+
+if [ ! -z "$wofId" ]; then
+  downloadTo="$outputDir/$("$wofId2PathBin" $wofOpts "$wofId")"
+  downloadFrom=$("$wofId2PathBin" -a --abspath-root="$wofDataRoot" $wofOpts "$wofId")
+  $curlBin -s -S -o "$downloadTo" "$downloadFrom"
+  echo $downloadTo # TODO: remove me once all maps upgraded
 fi
 
-if [[ -z "$wofFunction" && ! -z "$wofExtras" || ! -z "$wofFunction" && -z "$wofExtras" ]]; then
-  echo "$0: illegal error combination -- requires both or neither of wofFunction and wofExtra" >&2
-  usage
-  exit 1
+if [ ! -z "$wofIdsFile" ]; then
+  wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
+  mkdir -p "$outputDir"
+  $parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -d "$outputDir" "${wofOpts:+-o '$wofOpts'}" ::: $wofIds
 fi
-
-wofOpts="${wofSource:+-A -S} $wofSource ${wofFunction:+-F} $wofFunction ${wofExtras:+-E} $wofExtras"
-wofFile=$("$wofId2PathBin" $wofOpts "$wofId")
-wofUrl=$("$wofId2PathBin" -a --abspath-root="$wofDataRoot" $wofOpts "$wofId")
-
-downloadTo="${outputDir:-.}/${wofFile}"
-downloadFrom="$wofUrl"
-
-if [[ $clobber = true || ! -f "$downloadTo" ]]; then
-  curl -s -S -o "$downloadTo" "$downloadFrom"
-fi
-
-echo $downloadTo

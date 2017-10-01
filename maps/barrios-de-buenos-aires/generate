@@ -52,12 +52,8 @@ nowSlug=$(date -r $now -u +"%Y%m%d-%H%M%S")
 outputMapFilename="$titleSlug.$nowSlug.map.svg"
 outputMetaFilename="$titleSlug.$nowSlug.meta.json"
 
-echo "Loading wofids"
-wofIds=$(cat "$workingDir/wofIds" |  sed -e 's/#.*$//' -e '/^$/d')
-wofIdsCount=$(echo "$wofIds" | wc -l | tr -d '[:space:]')
-
-echo "Downloading (if not already cached) $wofIdsCount WOF geojson files, $downloadConcurrency at a time"
-wofGeomPaths=$($parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -o "$buildDir" ::: $wofIds)
+echo "Downloading WOF geojson files"
+wofGeomPaths=$($wofDownloadBin -d "$buildDir" -f "$workingDir/wofIds")
 
 echo "Building meta file"
 metaJson=$($jqBin -n "{title: \"$title\", titleSlug: \"$titleSlug\", description: \"$description\",

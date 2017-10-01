@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 workingDir="${BASH_SOURCE%/*}"
-altGeomsDir="$workingDir/alt-geoms"
+altGeomsDir="$workingDir/downloads/wof-alt-geoms"
 
 # dependencies
 geojsonMergeBin=geojson-merge    # https://github.com/mapbox/geojson-merge

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 workingDir="${BASH_SOURCE%/*}"
-geomsDir="$workingDir/geoms"
-caGeomDir="$workingDir/ca-geom"
-trimmedDir="$workingDir/trimmed-geoms"
+countyGeomsDir="$workingDir/downloads/county-geoms"
+caGeomDir="$workingDir/downloads/ca-geom"
+trimmedDir="$workingDir/build/trimmed-geoms"
 
 binDir="${workingDir}/../../bin"
 geojsonIntersectBin="$binDir/geojson-intersect"
@@ -35,7 +35,7 @@ subPixelPercision=0
 mkdir -p "$trimmedDir"
 caGeomPath="$caGeomDir/*"
 trimmedGeomPaths=''
-for wofPath in "$geomsDir"/*; do
+for wofPath in "$countyGeomsDir"/*; do
   wofId=$(jq '.id' "$wofPath")
   trimmedGeomPath="$trimmedDir/$wofId.trimmed.geojson"
   goodTypes='["Polygon", "MultiPolygon", "GeometryCollection", "Feature"]'

@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
 
-# TODO:
-#   * A space is appearing between charcaritta & villa crespo
-#   * Names: override defaults with those with accents and fix Versalles
+# FIXME: A space is appearing between charcaritta & villa crespo
 
 workingDir="${BASH_SOURCE%/*}"
 buildDir="${workingDir}/build"
 binDir="${workingDir}/../../bin"
 includesDir="${workingDir}/../../includes"
 
-title="Barrios de Buenos Aires"
 titleSlug='barrios-de-buenos-aires'
-description="The 48 barrios of Buenos Aires, Argentina. The barrios are officially defined by
-             the local government."
-license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
+metaTemplateFile="${workingDir}/meta-template.json"
+wofIdsFile="${workingDir}/wofids"
 
 wofDownloadBin="${binDir}/wof-download"
+generateMetaBin="$binDir/generate-meta"
 downloadConcurrency=6 # copying chrome, max connections per hostname
 
 # dependencies
@@ -53,16 +50,10 @@ outputMapFilename="$titleSlug.$nowSlug.map.svg"
 outputMetaFilename="$titleSlug.$nowSlug.meta.json"
 
 echo "Downloading WOF geojson files"
-wofGeomPaths=$($wofDownloadBin -d "$buildDir" -f "$workingDir/wofIds")
+wofGeomPaths=$($wofDownloadBin -d "$buildDir" -f "$wofIdsFile")
 
 echo "Building meta file"
-metaJson=$($jqBin -n "{title: \"$title\", titleSlug: \"$titleSlug\", description: \"$description\",
-                       generatedAt: $now | todate, license: \"$license\", objects: {}}")
-for wofPath in $wofDefaultGeomPaths; do
-  wofId=$(jq '.id' "$wofPath")
-  wofNameQuoted=$(jq '.properties."wof:name"' "$wofPath")
-  metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
-done
+metaJson=$($generateMetaBin -t "$titleSlug" -d "$buildDir" -f "$metaTemplateFile" "$wofIdsFile")
 
 echo "Merging, projecting, translating, and scaling geojson"
 geojson=$($geojsonMergeBin $wofGeomPaths | $geoprojectBin "d3.geoAzimuthalEqualArea().rotate([58.5033, 34.6156])")

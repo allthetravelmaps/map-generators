@@ -5,13 +5,13 @@ buildDir="${workingDir}/build"
 binDir="${workingDir}/../../bin"
 includesDir="${workingDir}/../../includes"
 
-title="Counties of California"
 titleSlug='counties-of-california'
-description="The 58 counties of California."
-license="Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>"
+metaTemplateFile="${workingDir}/meta-template.json"
+wofIdsFile="${workingDir}/wofids"
 
 geojsonIntersectBin="$binDir/geojson-intersect"
 wofDownloadBin="$binDir/wof-download"
+generateMetaBin="$binDir/generate-meta"
 downloadConcurrency=6 # copying chrome, max connections per hostname
 
 # dependencies
@@ -49,7 +49,7 @@ outputMapFilename="$titleSlug.$nowSlug.map.svg"
 outputMetaFilename="$titleSlug.$nowSlug.meta.json"
 
 echo "Downloading WOF geojson files"
-wofGeomPaths=$($wofDownloadBin -d "$buildDir" -f "$workingDir/wofIds")
+wofGeomPaths=$($wofDownloadBin -d "$buildDir" -f "$wofIdsFile")
 
 echo "Downloading WOF geojson for california"
 caWofId=85688637
@@ -57,13 +57,7 @@ caWofOpts="-A -S uscensus -F display -E terrestrial-zoom-10"
 caGeomPath=$("$wofDownloadBin" -d "$buildDir" -o "$caWofOpts" $caWofId)
 
 echo "Building meta file"
-metaJson=$($jqBin -n "{title: \"$title\", titleSlug: \"$titleSlug\", description: \"$description\",
-                       generatedAt: $now | todate, license: \"$license\", objects: {}}")
-for wofPath in $wofGeomPaths; do
-  wofId=$(jq '.id' "$wofPath")
-  wofNameQuoted=$(jq '.properties."wof:name"' "$wofPath")
-  metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
-done
+metaJson=$($generateMetaBin -t "$titleSlug" -d "$buildDir" -f "$metaTemplateFile" "$wofIdsFile")
 
 echo "Intersecting each county geojson with CA geojson to get a good coastline"
 trimmedGeomPaths=''

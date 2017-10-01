@@ -45,10 +45,10 @@ while getopts 'd:o:f:h' opt; do
     *) error ;;
   esac
 done
+wofId="${!OPTIND}"
 
 [ -z "$outputDir" ] && error "missing required option -- -d <outputDir>"
 
-wofId="${!OPTIND}"
 [[ -z "$wofId" && -z "$wofIdsFile" || ! -z "$wofId" && ! -z "$wofIdsFile" ]] \
    && error "exactly one of '-f <wofIdsFile>' or <wofId> positional parameter required"
 

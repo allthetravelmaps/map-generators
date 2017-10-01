@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+#
+# Build the meta.json file. Expects a template file and a
+# directory full of WOF records, one for each object that
+# should go in the meta file.
+
+jqBin=jq  # https://stedolan.github.io/jq/
+
+error () {
+  [ ! -z "$1" ] && echo "$0: $1" 1>&2
+  usage 1
+}
+
+usage () {
+  echo "Usage: $0 [options] <wofIdsFile>"
+  echo "  Options:"
+  echo "    -h                 Display this help message"
+  echo "    -d <wofDir>        Required. Dir with WOF records for objects"
+  echo "    -f <templateFile>  Required. Template for meta file"
+  echo "    -t <titleSlug>     Required. FS & URL-friendly slug of title"
+  exit "$1"
+}
+
+wofDir=""
+templateFile=""
+titleSlug=""
+while getopts "d:f:t:h" opt; do
+  case $opt in
+    d) wofDir="$OPTARG" ;;
+    f) templateFile="$OPTARG" ;;
+    t) titleSlug="$OPTARG" ;;
+    h) usage 0;;
+    *) error ;;
+  esac
+done
+wofIdsFile="${!OPTIND}"
+
+[ -z "$wofDir" ] && error "option is required -- d"
+[ -z "$templateFile" ] && error "option is required -- f"
+[ -z "$titleSlug" ] && error "option is required -- t"
+[ -z "$wofIdsFile" ] && error "positional paramenter <wofIdsFile> required"
+
+metaJson=$($jqBin ".title_slug = \"$titleSlug\"" "$templateFile")
+
+wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
+for wofId in $wofIds; do
+  lookupFile="$wofDir/$wofId.geojson"
+  # template may come with some names pre-filled in to override the WOF names
+  valueInTemplate=$($jqBin ".objects.\"$wofId\"" "$templateFile")
+  if [ "$valueInTemplate" == "null" ]; then
+    wofNameQuoted=$($jqBin '.properties."wof:name"' "$lookupFile")
+    metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
+  fi
+done
+
+echo $metaJson

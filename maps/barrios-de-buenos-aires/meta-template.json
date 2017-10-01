@@ -1,0 +1,10 @@
+{
+  "title": "Barrios de Buenos Aires",
+  "title_slug": "",
+  "description": "The 48 barrios of Buenos Aires, Argentina. The barrios are officially defined by the local government.",
+  "license": "Data from Who's On First. <a href=\"http://whosonfirst.mapzen.com#License\">License</a>",
+  "objects": {
+    "85765611": "San Nicolás",
+    "421174889": "Versalles"
+  }
+}

@@ -29,13 +29,13 @@ subPixelPercision=0
 geojson=$($geojsonMergeBin "$geomsDir"/* | $geoprojectBin "d3.geoAzimuthalEqualArea().rotate([58.5033, 34.6156])")
 
 # move top left to [0, 0], scale it appropriately
-read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')
+read -d '' xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | jq '.[]')
 geojson=$(echo $geojson \
           | $geoprojectBin "d3.geoIdentity().translate([-$xmin, -$ymin])" \
           | $geoprojectBin "d3.geoIdentity().scale($pixels/Math.max($xmax-$xmin, $ymax-$ymin))")
 
 # get our final dimens
-read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')
+read -d '' xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | jq '.[]')
 
 topojson=$(echo $geojson \
            | $geo2topoBin - \

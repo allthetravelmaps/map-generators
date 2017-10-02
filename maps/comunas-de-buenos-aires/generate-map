@@ -38,11 +38,11 @@ geojson=$(echo $geojson \
 read xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | tr '[,]', ' ')
 
 topojson=$(echo $geojson \
-           | $geo2topoBin "$topojsonLayer=-" \
+           | $geo2topoBin - \
            | $toposimplifyBin -f -p $simplification \
            | $topoquantizeBin $quantization)
 svg=$(echo $topojson \
-      | $topo2geoBin "$topojsonLayer=-" \
+      | $topo2geoBin - \
       | $ndjsonSplitBin 'd.features' \
       | $geo2svgBin -n -w "$xmax" -h "$ymax" -p "$subPixelPercision")
 

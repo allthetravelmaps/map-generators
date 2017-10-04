@@ -22,9 +22,9 @@ geostitchBin=geostitch
 
 # scaling, simplification
 width=960
-simplification=1
-quantization=10000
-subPixelPercision=0
+simplification=5
+quantization=1e6
+subPixelPercision=1
 
 # TODO: probably better to read in wofids again rather than rely on dir being correct
 geojson=$($geojsonMergeBin "$altGeomsDir"/* \

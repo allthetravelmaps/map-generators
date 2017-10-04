@@ -28,26 +28,23 @@ downloads:
 	$(wofDownloadBin) -d ./$(caGeomDir) -o $(caWofOpts) $(caWofId)
 
 .PHONY: meta
-meta: clean-meta downloads
+meta: clean downloads
 	$(generateMeta) -t $(titleSlug) -d ./$(countyGeomsDir) -f ./$(metaTemplateFile) \
 		         ./$(wofIdsFile) > ./$(metaFilename)
 
 .PHONY: map
-map: clean-map downloads
+map: clean downloads
 	./generate-map > ./$(mapFilename)
 
 .PHONY: all
 all: meta map
 
-.PHONY: clean-meta
-clean-meta:
+.PHONY: clean
+clean:
 	rm -f ./$(metaFilename)
-
-.PHONY: clean-map
-clean-map:
 	rm -f ./$(mapFilename)
 
-.PHONY: clean
-clean: clean-meta clean-map
+.PHONY: fullclean
+fullclean: clean
 	rm -rf ./$(buildDir)
 	rm -rf ./$(downloadDir)

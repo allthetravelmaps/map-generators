@@ -24,17 +24,12 @@ geoprojectBin=geoproject
 # scaling, simplification
 pixels=960
 simplification=1
-quantization=1000
+quantization=10000
 subPixelPercision=0
 
 # TODO: probably better to read in wofids again rather than rely on dir being correct
-geojson=$($geojsonMergeBin "$geomsDir"/* | $geoprojectBin "d3.geoAzimuthalEqualArea().rotate([58.5033, 34.6156])")
-
-# move top left to [0, 0], scale it appropriately
-read -d '' xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | jq '.[]')
-geojson=$(echo $geojson \
-          | $geoprojectBin "d3.geoIdentity().translate([-$xmin, -$ymin])" \
-          | $geoprojectBin "d3.geoIdentity().scale($pixels/Math.max($xmax-$xmin, $ymax-$ymin))")
+geojson=$($geojsonMergeBin "$geomsDir"/* \
+          | $geoprojectBin "d3.geoAzimuthalEqualArea().rotate([58.5033, 34.6156]).fitWidth(960, d)")
 
 # get our final dimens
 read -d '' xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | jq '.[]')

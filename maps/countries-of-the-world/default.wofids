@@ -51,7 +51,7 @@
 85633723 # Poland
 85633735 # Portugal
 85633745 # Romania
-85632685 # Russia
+#85632685 # Russia
 85633763 # San Marino
 85633755 # Serbia
 85633769 # Slovakia
@@ -70,7 +70,7 @@
 85632571 # Belize
 85633041 # Canada
 85632487 # Costa Rica
-85632675 # Cuba
+#85632675 # Cuba
 85632503 # Dominica
 85632713 # Dominican Republic
 85632545 # El Salvador
@@ -86,13 +86,13 @@
 85632369 # Saint Lucia
 85632569 # Saint Vincent and the Grenadines
 85632271 # Trinidad and Tobago
-85633793 # USA
+#85633793 # USA
 
 # South America
-85632505 # Argentina
+#85632505 # Argentina
 85632623 # Bolivia
-85633009 # Brazil
-85633057 # Chile
+#85633009 # Brazil
+#85633057 # Chile
 85632519 # Colombia
 85632261 # Ecuador
 85632397 # Guyana
@@ -165,15 +165,15 @@
 85632171 # Bhutan
 85632749 # Brunei
 85632359 # Cambodia
-85632695 # China
-85632469 # India
-85632203 # Indonesia
-85632361 # Iran
+#85632695 # China
+#85632469 # India
+#85632203 # Indonesia
+#85632361 # Iran
 85632191 # Iraq
 85632315 # Israel
-85632429 # Japan
+#85632429 # Japan
 85632425 # Jordan
-85632307 # Kazakhstan
+#85632307 # Kazakhstan
 85632401 # Kuwait
 85632761 # Kyrgyzstan
 85632241 # Laos
@@ -181,12 +181,12 @@
 85632739 # Malaysia
 85632305 # Maldives
 85632439 # Mongolia
-85632181 # Myanmar (Burma)
+#85632181 # Myanmar (Burma)
 85632465 # Nepal
 85632639 # North Korea
 85632207 # Oman
 85632659 # Pakistan
-85632509 # Philippines
+#85632509 # Philippines
 85632299 # Qatar
 85632253 # Saudi Arabia
 85632605 # Singapore
@@ -194,22 +194,22 @@
 85632313 # Sri Lanka
 85632413 # Syria
 85632513 # Tajikistan
-85632293 # Thailand
+#85632293 # Thailand
 85632583 # Timor-Leste
 85632671 # Turkmenistan
 85632573 # United Arab Emirates (UAE)
 85632645 # Uzbekistan
-85632763 # Vietnam
+#85632763 # Vietnam
 85632499 # Yemen
 
-# Cceania
-85632793 # Australia
+# Oceania
+#85632793 # Australia (52MB)
 85632755 # Fiji
 85632709 # Kiribati
 85632663 # Marshall Islands
 85632431 # Micronesia
 85632747 # Nauru
-85633345 # New Zealand
+#85633345 # New Zealand (115MB)
 85632331 # Palau
 85632347 # Papua New Guinea
 85632681 # Samoa

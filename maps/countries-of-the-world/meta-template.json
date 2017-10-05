@@ -1,0 +1,26 @@
+{
+  "title": "Countries of the World",
+  "title_slug": "",
+  "description": "The 193 member states of the UN, the 2 observer states, and the 4 states which hold membership in various specialized agencies, but do not formally hold overserver nor full member status.",
+  "license": "Data from Who's On First. <a href=\"http://whosonfirst.mapzen.com#License\">License</a>",
+  "objects": {
+    "85633345": "New Zealand",
+    "85632793": "Australia",
+    "85632685": "Russia",
+    "85633057": "Chile",
+    "85632203": "Indonesia",
+    "85632695": "China",
+    "85633009": "Brazil",
+    "85632509": "Philippines",
+    "85633793": "USA",
+    "85632763": "Vietnam",
+    "85632675": "Cuba",
+    "85632505": "Argentina",
+    "85632469": "India",
+    "85632429": "Japan",
+    "85632361": "Iran",
+    "85632307": "Kazakhstan",
+    "85632293": "Thailand",
+    "85632181": "Myanmar (Burma)"
+  }
+}

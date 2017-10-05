@@ -27,17 +27,16 @@ subPixelPercision=1
 
 # TODO: probably better to read in wofids again rather than rely on dir being correct
 geojson=$($geojsonMergeBin "$geomsDir"/* \
-  | $geoprojectBin "d3.geoConicEqualArea().parallels([-29.0, -47.0]).rotate([65, 0]).fitWidth($width, d)")
+  | $geoprojectBin "d3.geoConicEqualArea().parallels([-29.0, -47.0]).rotate([65, 0]).fitWidth($width, d)" \
+  | $geo2topoBin - \
+  | $toposimplifyBin -f -p $simplification \
+  | $topoquantizeBin $quantization \
+  | $topo2geoBin - )
 
 # get our final dimens
 read -d '' xmin ymin xmax ymax < <(echo "$geojson" | $geojsonExtentBin | jq '.[]')
 
-topojson=$(echo $geojson \
-  | $geo2topoBin - \
-  | $toposimplifyBin -f -p $simplification \
-  | $topoquantizeBin $quantization)
-svg=$(echo $topojson \
-  | $topo2geoBin - \
+svg=$(echo $geojson \
   | $jqBin -c '.features[]' \
   | $geo2svgBin -n -w "$xmax" -h "$ymax" -p "$subPixelPercision")
 

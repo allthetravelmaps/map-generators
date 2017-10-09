@@ -1,0 +1,64 @@
+[meta]
+title: States of the USA
+title-slug: provincias-de-argentina
+description: The 50 states, and the District of Columbia, of the United States of America.
+license: Data from Who's On First. <a href=http://whosonfirst.mapzen.com#License>License</a>
+
+[meta-objects]
+states
+
+[wof-download]
+states: alt-uscensus-display-terrestrial-zoom-10
+
+[states]
+85688675: Alabama
+85688573: Alaska
+85688719: Arizona
+85688549: Arkansas
+85688637: California
+85688683: South Carolina
+85688773: North Carolina
+85688603: Colorado
+85688741: District of Columbia
+85688629: Connecticut
+85688693: South Dakota
+85688525: North Dakota
+85688611: Delaware
+85688651: Florida
+85688535: Georgia
+85688689: New Hampshire
+85688671: Hawaii
+85688657: Idaho
+85688697: Illinois
+85688709: Indiana
+85688713: Iowa
+85688509: Rhode Island
+85688607: New Jersey
+85688555: Kansas
+85688641: Kentucky
+85688735: Louisiana
+85688769: Maine
+85688501: Maryland
+85688645: Massachusetts
+85688493: New Mexico
+85688599: Michigan
+85688727: Minnesota
+85688579: Mississippi
+85688661: Missouri
+85688617: Montana
+85688563: Nebraska
+85688531: Nevada
+85688543: New York
+85688485: Ohio
+85688585: Oklahoma
+85688513: Oregon
+85688481: Pennsylvania
+85688701: Tennessee
+85688753: Texas
+85688567: Utah
+85688763: Vermont
+85688747: Virginia
+85688589: West Virginia
+85688623: Washington
+85688517: Wisconsin
+85688475: Wyoming

@@ -9,8 +9,9 @@ downloadDir := downloads
 geomsDir := $(downloadDir)/geoms
 
 binDir := ../../bin
-wofDownloadBin := $(binDir)/wof-download
+wofDownload := $(binDir)/wof-download
 generateMeta := $(binDir)/generate-meta
+generateMap := ./generate-map
 
 wofIdsFile := wofids
 metaTemplateFile := meta-template.json
@@ -20,21 +21,19 @@ metaFilename := $(titleSlug).meta.json
 mapFilename := $(titleSlug).map.svg
 
 downloads:
-	$(wofDownloadBin) -d ./$(geomsDir) -f ./$(wofIdsFile)
+	$(wofDownload) -d ./$(geomsDir) -f ./$(wofIdsFile)
 
-.PHONY: meta
-meta: clean downloads
+$(metaFilename): downloads $(generateMeta) $(metaTemplateFile) $(wofIdsFile)
 	$(generateMeta) -t $(titleSlug) -d ./$(geomsDir) -f ./$(metaTemplateFile) \
 		         ./$(wofIdsFile) > ./$(metaFilename)
 
-.PHONY: map
-map: clean downloads
-	./generate-map > ./$(mapFilename)
+$(mapFilename):  downloads $(generateMap)
+	$(generateMap) > ./$(mapFilename)
 
 .PHONY: all
-all: meta map
+all: $(mapFilename) $(metaFilename)
 
-.PHONY: cleanmeta
+.PHONY: clean
 clean:
 	rm -f ./$(metaFilename)
 	rm -f ./$(mapFilename)

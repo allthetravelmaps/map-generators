@@ -7,12 +7,13 @@ SHELL := bash
 
 buildDir := build
 downloadDir := downloads
-countyGeomsDir := $(downloadDir)/county-geoms
+provinceGeomsDir := $(downloadDir)/province-geoms
 caGeomDir := $(downloadDir)/ca-geom
 
 binDir := ../../bin
-wofDownloadBin := $(binDir)/wof-download
+wofDownload := $(binDir)/wof-download
 generateMeta := $(binDir)/generate-meta
+generateMap := ./generate-map
 
 wofIdsFile := wofids
 metaTemplateFile := meta-template.json
@@ -23,20 +24,18 @@ metaFilename := $(titleSlug).meta.json
 mapFilename := $(titleSlug).map.svg
 
 downloads:
-	$(wofDownloadBin) -d ./$(countyGeomsDir) -f ./$(wofIdsFile)
-	$(wofDownloadBin) -d ./$(caGeomDir) $(caWofId)
+	$(wofDownload) -d ./$(provinceGeomsDir) -f ./$(wofIdsFile)
+	$(wofDownload) -d ./$(caGeomDir) $(caWofId)
 
-.PHONY: meta
-meta: clean downloads
-	$(generateMeta) -t $(titleSlug) -d ./$(countyGeomsDir) -f ./$(metaTemplateFile) \
+$(metaFilename): downloads $(generateMeta) $(metaTemplateFile) $(wofIdsFile)
+	$(generateMeta) -t $(titleSlug) -d ./$(provinceGeomsDir) -f ./$(metaTemplateFile) \
 		         ./$(wofIdsFile) > ./$(metaFilename)
 
-.PHONY: map
-map: clean downloads
-	./generate-map > ./$(mapFilename)
+$(mapFilename):  downloads $(generateMap)
+	$(generateMap) > ./$(mapFilename)
 
 .PHONY: all
-all: meta map
+all: $(mapFilename) $(metaFilename)
 
 .PHONY: clean
 clean:

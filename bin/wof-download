@@ -1,65 +1,67 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 #
 # Download one or more WOF records to a given output directory.
 
-# set -x
+import argparse
+import configparser
+import multiprocessing.dummy
+import os
+import urllib.request
 
-# The mapzen python packaging system is a work in progress.
-# Easiest way to get this working on your system as of 2017/09/25:
-#   pip install https://github.com/whosonfirst/py-mapzen-whosonfirst-uri/tarball/master
-#   pip install https://github.com/whosonfirst/py-mapzen-whosonfirst-sources/tarball/master
-wofId2PathBin=wof-id2path
+parser = argparse.ArgumentParser(description='Download WOF records')
+parser.add_argument('-v', '--verbose', action='store_true', help='ouput some info to stdout during execution')
+parser.add_argument('-c', dest='config_file', required=True, type=argparse.FileType('r'), help='wof-download configuration file')
+parser.add_argument('-d', dest='downloads_dir', required=True, help='directory to save files to')
+parser.add_argument('--concurrency', dest='download_concurrency', default=6, type=int)
+parser.add_argument('-w', dest='wof_data_root', default=os.getenv('WOF_DATA_ROOT', 'https://whosonfirst.mapzen.com/data'))
+args = parser.parse_args()
 
-curlBin=curl # https://curl.haxx.se/
-parallelBin=parallel # https://www.gnu.org/software/parallel/
-wofDownloadBin="${BASH_SOURCE[0]}"
+config = configparser.RawConfigParser(allow_no_value=True)
+config.readfp(args.config_file)
 
-wofDataRoot="https://whosonfirst.mapzen.com/data"
-downloadConcurrency=6  # copying chrome
+def id2path(wofid):
+    # From https://github.com/whosonfirst/py-mapzen-whosonfirst-uri/blob/c0450c3faea2/mapzen/whosonfirst/uri/__init__.py#L112
+    # (that module is not yet python3 compatible)
+    tmp = str(wofid)
+    parts = []
+    while len(tmp) > 3:
+        parts.append(tmp[0:3])
+        tmp = tmp[3:]
+    if len(tmp):
+        parts.append(tmp)
 
-error () {
-  [ ! -z "$1" ] && echo "$0: $1" 1>&2
-  usage 1
-}
+    return os.path.join(*parts)
 
-usage() {
-  echo "Usage: $0 [options] [wofId]"
-  echo "  Options:"
-  echo "    -h               Display this help message"
-  echo "    -d <outputDir>   Required. Directory to save files to"
-  echo "    -o <wofOpts>     String of WOF opts to use with wof-id2path. Ex:"
-  echo "                     '-s uscensus -f display -e terrestrial-zoom-10'"
-  echo "    -f <wofIdsFile>  File full of WOF IDs to download"
-  exit "$1"
-}
+def id2filename(wofid, alt):
+    if alt:
+        return '{}-{}.geojson'.format(wofid, alt)
+    return '{}.geojson'.format(wofid)
 
-wofOpts=""
-wofIdsFile=""
-outputDir=""
-while getopts 'd:o:f:h' opt; do
-  case $opt in
-    d) outputDir="$OPTARG" ;;
-    o) wofOpts="$OPTARG" ;;
-    f) wofIdsFile="$OPTARG" ;;
-    h) usage 0 ;;
-    *) error ;;
-  esac
-done
-wofId="${!OPTIND}"
+def do_download(pair):
+    retrieve_from, save_to = pair
+    if args.verbose:
+        print('{} -> {}'.format(retrieve_from, save_to))
+    urllib.request.urlretrieve(retrieve_from, save_to)
 
-[ -z "$outputDir" ] && error "missing required option -- -d <outputDir>"
+def make_directories(directories):
+    for directory in directories:
+        if not os.path.isdir(directory):
+            os.makedirs(directory)
 
-[[ -z "$wofId" && -z "$wofIdsFile" || ! -z "$wofId" && ! -z "$wofIdsFile" ]] \
-   && error "exactly one of '-f <wofIdsFile>' or <wofId> positional parameter required"
+def compile_directories_and_download_tasks(config):
+    directories = []
+    download_tasks = []
+    for section, alt in config.items('wof-download'):
+        section_dir = os.path.join(args.downloads_dir, section)
+        directories.append(section_dir)
 
-if [ ! -z "$wofId" ]; then
-  downloadTo="$outputDir/$("$wofId2PathBin" $wofOpts "$wofId")"
-  downloadFrom=$("$wofId2PathBin" -a --abspath-root="$wofDataRoot" $wofOpts "$wofId")
-  mkdir -p "$outputDir"
-  $curlBin -s -S -o "$downloadTo" "$downloadFrom"
-fi
+        for wofid, name in config.items(section):
+            retrieve_from = os.path.join(args.wof_data_root, id2path(wofid), id2filename(wofid, alt))
+            save_to = os.path.join(section_dir, '{}.geojson'.format(wofid))
+            download_tasks.append((retrieve_from, save_to))
 
-if [ ! -z "$wofIdsFile" ]; then
-  wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
-  $parallelBin -j "$downloadConcurrency" "$wofDownloadBin" -d "$outputDir" "${wofOpts:+-o '$wofOpts'}" ::: $wofIds
-fi
+    return directories, download_tasks
+
+directories, download_tasks = compile_directories_and_download_tasks(config)
+make_directories(directories)
+multiprocessing.dummy.Pool(args.download_concurrency).map(do_download, download_tasks)

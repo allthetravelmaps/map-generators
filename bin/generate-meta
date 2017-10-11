@@ -1,56 +1,43 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 #
-# Build the meta.json file. Expects a template file and a
-# directory full of WOF records, one for each object that
-# should go in the meta file.
+# Build the meta file, output result to stdout
 
-jqBin=jq  # https://stedolan.github.io/jq/
+import argparse
+import configparser
+import json
+import os
 
-error () {
-  [ ! -z "$1" ] && echo "$0: $1" 1>&2
-  usage 1
-}
+parser = argparse.ArgumentParser(description='Build the meta file')
+parser.add_argument('-c', dest='config_file', required=True, type=argparse.FileType('r'), help='generate-meta configuration file')
+parser.add_argument('-d', dest='downloads_dir', help='directory to look for saved geojson in')
+args = parser.parse_args()
 
-usage () {
-  echo "Usage: $0 [options] <wofIdsFile>"
-  echo "  Options:"
-  echo "    -h                 Display this help message"
-  echo "    -d <wofDir>        Required. Dir with WOF records for objects"
-  echo "    -f <templateFile>  Required. Template for meta file"
-  echo "    -t <titleSlug>     Required. FS & URL-friendly slug of title"
-  exit "$1"
-}
+config = configparser.RawConfigParser(allow_no_value=True)
+config.readfp(args.config_file)
 
-wofDir=""
-templateFile=""
-titleSlug=""
-while getopts "d:f:t:h" opt; do
-  case $opt in
-    d) wofDir="$OPTARG" ;;
-    f) templateFile="$OPTARG" ;;
-    t) titleSlug="$OPTARG" ;;
-    h) usage 0;;
-    *) error ;;
-  esac
-done
-wofIdsFile="${!OPTIND}"
+def lookup_name_in_wof_geojson(section, wofid):
+    if not args.downloads_dir:
+        raise Exception('The [-d DOWNLOADS_DIR] option is required in this case since not all wofids have names in the config file')
+    path = os.path.join(args.downloads_dir, section, '{}.geojson'.format(wofid))
+    with open(path, 'r') as fh:
+        geojson = json.loads(fh.read())
+    return geojson['properties']['wof:name']
 
-[ -z "$wofDir" ] && error "option is required -- d"
-[ -z "$templateFile" ] && error "option is required -- f"
-[ -z "$titleSlug" ] && error "option is required -- t"
-[ -z "$wofIdsFile" ] && error "positional paramenter <wofIdsFile> required"
+def build_ds(config):
+    ds = {
+        'title': config.get('meta', 'title'),
+        'title_slug': config.get('meta', 'title-slug'),
+        'description': config.get('meta', 'description'),
+        'license': config.get('meta', 'license'),
+        'objects': {},
+    }
+    for section, _ in config.items('meta-objects'):
+        for wofid, name in config.items(section):
+            if not name:
+                name = lookup_name_in_wof_geojson(section, wofid)
+            ds['objects'][wofid] = name
 
-metaJson=$($jqBin ".title_slug = \"$titleSlug\"" "$templateFile")
+    return ds
 
-wofIds=$(cat "$wofIdsFile" |  sed -e 's/#.*$//' -e '/^$/d')
-for wofId in $wofIds; do
-  lookupFile="$wofDir/$wofId.geojson"
-  # template may come with some names pre-filled in to override the WOF names
-  valueInTemplate=$($jqBin ".objects.\"$wofId\"" "$templateFile")
-  if [ "$valueInTemplate" == "null" ]; then
-    wofNameQuoted=$($jqBin '.properties."wof:name"' "$lookupFile")
-    metaJson=$(echo $metaJson | $jqBin ".objects += {\"$wofId\": $wofNameQuoted}")
-  fi
-done
-
-echo $metaJson
+ds = build_ds(config)
+print(json.dumps(ds, ensure_ascii=False))

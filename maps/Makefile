@@ -1,5 +1,5 @@
-PROJECT_ROOT := ..
-include make-preamble.mk
+INCLUDE := ../makefile-include
+include $(INCLUDE)/preamble.mk
 
 # https://stackoverflow.com/a/17845120/103909
 targets:= downloads meta.json map.svg all clean fullclean

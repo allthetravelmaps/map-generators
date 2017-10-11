@@ -1,10 +1,10 @@
-PROJECT_ROOT := ../..
-include ../make-preamble.mk
+INCLUDE := ../../makefile-include
+include $(INCLUDE)/preamble.mk
 
 # default rules, omit and override as needed
-include ../make-downloads.mk
-include ../make-meta.mk
-include ../make-map.mk
-include ../make-all.mk
-include ../make-clean.mk
-include ../make-fullclean.mk
+include $(INCLUDE)/downloads.mk
+include $(INCLUDE)/meta.mk
+include $(INCLUDE)/map.mk
+include $(INCLUDE)/all.mk
+include $(INCLUDE)/clean.mk
+include $(INCLUDE)/fullclean.mk

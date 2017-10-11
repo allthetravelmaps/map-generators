@@ -1,12 +1,8 @@
-MAKEFLAGS += --warn-undefined-variables
-SHELL := bash
-.SHELLFLAGS := -eu -o pipefail -c
-.DEFAULT_GOAL := all
-.DELETE_ON_ERROR:
-.SUFFIXES:
+PROJECT_ROOT := ..
+include make-preamble.mk
 
 # https://stackoverflow.com/a/17845120/103909
-targets:= all clean fullclean
+targets:= downloads meta.json map.svg all clean fullclean
 subdirs := $(wildcard */.)
 MAKECMDGOALS ?= all  # avoids an undefined variable warning
 

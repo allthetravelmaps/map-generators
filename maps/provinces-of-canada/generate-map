@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 workingDir="${BASH_SOURCE%/*}"
-countyGeomsDir="$workingDir/downloads/county-geoms"
-caGeomDir="$workingDir/downloads/ca-geom"
+countyGeomsDir="$workingDir/downloads/provinces"
+caGeomDir="$workingDir/downloads/canada"
 trimmedDir="$workingDir/build/trimmed-geoms"
 
 binDir="${workingDir}/../../bin"

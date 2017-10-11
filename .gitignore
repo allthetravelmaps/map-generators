@@ -1,5 +1,5 @@
 node_modules
 build
 downloads
-*.meta.json
-*.map.svg
+meta.json
+map.svg

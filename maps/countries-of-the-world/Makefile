@@ -5,36 +5,28 @@ SHELL := bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 
-downloadDir := downloads
-geomsDir := $(downloadDir)/geoms
+downloadsDir := downloads
+configFile := config
 
 binDir := ../../bin
 wofDownload := $(binDir)/wof-download
 generateMeta := $(binDir)/generate-meta
 generateMap := ./generate-map
 
-defaultWofIdsFile := default.wofids
-altWofIdsFile := alt.wofids
-metaTemplateFile := meta-template.json
-altWofOpts := "-A -S naturalearth"
+metaFilename := meta.json
+mapFilename := map.svg
 
-titleSlug := countries-of-the-world
-metaFilename := $(titleSlug).meta.json
-mapFilename := $(titleSlug).map.svg
+downloads: $(configFile)
+	$(wofDownload) -d ./$(downloadsDir) -c ./$(configFile)
 
-downloads:
-	$(wofDownload) -d ./$(geomsDir) -f ./$(defaultWofIdsFile)
-	$(wofDownload) -d ./$(geomsDir) -o $(altWofOpts) -f ./$(altWofIdsFile)
-
-$(metaFilename): downloads $(generateMeta) $(metaTemplateFile) $(wofIdsFile)
-	$(generateMeta) -t $(titleSlug) -d ./$(geomsDir) -f ./$(metaTemplateFile) \
-		         ./$(defaultWofIdsFile) > ./$(metaFilename)
+$(metaFilename): downloads $(generateMeta) $(configFile)
+	$(generateMeta) -d ./$(downloadsDir) -c ./$(configFile) > ./$(metaFilename)
 
 $(mapFilename):  downloads $(generateMap)
 	$(generateMap) > ./$(mapFilename)
 
 .PHONY: all
-all: $(mapFilename) $(metaFilename)
+all: $(metaFilename) $(mapFilename)
 
 .PHONY: clean
 clean:
@@ -43,4 +35,4 @@ clean:
 
 .PHONY: fullclean
 fullclean: clean
-	rm -rf ./$(downloadDir)
+	rm -rf ./$(downloadsDir)

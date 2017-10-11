@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 workingDir="${BASH_SOURCE%/*}"
-geomsDir="$workingDir/downloads/geoms"
+geomsDir="$workingDir/downloads/provincias"
 
 # dependencies
 geojsonMergeBin=geojson-merge    # https://github.com/mapbox/geojson-merge

@@ -6,37 +6,28 @@ SHELL := bash
 .SUFFIXES:
 
 buildDir := build
-downloadDir := downloads
-countyGeomsDir := $(downloadDir)/county-geoms
-caGeomDir := $(downloadDir)/ca-geom
+downloadsDir := downloads
+configFile := config
 
 binDir := ../../bin
 wofDownload := $(binDir)/wof-download
 generateMeta := $(binDir)/generate-meta
 generateMap := ./generate-map
 
-wofIdsFile := wofids
-metaTemplateFile := meta-template.json
-caWofId := 85688637
-caWofOpts := "-A -S uscensus -F display -E terrestrial-zoom-10"
+metaFilename := meta.json
+mapFilename := map.svg
 
-titleSlug := counties-of-california
-metaFilename := $(titleSlug).meta.json
-mapFilename := $(titleSlug).map.svg
+downloads: $(configFile)
+	$(wofDownload) -d ./$(downloadsDir) -c ./$(configFile)
 
-downloads:
-	$(wofDownload) -d ./$(countyGeomsDir) -f ./$(wofIdsFile)
-	$(wofDownload) -d ./$(caGeomDir) -o $(caWofOpts) $(caWofId)
-
-$(metaFilename): downloads $(generateMeta) $(metaTemplateFile) $(wofIdsFile)
-	$(generateMeta) -t $(titleSlug) -d ./$(countyGeomsDir) -f ./$(metaTemplateFile) \
-		         ./$(wofIdsFile) > ./$(metaFilename)
+$(metaFilename): downloads $(generateMeta) $(configFile)
+	$(generateMeta) -d ./$(downloadsDir) -c ./$(configFile) > ./$(metaFilename)
 
 $(mapFilename):  downloads $(generateMap)
 	$(generateMap) > ./$(mapFilename)
 
 .PHONY: all
-all: $(mapFilename) $(metaFilename)
+all: $(metaFilename) $(mapFilename)
 
 .PHONY: clean
 clean:
@@ -46,4 +37,4 @@ clean:
 .PHONY: fullclean
 fullclean: clean
 	rm -rf ./$(buildDir)
-	rm -rf ./$(downloadDir)
+	rm -rf ./$(downloadsDir)

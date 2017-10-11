@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 workingDir="${BASH_SOURCE%/*}"
-geomsDir="$workingDir/downloads/geoms"
+geomsDir1="$workingDir/downloads/countries-wof-default"
+geomsDir2="$workingDir/downloads/countries-wof-naturalearth-alt"
 
 # dependencies
 geojsonMergeBin=geojson-merge    # https://github.com/mapbox/geojson-merge
@@ -27,7 +28,7 @@ quantization=1e6
 subPixelPercision=1
 
 # TODO: probably better to read in wofids again rather than rely on dir being correct
-geojson=$($geojsonMergeBin "$geomsDir"/* \
+geojson=$($geojsonMergeBin "$geomsDir1"/* "$geomsDir2"/* \
   | $geostitchBin \
   | $geoprojectBin "d3.geoNaturalEarth1().fitWidth($width, d)" \
   | $geo2topoBin - \

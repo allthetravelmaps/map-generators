@@ -3,7 +3,7 @@
 # FIXME: A space is appearing between charcaritta & villa crespo
 
 workingDir="${BASH_SOURCE%/*}"
-geomsDir="$workingDir/downloads/geoms"
+geomsDir="$workingDir/downloads/barrios"
 
 # dependencies
 geojsonMergeBin=geojson-merge    # https://github.com/mapbox/geojson-merge

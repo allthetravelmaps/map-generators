@@ -6,7 +6,7 @@ license: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#Licens
 
 [meta-objects]
 countries-wof-default
-countires-wof-naturalearth-alt
+countries-wof-naturalearth-alt
 
 [wof-download]
 countries-wof-default

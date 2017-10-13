@@ -9,18 +9,21 @@ import os
 import urllib.request
 
 parser = argparse.ArgumentParser(description='Download WOF records')
-parser.add_argument('-v', '--verbose', action='store_true', help='ouput some info to stdout during execution')
-parser.add_argument('-c', dest='config_file', required=True, type=argparse.FileType('r'), help='wof-download configuration file')
+parser.add_argument('-v', '--verbose', action='store_true',
+                    help='ouput some info to stdout during execution')
+parser.add_argument('-c', dest='config_file', required=True, type=argparse.FileType('r'),
+                    help='wof-download configuration file')
 parser.add_argument('-d', dest='downloads_dir', required=True, help='directory to save files to')
 parser.add_argument('--concurrency', dest='download_concurrency', default=6, type=int)
-parser.add_argument('-w', dest='wof_data_root', default=os.getenv('WOF_DATA_ROOT', 'https://whosonfirst.mapzen.com/data'))
+parser.add_argument('-w', dest='wof_data_root', default=os.getenv('WOF_DATA_ROOT',
+                    'https://whosonfirst.mapzen.com/data'))
 args = parser.parse_args()
 
 config = configparser.RawConfigParser(allow_no_value=True)
 config.readfp(args.config_file)
 
 def id2path(wofid):
-    # From https://github.com/whosonfirst/py-mapzen-whosonfirst-uri/blob/c0450c3faea2/mapzen/whosonfirst/uri/__init__.py#L112
+    # From https://git.io/vdPzX
     # (that module is not yet python3 compatible)
     tmp = str(wofid)
     parts = []
@@ -56,9 +59,9 @@ def compile_directories_and_download_tasks(config):
         directories.append(section_dir)
 
         for wofid, name in config.items(section):
-            retrieve_from = os.path.join(args.wof_data_root, id2path(wofid), id2filename(wofid, alt))
+            get_from = os.path.join(args.wof_data_root, id2path(wofid), id2filename(wofid, alt))
             save_to = os.path.join(section_dir, '{}.geojson'.format(wofid))
-            download_tasks.append((retrieve_from, save_to))
+            download_tasks.append((get_from, save_to))
 
     return directories, download_tasks
 

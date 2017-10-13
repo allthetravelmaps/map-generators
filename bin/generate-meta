@@ -8,7 +8,8 @@ import json
 import os
 
 parser = argparse.ArgumentParser(description='Build the meta file')
-parser.add_argument('-c', dest='config_file', required=True, type=argparse.FileType('r'), help='generate-meta configuration file')
+parser.add_argument('-c', dest='config_file', required=True, type=argparse.FileType('r'),
+                    help='generate-meta configuration file')
 parser.add_argument('-d', dest='downloads_dir', help='directory to look for saved geojson in')
 args = parser.parse_args()
 
@@ -17,7 +18,8 @@ config.readfp(args.config_file)
 
 def lookup_name_in_wof_geojson(section, wofid):
     if not args.downloads_dir:
-        raise Exception('The [-d DOWNLOADS_DIR] option is required in this case since not all wofids have names in the config file')
+        raise Exception('The [-d DOWNLOADS_DIR] option is required in this case since not all'
+                        ' wofids have names in the config file')
     path = os.path.join(args.downloads_dir, section, '{}.geojson'.format(wofid))
     with open(path, 'r') as fh:
         geojson = json.loads(fh.read())

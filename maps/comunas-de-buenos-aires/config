@@ -2,7 +2,7 @@
 title: Comunas de Buenos Aires
 title-slug: comunas-de-buenos-aires
 description: The 15 Comunas of Buenos Aires, Argentina. The Comunas are administrative districts composed of one or more barrios.
-license: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
+attribution: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
 
 [meta-objects]
 comunas

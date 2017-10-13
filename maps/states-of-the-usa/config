@@ -2,7 +2,7 @@
 title: States of the USA
 title-slug: provincias-de-argentina
 description: The 50 states, and the District of Columbia, of the United States of America.
-license: Data from Who's On First. <a href=http://whosonfirst.mapzen.com#License>License</a>
+attribution: Data from Who's On First. <a href=http://whosonfirst.mapzen.com#License>License</a>
 
 [meta-objects]
 states

@@ -2,7 +2,7 @@
 title: Countries of the World
 title-slug: countries-of-the-world
 description: The 193 member states of the UN, the 2 observer states, and the 4 states which hold membership in various specialized agencies, but do not formally hold overserver nor full member status.
-license: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
+attribution: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
 
 [meta-objects]
 countries-wof-default

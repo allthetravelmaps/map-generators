@@ -2,7 +2,7 @@
 title: Counties of California
 title-slug: counties-of-california
 description: The 58 counties of California, USA.
-license: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
+attribution: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
 
 [meta-objects]
 counties

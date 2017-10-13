@@ -2,7 +2,7 @@
 title: Provinces of Canada
 title-slug: provinces-of-canada
 description: The 10 provinces and 3 territories of Canada.
-license: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
+attribution: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
 
 [meta-objects]
 provinces

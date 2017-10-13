@@ -2,7 +2,7 @@
 title: Barrios de Buenos Aires
 title-slug: barrios-de-buenos-aires
 description: The 48 barrios of Buenos Aires, Argentina. The barrios are officially defined by the local government.
-license: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
+attribution: Data from Who's On First. <a href="http://whosonfirst.mapzen.com#License">License</a>
 
 [meta-objects]
 barrios

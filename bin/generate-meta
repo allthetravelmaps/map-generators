@@ -28,7 +28,7 @@ def build_ds(config):
         'title': config.get('meta', 'title'),
         'title_slug': config.get('meta', 'title-slug'),
         'description': config.get('meta', 'description'),
-        'license': config.get('meta', 'license'),
+        'attribution': config.get('meta', 'attribution'),
         'objects': {},
     }
     for section, _ in config.items('meta-objects'):

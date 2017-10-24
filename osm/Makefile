@@ -6,23 +6,22 @@ SHELL := bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 
-downloads/provinces-of-canada/3908674.geojson downloads/provinces-of-canada/3911864.geojson:
+layers := provinces-of-canada provinces-of-argentina
+
+provinces-of-canada-osmids := 3908674 3911864
+provinces-of-argentina-osmids := 30826684 16321674
+
+downloads/%/%.geojson:
 	mkdir -p $(dir $@)
 	get-overpass -m $(notdir $(basename $@)) > $@
 
-downloads/provinces-of-argentina/30826684.geojson downloads/provinces-of-argentina/16321674.geojson:
-	mkdir -p $(dir $@)
-	get-overpass -m $(notdir $(basename $@)) > $@
-
-build/provinces-of-canada.mbtiles: downloads/provinces-of-canada/3908674.geojson downloads/provinces-of-canada/3911864.geojson
+.SECONDEXPANSION:
+# build/provinces-of-canada.mbtiles: downloads/provinces-of-canada/$(provinces-of-canada-osmids).geojson
+build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geojson, $$($$(basename $$(@F))-osmids)))
 	mkdir -p build
-	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l provinces-of-canada
+	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))
 
-build/provinces-of-argentina.mbtiles: downloads/provinces-of-argentina/30826684.geojson downloads/provinces-of-argentina/16321674.geojson
-	mkdir -p build
-	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l provinces-of-argentina
-
-osm.mbtiles: build/provinces-of-argentina.mbtiles build/provinces-of-canada.mbtiles
+osm.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(layers)))
 	tile-join -f -o $@ -pk -n "OSM TravelMapAddict" $^
 
 .PHONY: all

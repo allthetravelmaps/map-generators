@@ -6,20 +6,17 @@ SHELL := bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 
-# All makefiles in the make/ directory should:
-#   * add their slug to $layers
-#   * declare a variable of the form {slug}-osmids
+layers := \
+	provinces-of-argentina \
+	provinces-of-canada
 
-layers := 
-include make/*.make
-
-downloads/%/%.geojson:
+downloads/%.geojson:
 	mkdir -p $(dir $@)
 	get-overpass -m $(notdir $(basename $@)) > $@
 
 .SECONDEXPANSION:
-# build/provinces-of-canada.mbtiles: downloads/provinces-of-canada/$(provinces-of-canada-osmids).geojson
-build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geojson, $$($$(basename $$(@F))-osmids)))
+# build/provinces-of-canada.mbtiles: downloads/provinces-of-canada/$(cat-and-remove-comments osmids/provinces-of-canada).geojson
+build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geojson, $$(shell sed s/\#.*$$$$// osmids/$$(basename $$(@F)))))
 	mkdir -p build
 	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))
 

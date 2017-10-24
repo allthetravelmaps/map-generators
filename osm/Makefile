@@ -5,10 +5,7 @@ SHELL := bash
 .DEFAULT_GOAL := all
 .DELETE_ON_ERROR:
 .SUFFIXES:
-
-layers := \
-	provinces-of-argentina \
-	provinces-of-canada
+.SECONDARY:
 
 downloads/%.geojson:
 	mkdir -p $(dir $@)
@@ -16,11 +13,12 @@ downloads/%.geojson:
 
 .SECONDEXPANSION:
 # build/provinces-of-canada.mbtiles: downloads/provinces-of-canada/$(cat-and-remove-comments osmids/provinces-of-canada).geojson
-build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geojson, $$(shell sed s/\#.*$$$$// osmids/$$(basename $$(@F)))))
+build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geojson, $$(shell sed s/\#.*$$$$// osmids/$$(basename $$(@F))))) \
+	               osmids/$$(basename $$(@F))
 	mkdir -p build
 	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))
 
-osm.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(layers)))
+osm.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(notdir $(wildcard osmids/*))))
 	tile-join -f -o $@ -pk -n "OSM TravelMapAddict" $^
 
 .PHONY: all
@@ -33,6 +31,7 @@ serve: osm.mbtiles
 .PHONY: clean
 clean:
 	rm -rf build
+	rm -f osm.mbtiles
 
 .PHONY: fullclean
 fullclean: clean

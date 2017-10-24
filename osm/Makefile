@@ -6,10 +6,12 @@ SHELL := bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 
-layers := provinces-of-canada provinces-of-argentina
+# All makefiles in the make/ directory should:
+#   * add their slug to $layers
+#   * declare a variable of the form {slug}-osmids
 
-provinces-of-canada-osmids := 3908674 3911864
-provinces-of-argentina-osmids := 30826684 16321674
+layers := 
+include make/*.make
 
 downloads/%/%.geojson:
 	mkdir -p $(dir $@)

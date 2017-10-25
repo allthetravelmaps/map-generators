@@ -26,7 +26,7 @@ all: osm.mbtiles
 
 .PHONY: serve
 serve: osm.mbtiles
-	docker run -it -v $(CURDIR):/data:ro -p 8080:80 klokantech/tileserver-gl-light $<
+	tileserver-gl-light $<
 
 .PHONY: clean
 clean:

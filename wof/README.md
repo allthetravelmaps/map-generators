@@ -2,7 +2,7 @@
 
 ## Note: this is no longer maintained.
 
-Map generators that use Who's On First as a data source.
+Map generators that use [Who's On First](https://whosonfirst.mapzen.com/) as a data source.
 
 ## Quickstart
 

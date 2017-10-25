@@ -1,0 +1,219 @@
+# https://en.wikipedia.org/wiki/List_of_sovereign_states
+# https://www.countries-ofthe-world.com/
+
+# UN Observer Status
+17038144 # Palestine
+369894 # Vatican City (Holy See)
+
+# UN specialized agency membership only
+21842334 # Cook Islands
+20889904 # Kosovo
+15585564 # Niue
+4492204 # Taiwan
+
+# UN Full Members follow
+
+# Europe
+532924 # Albania
+94074 # Andorra
+3640664 # Armenia
+162394 # Austria
+3641104 # Azerbaijan
+590654 # Belarus
+524114 # Belgium
+25281424 # Bosnia and Herzegovina
+1863824 # Bulgaria
+2148854 # Croatia
+3077874 # Cyprus
+516844 # Czech Republic
+500464 # Denmark
+795104 # Estonia
+542244 # Finland
+22021624 # France
+286994 # Georgia
+514774 # Germany
+1923074 # Greece
+213354 # Hungary
+2991334 # Iceland
+622734 # Ireland
+3653314 # Italy
+725944 # Latvia
+11559554 # Liechtenstein
+725964 # Lithuania
+21713474 # Luxembourg
+532934 # Macedonia
+3653074 # Malta
+589744 # Moldova
+369904 # Monaco (also 11240394 -- wtf?)
+532964 # Montenegro
+23233094 # Netherlands
+29786504 # Norway
+497154 # Poland
+2954804 # Portugal
+906894 # Romania
+601894 # Russia
+546244 # San Marino
+17413114 # Serbia
+142964 # Slovakia
+2186574 # Slovenia
+13113414 # Spain
+528224 # Sweden
+517014 # Switzerland
+1747374 # Turkey
+601994 # Ukraine
+621494 # United Kingdom (UK)
+
+# North America
+5369004 # Antigua and Barbuda
+5475114 # Barbados
+5474694 # The Bahamas
+2878274 # Belize
+14281254 # Canada
+2876674 # Costa Rica
+3078334 # Cuba
+3078234 # Dominica
+3078284 # Dominican Republic
+15206124 # El Salvador
+5507274 # Grenada
+15214634 # Guatemala
+3078294 # Hati
+2876664 # Nicaragua
+2876704 # Honduras
+5550174 # Jamaica
+1146864 # Mexico
+2876684 # Panama
+5368994 # Saint Kitts and Nevis
+5507284 # Saint Lucia
+5507254 # Saint Vincent and the Grenadines
+5557174 # Trinidad and Tobago
+1488384 # USA
+
+# South America
+2863934 # Argentina
+2526454 # Bolivia
+594704 # Brazil
+1674544 # Chile
+1200274 # Colombia
+1080894 # Ecuador
+2870834 # Guyana
+2870774 # Paraguay
+2882474 # Peru
+2870824 # Suriname
+2870724 # Uruguay
+2726444 # Venezuela
+
+# Africa
+1927564 # Algeria
+1952674 # Angola
+1927844 # Benin
+18893394 # Botswana
+1927834 # Burkina Faso
+1952694 # Burundi
+1928304 # Cameroon
+5357744 # Cape Verde
+1927904 # Central African Republic (CAR)
+23613044 # Chad
+5357904 # Comoros
+1927954 # Democratic Republic of the Congo
+1927944 # Republic of the Congo
+1927794 # Cote d'Ivoire
+1928014 # Djibouti
+14739474 # Egypt
+1927914 # Equatorial Guinea
+2969614 # Eritrea
+1928004 # Ethiopia
+1927934 # Gabon
+1927744 # Gambia
+1927814 # Ghana
+1927784 # Guinea
+1927764 # Guinea-Bissau
+1927984 # Kenya
+20932344 # Lesotho
+1927804 # Liberia
+1927584 # Libya
+4473254 # Madagascar
+1952904 # Malawi
+1927854 # Mali
+1927634 # Mauritania
+5358284 # Mauritius
+36304394 # Morocco
+1952734 # Mozambique
+1952664 # Namibia
+1927864 # Niger
+1927874 # Nigeria
+1714964 # Rwanda
+5358804 # Sao Tome and Principe
+1927754 # Senegal
+5367654 # Seychelles
+1927774 # Sierra Leone
+1927994 # Somalia
+875654 # South Africa (also 1252792)
+16566784 # South Sudan
+1927894 # Sudan
+882104 # Swaziland
+1952704 # Tanzania
+1927824 # Togo
+1927574 # Tunisia
+1927964 # Uganda
+1952714 # Zambia
+1952724 # Zimbabwe
+
+# Asia
+3034274 # Afghanistan
+3787344 # Bahrain
+1846404 # Bangladesh
+1846294 # Bhutan
+21031204 # Brunei
+498984 # Cambodia
+2700564 # China
+3047164 # India
+3047514 # Indonesia
+3049384 # Iran
+3049344 # Iraq
+14739464 # Israel
+3823134 # Japan
+1848184 # Jordan
+2146654 # Kazakhstan
+3050994 # Kuwait
+1780094 # Kyrgyzstan
+499034 # Laos
+1848434 # Lebanon
+21081214 # Malaysia
+5367734 # Maldives
+1610334 # Mongolia
+503714 # Myanmar (Burma)
+1846334 # Nepal
+1927344 # North Korea
+3051384 # Oman
+3075734 # Pakistan
+4431744 # Philippines
+3050954 # Qatar
+3075844 # Saudi Arabia
+5367804 # Singapore
+3077564 # South Korea
+5368074 # Sri Lanka
+1848404 # Syria
+2146264 # Tajikistan
+20677314 # Thailand
+3051424 # Timor-Leste
+2230264 # Turkmenistan
+3077634 # United Arab Emirates (UAE)
+1962404 # Uzbekistan
+499154 # Vietnam
+3050924 # Yemen
+
+# Oceania
+805004 # Australia
+5717474 # Fiji
+5711784 # Kiribati
+5717714 # Marshall Islands
+5718024 # Micronesia
+5718044 # Nauru
+5567064 # New Zealand
+5718054 # Palau
+3078664 # Papua New Guinea
+18726734 # Samoa
+18574364 # Solomon Islands
+21866654 # Tonga
+21772664 # Tuvalu
+21772464 # Vanuatu

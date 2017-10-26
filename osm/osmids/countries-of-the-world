@@ -27,9 +27,22 @@
 3077874 # Cyprus
 516844 # Czech Republic
 500464 # Denmark
+529394 # Denmark - Faroe Islands
+21840734 # Denmark - Greenland
 795104 # Estonia
 542244 # Finland
+# Finland dependencies included in country relation:
+#   Aland Islands
 22021624 # France
+# France dependencies included in country relation:
+#   Saint Barthélemy
+#   Saint Martin
+#   Saint Pierre and Miquelon
+#   Wallis and Futuna
+#   French Polynesia
+#   New Caledonia
+#   Clipperton Island
+#   French Southern and Antarctic Lands (Antartic part excluded)
 286994 # Georgia
 514774 # Germany
 1923074 # Greece
@@ -47,7 +60,15 @@
 369904 # Monaco (also 11240394 -- wtf?)
 532964 # Montenegro
 23233094 # Netherlands
+# Netherlands dependencies included in country relation:
+#   Aruba
+#   Curacao
+#   Sint Maarten
 29786504 # Norway
+# Norway dependencies included in country relation:
+#   Bouvet Island
+#   Svalbard
+# Norway dependencies excluded as part of Antartca: Peter Island
 497154 # Poland
 2954804 # Portugal
 906894 # Romania
@@ -61,7 +82,23 @@
 517014 # Switzerland
 1747374 # Turkey
 601994 # Ukraine
-621494 # United Kingdom (UK)
+621494 # United Kingdom
+21771614 # UK - Anguilla
+19932084 # UK - Bermuda
+19938674 # UK - British Indian Ocean Territory
+2854544 # UK - British Virgin Islands
+21853664 # UK - Cayman Islands
+21853744 # UK - Falkland Islands
+12787364 # UK - Gibraltar
+5372574 # UK - Montserrat
+21853754 # UK - Pitcairn Islands
+19642724 # UK - Saint Helena, Ascension and Tristan da Cunha
+5474794 # UK - Turks and Caicos Islands
+19836284 # UK - South Georgia and the South Sandwich Islands
+32637284 # UK - Akrotiri and Dhekelia
+2700094 # UK - Guernsey
+3679884 # UK - Jersey
+622694 # UK - Isle of Man
 
 # North America
 5369004 # Antigua and Barbuda
@@ -86,7 +123,22 @@
 5507284 # Saint Lucia
 5507254 # Saint Vincent and the Grenadines
 5557174 # Trinidad and Tobago
-1488384 # USA
+1488384 # United States
+# United States dependencies included in country relation:
+#   Gaum
+#   Northern Mariana Islands
+#   Puerto Rico
+#   US Virgin Islands
+#   American Samoa
+#   Midway Atoll
+#   Wake Island
+#   Baker Island
+#   Howland Island
+#   Jarvis Island
+#   Johnston Atoll
+#   Kingman Reef
+#   Navassa Island
+#   Palmyra Atoll
 
 # South America
 2863934 # Argentina
@@ -137,6 +189,7 @@
 1927634 # Mauritania
 5358284 # Mauritius
 36304394 # Morocco
+54419684 # Morocco - Western Sarah / Sahrawi Arab Democratic Republic
 1952734 # Mozambique
 1952664 # Namibia
 1927864 # Niger
@@ -166,6 +219,9 @@
 21031204 # Brunei
 498984 # Cambodia
 2700564 # China
+# China dependencies included in country relation:
+#   Hong Kong
+#   Macau
 3047164 # India
 3047514 # Indonesia
 3049384 # Iran
@@ -204,12 +260,20 @@
 
 # Oceania
 805004 # Australia
+# Australia dependencies included in country relation:
+#   Christmas Island
+#   Cocos (Keeling) Islands
+#   Norfolk Island
+#   Ashmore and Cartier Islnads
+#   Coral Sea Islands
+#   Heard Island and McDonald Islands
 5717474 # Fiji
 5711784 # Kiribati
 5717714 # Marshall Islands
 5718024 # Micronesia
 5718044 # Nauru
 5567064 # New Zealand
+21866004 # New Zealand - Tokelau
 5718054 # Palau
 3078664 # Papua New Guinea
 18726734 # Samoa

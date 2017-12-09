@@ -21,6 +21,12 @@ build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geoj
 osm.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(notdir $(wildcard osmids/*))))
 	tile-join -f -o $@ -pk -n "All the Travel Maps" -N "All the Travel Maps" $^
 
+osm.static.compressed: osm.mbtiles
+	tile-join -e $@ $<
+
+.PHONY: static
+static: osm.static.compressed
+
 .PHONY: all
 all: osm.mbtiles
 

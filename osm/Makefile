@@ -19,7 +19,7 @@ build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geoj
 	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))
 
 osm.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(notdir $(wildcard osmids/*))))
-	tile-join -f -o $@ -pk -n "OSM TravelMapAddict" $^
+	tile-join -f -o $@ -pk -n "All the Travel Maps" -N "All the Travel Maps" $^
 
 .PHONY: all
 all: osm.mbtiles

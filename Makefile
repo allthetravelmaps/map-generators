@@ -18,26 +18,27 @@ build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geoj
 	mkdir -p build
 	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))
 
-osm.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(notdir $(wildcard osmids/*))))
+all.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(notdir $(wildcard osmids/*))))
 	tile-join -f -o $@ -pk -n "All the Travel Maps" -N "All the Travel Maps" $^
 
-osm.static.compressed: osm.mbtiles
+build/all.unpackaged: all.mbtiles
 	tile-join -e $@ $<
 
-.PHONY: static
-static: osm.static.compressed
-
 .PHONY: all
-all: osm.mbtiles
+all: all.mbtiles
+
+.PHONY: upload
+upload: build/all.unpackaged
+	# TODO: upload $< to a google cloud storage bucket
 
 .PHONY: serve
-serve: osm.mbtiles
+serve: all.mbtiles
 	tileserver-gl-light $<
 
 .PHONY: clean
 clean:
 	rm -rf build
-	rm -f osm.mbtiles
+	rm -f all.mbtiles
 
 .PHONY: fullclean
 fullclean: clean

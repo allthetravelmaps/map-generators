@@ -7,18 +7,20 @@ SHELL := bash
 .SUFFIXES:
 .SECONDARY:
 
+LAYERS := $(notdir $(wildcard osmids/*))
+
+cat-and-remove-comments = $(shell sed s/\#.*$$// osmids/$(1))
+
 downloads/%.geojson:
 	mkdir -p $(dir $@)
 	get-overpass -m $(notdir $(basename $@)) > $@
 
 .SECONDEXPANSION:
-# build/provinces-of-canada.mbtiles: downloads/provinces-of-canada/$(cat-and-remove-comments osmids/provinces-of-canada).geojson
-build/%.mbtiles: $$(addprefix downloads/$$(basename $$(@F))/, $$(addsuffix .geojson, $$(shell sed s/\#.*$$$$// osmids/$$(basename $$(@F))))) \
-	               osmids/$$(basename $$(@F))
+build/%.mbtiles: $$(addprefix downloads/$$(*F)/, $$(addsuffix .geojson, $$(call cat-and-remove-comments,$$(*F)))) osmids/$$(*F)
 	mkdir -p build
 	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))
 
-all.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(notdir $(wildcard osmids/*))))
+all.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(LAYERS)))
 	tile-join -f -o $@ -pk -n "All the Travel Maps" -N "All the Travel Maps" $^
 
 build/all: all.mbtiles

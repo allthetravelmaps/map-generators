@@ -1,0 +1,21 @@
+name: Comunas of Buenos Aires
+desc: >
+  The 15 comunas of Buenos Aires, Argentina. The comunas are administrative
+  areas defined by the government. They are composed of one or more
+  officially-defined neighborhoods.
+entities:
+  Comuna 1: 4261029
+  Comuna 2: 4260905
+  Comuna 3: 4260835
+  Comuna 4: 4260419
+  Comuna 5: 4260378
+  Comuna 6: 4257895
+  Comuna 7: 4256878
+  Comuna 8: 4256826
+  Comuna 9: 4256731
+  Comuna 10: 4256510
+  Comuna 11: 4240316
+  Comuna 12: 4239028
+  Comuna 13: 4238168
+  Comuna 14: 4240239
+  Comuna 15: 4239231

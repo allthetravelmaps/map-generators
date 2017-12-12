@@ -1,0 +1,16 @@
+name: Provinces and Territories of Canada
+desc: The 10 provinces and 3 territories of Canada.
+entities:
+  British Columbia: 390867
+  Alberta: 391186
+  Saskatchewan: 391178
+  Manitoba: 390841
+  Ontario: 68841
+  Quebec: 61549
+  Newfoundland: 391196
+  New Brunswick: 68942
+  Nova Scotia: 390558
+  Prince Edward Island: 391115
+  Nunavut: 390840
+  Northwest Territories: 391220
+  Yukon: 391455

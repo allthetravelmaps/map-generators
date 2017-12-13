@@ -1,3 +1,4 @@
-build
-downloads
+osm-downloads
+layer-mbtiles
 all.mbtiles
+all-static

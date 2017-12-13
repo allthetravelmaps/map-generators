@@ -16,21 +16,21 @@ endef
 
 $(foreach layer,$(LAYERS),$(eval $(INCLUDE_MAKEFILE_LAYER)))
 
-downloads/%.geojson:
+osm-downloads/%.geojson:
 	mkdir -p $(dir $@)
 	get-overpass -m $(notdir $(basename $@)) > $@
 
-all.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(LAYERS)))
+all.mbtiles: $(addprefix layer-mbtiles/, $(addsuffix .mbtiles, $(LAYERS)))
 	tile-join -f -o $@ -pk -n "All the Travel Maps" -N "All the Travel Maps" $^
 
-build/all: all.mbtiles
+all-static: all.mbtiles
 	tile-join -e $@ $<
 
 .PHONY: all
 all: all.mbtiles
 
 .PHONY: upload
-upload: build/all
+upload: all-static
 	@read -p "Target Google Cloud Storage path (ex: my-bucket-id/some-path): " gcpath; \
 	localsource="$$(pwd)/$<"; \
 	gcfullpath="$${gcpath}/all"; \
@@ -56,9 +56,10 @@ serve: all.mbtiles
 
 .PHONY: clean
 clean:
-	rm -rf build
+	rm -rf layer-mbtiles
 	rm -f all.mbtiles
+	rm -rf all-static
 
 .PHONY: fullclean
 fullclean: clean
-	rm -rf downloads
+	rm -rf osm-downloads

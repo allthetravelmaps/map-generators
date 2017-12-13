@@ -6,7 +6,7 @@ cat-and-remove-comments = $(shell sed s/\#.*$$// osmids/$(1))
 
 ENTITIES=$(call cat-and-remove-comments,$(LAYER))
 
-build/$(LAYER).mbtiles: $(addprefix downloads/$(LAYER)/, $(addsuffix .geojson, $(ENTITIES))) osmids/$(LAYER)
-	mkdir -p build
+layer-mbtiles/$(LAYER).mbtiles: $(addprefix osm-downloads/, $(addsuffix .geojson, $(ENTITIES))) osmids/$(LAYER)
+	mkdir -p layer-mbtiles
 	cat $(filter-out osmids/$(basename $(@F)),$^) | \
 		tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))

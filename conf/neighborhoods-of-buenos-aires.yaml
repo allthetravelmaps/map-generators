@@ -1,0 +1,51 @@
+name: Neighborhoods of Buenos Aires
+desc: The 48 government-defined neighborhoods of Buenos Aires, Argentina.
+entities:
+  Villa Santa Rita: 2220602
+  Villa del Parque: 2220994
+  Villa General Mitre: 2221081
+  Villa Devoto: 2221264
+  Villa Pueyrredón: 2221272
+  Agronomía: 2221283
+  La Paternal: 2221308
+  Parque Chas: 2221316
+  Chacarita: 2221347
+  Villa Ortúzar: 2221396
+  Villa Crespo: 2221410
+  Caballito: 2221428
+  Monte Castro: 2221446
+  Floresta: 2221465
+  Flores: 2221479
+  Villa Real: 2222105
+  Versalles: 2222108
+  Villa Luro: 2222110
+  Vélez Sarsfield: 2222113
+  Villa Urquiza: 2222119
+  Saavedra: 2222167
+  Núñez: 2222173
+  Colegiales: 2222175
+  Belgrano: 2222180
+  Palermo: 2222226
+  Liniers: 2222235
+  Mataderos: 2222237
+  Parque Avellaneda: 2222250
+  Parque Chacabuco: 2222256
+  Almagro: 2222269
+  Boedo: 2222296
+  Balvanera: 2222813
+  San Cristóbal: 2222826
+  Monserrat: 2222917
+  San Nicolás: 2223057
+  San Telmo: 2223069
+  Constitución: 2223078
+  Parque Patricios: 2223088
+  Nueva Pompeya: 2223107
+  Villa Lugano: 2223126
+  Villa Soldati: 2223172
+  Villa Riachuelo: 2223176
+  Barracas: 2223536
+  La Boca: 2223879
+  Recoleta: 2224056
+  Retiro: 2224546
+  Puerto Madero: 2224562
+  Coghlan: 5328270

@@ -1,0 +1,27 @@
+name: Provinces of Argentina
+desc: The 23 provinces and the one autonomous city (Buenos Aires) of Argentina.
+entities:
+  La Rioja: 153536
+  San Luis: 153538
+  San Juan: 153539
+  Mendoza: 153540
+  La Pampa: 153541
+  Santa Fe: 153543
+  Santiago del Estero: 153544
+  Catamarca: 153545
+  Río Negro: 153547
+  Chubut: 153548
+  Santa Cruz: 153549
+  Tierra del Fuego: 153550
+  Entre Ríos: 153551
+  Corrientes: 153552
+  Misiones: 153553
+  Chaco: 153554
+  Jujuy: 153556
+  Tucumán: 153558
+  Neuquén: 1606727
+  Buenos Aires: 1632167
+  Salta: 2405230
+  Formosa: 2849847
+  Autonomous City of Buenos Aires: 3082668
+  Córdoba: 3592494

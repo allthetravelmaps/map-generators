@@ -9,16 +9,16 @@ SHELL := bash
 
 LAYERS := $(notdir $(wildcard osmids/*))
 
-cat-and-remove-comments = $(shell sed s/\#.*$$// osmids/$(1))
+define INCLUDE_MAKEFILE_LAYER
+LAYER=$(layer)
+include Makefile.layer
+endef
+
+$(foreach layer,$(LAYERS),$(eval $(INCLUDE_MAKEFILE_LAYER)))
 
 downloads/%.geojson:
 	mkdir -p $(dir $@)
 	get-overpass -m $(notdir $(basename $@)) > $@
-
-.SECONDEXPANSION:
-build/%.mbtiles: $$(addprefix downloads/$$(*F)/, $$(addsuffix .geojson, $$(call cat-and-remove-comments,$$(*F)))) osmids/$$(*F)
-	mkdir -p build
-	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))
 
 all.mbtiles: $(addprefix build/, $(addsuffix .mbtiles, $(LAYERS)))
 	tile-join -f -o $@ -pk -n "All the Travel Maps" -N "All the Travel Maps" $^

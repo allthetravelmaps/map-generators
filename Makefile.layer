@@ -1,0 +1,11 @@
+ifndef LAYER
+    $(error LAYER is undefined)
+endif
+
+cat-and-remove-comments = $(shell sed s/\#.*$$// osmids/$(1))
+
+ENTITIES=$(call cat-and-remove-comments,$(LAYER))
+
+build/$(LAYER).mbtiles: $(addprefix downloads/$(LAYER)/, $(addsuffix .geojson, $(ENTITIES))) osmids/$(LAYER)
+	mkdir -p build
+	cat $^ | tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))

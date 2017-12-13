@@ -4,18 +4,33 @@ desc: >
   areas defined by the government. They are composed of one or more
   officially-defined neighborhoods.
 entities:
-  Comuna 1: 4261029
-  Comuna 2: 4260905
-  Comuna 3: 4260835
-  Comuna 4: 4260419
-  Comuna 5: 4260378
-  Comuna 6: 4257895
-  Comuna 7: 4256878
-  Comuna 8: 4256826
-  Comuna 9: 4256731
-  Comuna 10: 4256510
-  Comuna 11: 4240316
-  Comuna 12: 4239028
-  Comuna 13: 4238168
-  Comuna 14: 4240239
-  Comuna 15: 4239231
+  - name: Comuna 1
+    osmids: [4261029]
+  - name: Comuna 2
+    osmids: [4260905]
+  - name: Comuna 3
+    osmids: [4260835]
+  - name: Comuna 4
+    osmids: [4260419]
+  - name: Comuna 5
+    osmids: [4260378]
+  - name: Comuna 6
+    osmids: [4257895]
+  - name: Comuna 7
+    osmids: [4256878]
+  - name: Comuna 8
+    osmids: [4256826]
+  - name: Comuna 9
+    osmids: [4256731]
+  - name: Comuna 10
+    osmids: [4256510]
+  - name: Comuna 11
+    osmids: [4240316]
+  - name: Comuna 12
+    osmids: [4239028]
+  - name: Comuna 13
+    osmids: [4238168]
+  - name: Comuna 14
+    osmids: [4240239]
+  - name: Comuna 15
+    osmids: [4239231]

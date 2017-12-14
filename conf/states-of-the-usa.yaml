@@ -1,0 +1,107 @@
+name: States of the USA
+desc: >
+  The 50 states and one federal district (AKA the District of Columbia)
+  of the United States of America.
+entities:
+  - name: Vermont
+    osmids: [60759]
+  - name: Massachusetts
+    osmids: [61315]
+  - name: New York
+    osmids: [61320]
+  - name: Maine
+    osmids: [63512]
+  - name: New Hampshire
+    osmids: [67213]
+  - name: Texas
+    osmids: [114690]
+  - name: Illinois
+    osmids: [122586]
+  - name: Missouri
+    osmids: [161638]
+  - name: Kansas
+    osmids: [161644]
+  - name: Oklahoma
+    osmids: [161645]
+  - name: Arkansas
+    osmids: [161646]
+  - name: Nebraska
+    osmids: [161648]
+  - name: Iowa
+    osmids: [161650]
+  - name: South Dakota
+    osmids: [161652]
+  - name: North Dakota
+    osmids: [161653]
+  - name: Kentucky
+    osmids: [161655]
+  - name: Indiana
+    osmids: [161816]
+  - name: Tennessee
+    osmids: [161838]
+  - name: Mississippi
+    osmids: [161943]
+  - name: Alabama
+    osmids: [161950]
+  - name: Georgia
+    osmids: [161957]
+  - name: Colorado
+    osmids: [161961]
+  - name: Wyoming
+    osmids: [161991]
+  - name: Utah
+    osmids: [161993]
+  - name: New Mexico
+    osmids: [162014]
+  - name: Arizona
+    osmids: [162018]
+  - name: Florida
+    osmids: [162050]
+  - name: Ohio
+    osmids: [162061]
+  - name: West Virginia
+    osmids: [162068]
+  - name: District of Columbia
+    osmids: [162069]
+  - name: Pennsylvania
+    osmids: [162109]
+  - name: Delaware
+    osmids: [162110]
+  - name: Maryland
+    osmids: [162112]
+  - name: Montana
+    osmids: [162115]
+  - name: Idaho
+    osmids: [162116]
+  - name: Wisconsin
+    osmids: [165466]
+  - name: Minnesota
+    osmids: [165471]
+  - name: Nevada
+    osmids: [165473]
+  - name: California
+    osmids: [165475]
+  - name: Oregon
+    osmids: [165476]
+  - name: Washington
+    osmids: [165479]
+  - name: Michigan
+    osmids: [165789]
+  - name: Connecticut
+    osmids: [165794]
+  - name: Hawaii
+    osmids: [166563]
+  - name: South Carolina
+    osmids: [224040]
+  - name: Virginia
+    osmids: [224042]
+  - name: North Carolina
+    osmids: [224045]
+  - name: Louisiana
+    osmids: [224922]
+  - name: New Jersey
+    osmids: [224951]
+  - name: Rhode Island
+    osmids: [392915]
+  - name: Alaska
+    osmids: [1116270]

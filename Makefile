@@ -27,8 +27,14 @@ get-entity-ids = $(shell seq 1 $(call get-number-of-entities,$(1)))
 # layer, list of entity_ids -> list of paths to entity geojson files
 get-entity-geojson-paths = $(addprefix entity-geojson/$(1)/, $(addsuffix .geojson, $(2)))
 
-# layer, entity id -> list of osm ids in this entity
-get-osm-ids = $(shell yq '.entities[$(2)-1].osmids[]' $(call get-layer-conf,$(1)))
+# layer, entity id -> list of osm ids included in this entity
+get-included-osm-ids = $(shell yq '.entities[$(2)-1].osmids[]' $(call get-layer-conf,$(1)))
+
+# layer, entity id -> list of osm ids excluded in this entity
+get-excluded-osm-ids = $(shell yq '(.entities[$(2)-1].excluded_osmids // [])[]' $(call get-layer-conf,$(1)))
+
+# layer, entity id -> list of all osm ids either included or excluded in this entity
+get-all-osm-ids = $(call get-included-osm-ids,$(1),$(2)) $(call get-excluded-osm-ids,$(1),$(2))
 
 # list of osm ids -> list of paths to osm geojson files
 get-osm-geojson-paths = $(addprefix osm-downloads/, $(addsuffix .geojson, $(1)))
@@ -39,7 +45,10 @@ osm-downloads/%.geojson:
 	get-overpass relation/$(notdir $(basename $@)) > $@
 
 
-entity-geojson/%.geojson: $$(call get-osm-geojson-paths, $$(call get-osm-ids,$$(*D),$$(*F)))
+# TODO: fetch the geojson for the excluded-osmids, and remove those polygons from the
+# 			generated entity geojson
+
+entity-geojson/%.geojson: $$(call get-osm-geojson-paths, $$(call get-included-osm-ids,$$(*D),$$(*F)))
 	mkdir -p $(dir $@)
 	mapshaper -i combine-files $^ -drop fields=* -merge-layers -dissolve -o geojson-type=Feature - | \
 		jq -c '. + {"id": $(*F)}' > $@

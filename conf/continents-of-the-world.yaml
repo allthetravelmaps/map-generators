@@ -60,7 +60,7 @@ entities:
       - 270009  # UK - Guernsey
       - 3263728 # UK - Akrotiri and Dhekelia (on Cypress, soverign military bases)
       - 1403916 # France - mainland and Corse
-    exclude_osmids:
+    excluded_osmids:
       - 1216720 # Netherlands - Caribbean Netherlands
 
   - name: North America
@@ -104,7 +104,7 @@ entities:
       - 1891495 # France - Martinique
       - 1891583 # France - Saint Martin
       - 148838  # USA - mainland and all overseas territories
-    exclude_osmids:
+    excluded_osmids:
       - 7248460 # USA - Howland Island
       - 7248461 # USA - Baker Island
       - 7248458 # USA - Johnston Atoll
@@ -138,7 +138,7 @@ entities:
       - 1983628 # UK - South Georgia and the South Sandwich Islands
       - 285454  # UK - British Virgin Islands
       - 1260551 # France - French Guiana
-    exclude_osmids:
+    excluded_osmids:
       - 3473022 # Venezuela - Isla Aves
 
   - name: Africa
@@ -281,7 +281,7 @@ entities:
       - 6430384 # USA - Wake Island
       - 306001  # USA - Guam
       - 306004  # USA - Northern Mariana Islands
-    exclude_osmids:
+    excluded_osmids:
       - 2177227 # Australia - Heard Island and McDonald Islands
 
   - name: Antartica

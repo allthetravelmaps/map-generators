@@ -1,0 +1,297 @@
+name: Continents of the World
+desc: The 7 continents of the world.
+entities:
+  - name: Europe
+    osmids:
+      - 36989   # Vatican City (Holy See)
+      - 2088990 # Kosovo
+      - 53292   # Albania
+      - 9407    # Andorra
+      - 364066  # Armenia
+      - 16239   # Austria
+      - 364110  # Azerbaijan
+      - 59065   # Belarus
+      - 52411   # Belgium
+      - 2528142 # Bosnia and Herzegovina
+      - 186382  # Bulgaria
+      - 214885  # Croatia
+      - 307787  # Cyprus
+      - 51684   # Czech Republic
+      - 50046   # Denmark
+      - 52939   # Denmark - Faroe Islands
+      - 79510   # Estonia
+      - 54224   # Finland
+      - 28699   # Georgia
+      - 51477   # Germany
+      - 192307  # Greece
+      - 21335   # Hungary
+      - 299133  # Iceland
+      - 62273   # Ireland
+      - 365331  # Italy
+      - 72594   # Latvia
+      - 1155955 # Liechtenstein
+      - 72596   # Lithuania
+      - 2171347 # Luxembourg
+      - 53293   # Macedonia
+      - 365307  # Malta
+      - 58974   # Moldova
+      - 1124039 # Monaco
+      - 53296   # Montenegro
+      - 49715   # Poland
+      - 295480  # Portugal
+      - 90689   # Romania
+      - 60189   # Russia
+      - 54624   # San Marino
+      - 1741311 # Serbia
+      - 14296   # Slovakia
+      - 218657  # Slovenia
+      - 1311341 # Spain
+      - 52822   # Sweden
+      - 51701   # Switzerland
+      - 174737  # Turkey
+      - 60199   # Ukraine
+      - 1059668 # Norway - mainland
+      - 3245620 # Norway - Svalbard and Jan Mayen islands
+      - 47796   # Netherlands - mainland and Caribbean Netherlands
+      - 62149   # UK - mainland
+      - 1278736 # UK - Gibraltar
+      - 367988  # UK - Jersey
+      - 62269   # UK - Isle of Man
+      - 270009  # UK - Guernsey
+      - 3263728 # UK - Akrotiri and Dhekelia (on Cypress, soverign military bases)
+      - 1403916 # France - mainland and Corse
+    exclude_osmids:
+      - 1216720 # Netherlands - Caribbean Netherlands
+
+  - name: North America
+    osmids:
+      - 536900  # Antigua and Barbuda
+      - 547511  # Barbados
+      - 547469  # The Bahamas
+      - 287827  # Belize
+      - 1428125 # Canada
+      - 3406826 # France - Saint Pierre and Miquelon
+      - 287667  # Costa Rica
+      - 307833  # Cuba
+      - 307823  # Dominica
+      - 307828  # Dominican Republic
+      - 1520612 # El Salvador
+      - 550727  # Grenada
+      - 1521463 # Guatemala
+      - 307829  # Hati
+      - 287666  # Nicaragua
+      - 287670  # Honduras
+      - 555017  # Jamaica
+      - 114686  # Mexico
+      - 2573009 # Clipperton Island
+      - 287668  # Panama
+      - 536899  # Saint Kitts and Nevis
+      - 550728  # Saint Lucia
+      - 550725  # Saint Vincent and the Grenadines
+      - 2184073 # Denmark - Greenland
+      - 1231790 # Netherlands - Saint Martin
+      - 2324451 # Netherlands - Caribbean Netherlands - Saba
+      - 2324452 # Netherlands - Caribbean Netherlands - Sint Eustatius
+      - 2177161 # UK - Anguilla
+      - 1993208 # UK - Bermuda
+      - 2185366 # UK - Cayman Islands
+      - 537257  # UK - Montserrat
+      - 547479  # UK - Turks and Caicos Islands
+      - 3473022 # Venezuela - Isla Aves
+      - 537967  # France - Saint Barthélemy
+      - 1891583 # France - Saint Martin
+      - 1401835 # France - Guadeloupe
+      - 1891495 # France - Martinique
+      - 1891583 # France - Saint Martin
+      - 148838  # USA - mainland and all overseas territories
+    exclude_osmids:
+      - 7248460 # USA - Howland Island
+      - 7248461 # USA - Baker Island
+      - 7248458 # USA - Johnston Atoll
+      - 7248457 # USA - Kingman Reef
+      - 7248454 # USA - Palmyra Atoll
+      - 7248459 # USA - Jarvis Island
+      - 2177187 # USA - American Samoa
+      - 6430384 # USA - Wake Island
+      - 306001  # USA - Guam
+      - 306004  # USA - Northern Mariana Islands
+
+  - name: South America
+    osmids:
+      - 286393  # Argentina
+      - 252645  # Bolivia
+      - 59470   # Brazil
+      - 167454  # Chile
+      - 120027  # Colombia
+      - 108089  # Ecuador
+      - 287083  # Guyana
+      - 287077  # Paraguay
+      - 288247  # Peru
+      - 287082  # Suriname
+      - 287072  # Uruguay
+      - 272644  # Venezuela
+      - 555717  # Trinidad and Tobago
+      - 1231749 # Netherlands - Aruba
+      - 1216719 # Netherlands - Curacao
+      - 2324450 # Netherlands - Caribbean Netherlands - Bonaire
+      - 2185374 # UK - Falkland Islands
+      - 1983628 # UK - South Georgia and the South Sandwich Islands
+      - 285454  # UK - British Virgin Islands
+      - 1260551 # France - French Guiana
+    exclude_osmids:
+      - 3473022 # Venezuela - Isla Aves
+
+  - name: Africa
+    osmids:
+      - 192756  # Algeria
+      - 195267  # Angola
+      - 192784  # Benin
+      - 1889339 # Botswana
+      - 192783  # Burkina Faso
+      - 195269  # Burundi
+      - 192830  # Cameroon
+      - 535774  # Cape Verde
+      - 192790  # Central African Republic (CAR)
+      - 2361304 # Chad
+      - 535790  # Comoros
+      - 192795  # Democratic Republic of the Congo
+      - 192794  # Republic of the Congo
+      - 192779  # Cote d'Ivoire
+      - 192801  # Djibouti
+      - 1473947 # Egypt
+      - 192791  # Equatorial Guinea
+      - 296961  # Eritrea
+      - 192800  # Ethiopia
+      - 192793  # Gabon
+      - 192774  # Gambia
+      - 192781  # Ghana
+      - 192778  # Guinea
+      - 192776  # Guinea-Bissau
+      - 192798  # Kenya
+      - 2093234 # Lesotho
+      - 192780  # Liberia
+      - 192758  # Libya
+      - 447325  # Madagascar
+      - 195290  # Malawi
+      - 192785  # Mali
+      - 192763  # Mauritania
+      - 535828  # Mauritius
+      - 195273  # Mozambique
+      - 195266  # Namibia
+      - 192786  # Niger
+      - 192787  # Nigeria
+      - 171496  # Rwanda
+      - 535880  # Sao Tome and Principe
+      - 192775  # Senegal
+      - 536765  # Seychelles
+      - 192777  # Sierra Leone
+      - 192799  # Somalia
+      - 87565   # South Africa
+      - 1656678 # South Sudan
+      - 192789  # Sudan
+      - 88210   # Swaziland
+      - 195270  # Tanzania
+      - 192782  # Togo
+      - 192757  # Tunisia
+      - 192796  # Uganda
+      - 195271  # Zambia
+      - 195272  # Zimbabwe
+      - 3630439 # Morocco
+      - 5441968 # Morocco - Western Sarah / Sahrawi Arab Democratic Republic
+      - 6063099 # France - "Scattered Islands in the Indian Ocean"
+
+  - name: Asia
+    osmids:
+      - 303427  # Afghanistan
+      - 378734  # Bahrain
+      - 184640  # Bangladesh
+      - 184629  # Bhutan
+      - 2103120 # Brunei
+      - 49898   # Cambodia
+      - 270056  # China
+      - 304716  # India
+      - 304751  # Indonesia
+      - 304938  # Iran
+      - 304934  # Iraq
+      - 1473946 # Israel
+      - 382313  # Japan
+      - 184818  # Jordan
+      - 214665  # Kazakhstan
+      - 305099  # Kuwait
+      - 178009  # Kyrgyzstan
+      - 49903   # Laos
+      - 184843  # Lebanon
+      - 2108121 # Malaysia
+      - 536773  # Maldives
+      - 161033  # Mongolia
+      - 50371   # Myanmar (Burma)
+      - 184633  # Nepal
+      - 192734  # North Korea
+      - 305138  # Oman
+      - 307573  # Pakistan
+      - 443174  # Philippines
+      - 305095  # Qatar
+      - 307584  # Saudi Arabia
+      - 536780  # Singapore
+      - 307756  # South Korea
+      - 536807  # Sri Lanka
+      - 184840  # Syria
+      - 214626  # Tajikistan
+      - 2067731 # Thailand
+      - 305142  # Timor-Leste
+      - 223026  # Turkmenistan
+      - 307763  # United Arab Emirates (UAE)
+      - 196240  # Uzbekistan
+      - 49915   # Vietnam
+      - 305092  # Yemen
+      - 1703814 # Palestine
+      - 449220  # Taiwan
+      - 1993867 # UK - British Indian Ocean Territory
+
+  - name: Oceania
+    osmids:
+      - 556706  # New Zealand
+      - 2186600 # Tokelau
+      - 571747  # Fiji
+      - 571178  # Kiribati
+      - 571771  # Marshall Islands
+      - 571802  # Micronesia
+      - 571804  # Nauru
+      - 571805  # Palau
+      - 307866  # Papua New Guinea
+      - 1872673 # Samoa
+      - 1857436 # Solomon Islands
+      - 2186665 # Tonga
+      - 2177266 # Tuvalu
+      - 2177246 # Vanuatu
+      - 2184233 # Cook Islands
+      - 1558556 # Niue
+      - 80500   # Australia - mainland and all islands
+      - 2185375 # UK - Pitcairn Islands
+      - 3412448 # France - Wallis and Futuna
+      - 3412620 # France - French Polynesia
+      - 3407643 # France - New Caledonia
+      - 7248460 # USA - Howland Island
+      - 7248461 # USA - Baker Island
+      - 7248458 # USA - Johnston Atoll
+      - 7248457 # USA - Kingman Reef
+      - 7248454 # USA - Palmyra Atoll
+      - 7248459 # USA - Jarvis Island
+      - 2177187 # USA - American Samoa
+      - 6430384 # USA - Wake Island
+      - 306001  # USA - Guam
+      - 306004  # USA - Northern Mariana Islands
+    exclude_osmids:
+      - 2177227 # Australia - Heard Island and McDonald Islands
+
+  - name: Antartica
+    osmids:
+      - 2186646 # Antartic treaty border
+
+# Un-continentable...?
+#  - Bouvet Island - Norway (2425963)
+#  - Heard Island and McDonald Islands - Australia (2177227)
+#  - Saint Helena, Ascension and Tristan da Cunha - UK (1964272)
+#  - Most of French Southern and Antarctic Lands - France (6063098)
+#    Excluding the islands by Africa, which are included in 6063099
+#    And the part of Antartica, which is included in the Antartic continent

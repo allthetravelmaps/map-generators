@@ -7,7 +7,7 @@ SHELL := bash
 .SUFFIXES:
 .SECONDARY:
 
-LAYERS := $(notdir $(wildcard osmids/*))
+LAYERS := $(notdir $(basename $(wildcard conf/*)))
 
 define INCLUDE_MAKEFILE_LAYER
 LAYER=$(layer)
@@ -18,7 +18,7 @@ $(foreach layer,$(LAYERS),$(eval $(INCLUDE_MAKEFILE_LAYER)))
 
 osm-downloads/%.geojson:
 	mkdir -p $(dir $@)
-	get-overpass -m $(notdir $(basename $@)) > $@
+	get-overpass relation/$(notdir $(basename $@)) > $@
 
 all.mbtiles: $(addprefix layer-mbtiles/, $(addsuffix .mbtiles, $(LAYERS)))
 	tile-join -f -o $@ -pk -n "All the Travel Maps" -N "All the Travel Maps" $^
@@ -56,6 +56,7 @@ serve: all.mbtiles
 
 .PHONY: clean
 clean:
+	rm -rf entity-geojson
 	rm -rf layer-mbtiles
 	rm -f all.mbtiles
 	rm -rf all-static

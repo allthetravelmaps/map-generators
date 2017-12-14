@@ -2,11 +2,21 @@ ifndef LAYER
     $(error LAYER is undefined)
 endif
 
-cat-and-remove-comments = $(shell sed s/\#.*$$// osmids/$(1))
+LAYER_CONF = conf/$(LAYER).yaml
 
-ENTITIES=$(call cat-and-remove-comments,$(LAYER))
+NUMBER_OF_ENTITIES = $(shell yq '.entities | length' $(LAYER_CONF))
+ENTITY_IDS = $(shell seq 1 $(NUMBER_OF_ENTITIES))
 
-layer-mbtiles/$(LAYER).mbtiles: $(addprefix osm-downloads/, $(addsuffix .geojson, $(ENTITIES))) osmids/$(LAYER)
+entity-geojson-path = $(addprefix entity-geojson/$(LAYER)/, $(addsuffix .geojson, $(1)))
+
+define INCLUDE_MAKEFILE_ENTITY
+ENTITY_ID=$(entity_id)
+include Makefile.entity
+endef
+
+$(foreach entity_id,$(ENTITY_IDS),$(eval $(INCLUDE_MAKEFILE_ENTITY)))
+
+layer-mbtiles/$(LAYER).mbtiles: $(call entity-geojson-path, $(ENTITY_IDS)) $(LAYER_CONF)
 	mkdir -p layer-mbtiles
-	cat $(filter-out osmids/$(basename $(@F)),$^) | \
+	cat $(filter-out $(LAYER_CONF),$^) | \
 		tippecanoe -f -o $@ -zg --detect-shared-borders --detect-longitude-wraparound -l $(basename $(@F))

@@ -51,6 +51,7 @@ osm-downloads/%.geojson:
 entity-geojson/%.geojson: $$(call get-osm-geojson-paths, $$(call get-included-osm-ids,$$(*D),$$(*F)))
 	mkdir -p $(dir $@)
 	mapshaper -i combine-files $^ -drop fields=* -merge-layers -dissolve -o geojson-type=Feature - | \
+		geojson-cli-bbox add | \
 		jq -c '. + {"id": $(*F)}' > $@
 
 

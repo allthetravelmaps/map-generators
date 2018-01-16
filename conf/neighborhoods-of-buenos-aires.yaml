@@ -1,0 +1,99 @@
+name: Neighborhoods of Buenos Aires
+desc: The 48 government-defined neighborhoods of Buenos Aires, Argentina.
+entities:
+  - name: Villa Santa Rita
+    osmids: [2220602]
+  - name: Villa del Parque
+    osmids: [2220994]
+  - name: Villa General Mitre
+    osmids: [2221081]
+  - name: Villa Devoto
+    osmids: [2221264]
+  - name: Villa Pueyrredón
+    osmids: [2221272]
+  - name: Agronomía
+    osmids: [2221283]
+  - name: La Paternal
+    osmids: [2221308]
+  - name: Parque Chas
+    osmids: [2221316]
+  - name: Chacarita
+    osmids: [2221347]
+  - name: Villa Ortúzar
+    osmids: [2221396]
+  - name: Villa Crespo
+    osmids: [2221410]
+  - name: Caballito
+    osmids: [2221428]
+  - name: Monte Castro
+    osmids: [2221446]
+  - name: Floresta
+    osmids: [2221465]
+  - name: Flores
+    osmids: [2221479]
+  - name: Villa Real
+    osmids: [2222105]
+  - name: Versalles
+    osmids: [2222108]
+  - name: Villa Luro
+    osmids: [2222110]
+  - name: Vélez Sarsfield
+    osmids: [2222113]
+  - name: Villa Urquiza
+    osmids: [2222119]
+  - name: Saavedra
+    osmids: [2222167]
+  - name: Núñez
+    osmids: [2222173]
+  - name: Colegiales
+    osmids: [2222175]
+  - name: Belgrano
+    osmids: [2222180]
+  - name: Palermo
+    osmids: [2222226]
+  - name: Liniers
+    osmids: [2222235]
+  - name: Mataderos
+    osmids: [2222237]
+  - name: Parque Avellaneda
+    osmids: [2222250]
+  - name: Parque Chacabuco
+    osmids: [2222256]
+  - name: Almagro
+    osmids: [2222269]
+  - name: Boedo
+    osmids: [2222296]
+  - name: Balvanera
+    osmids: [2222813]
+  - name: San Cristóbal
+    osmids: [2222826]
+  - name: Monserrat
+    osmids: [2222917]
+  - name: San Nicolás
+    osmids: [2223057]
+  - name: San Telmo
+    osmids: [2223069]
+  - name: Constitución
+    osmids: [2223078]
+  - name: Parque Patricios
+    osmids: [2223088]
+  - name: Nueva Pompeya
+    osmids: [2223107]
+  - name: Villa Lugano
+    osmids: [2223126]
+  - name: Villa Soldati
+    osmids: [2223172]
+  - name: Villa Riachuelo
+    osmids: [2223176]
+  - name: Barracas
+    osmids: [2223536]
+  - name: La Boca
+    osmids: [2223879]
+  - name: Recoleta
+    osmids: [2224056]
+  - name: Retiro
+    osmids: [2224546]
+  - name: Puerto Madero
+    osmids: [2224562]
+  - name: Coghlan
+    osmids: [5328270]

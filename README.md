@@ -18,7 +18,8 @@ make upload # will prompt you for a google cloud storage path to upload to
 
 ## Dependencies
 
-* [get-overpass](https://github.com/mfogel/get-overpass)
+* [get-overpass](https://www.npmjs.com/package/get-overpass)
+* [geojson-cli-bbox](https://www.npmjs.com/package/geojson-cli-bbox)
 * [tippecanoe](https://github.com/mapbox/tippecanoe)
 * [tileserver-gl-light](https://www.npmjs.com/package/tileserver-gl-light) - for serving locally
 * [gsutil](https://cloud.google.com/storage/docs/gsutil) - for uploading

@@ -34,20 +34,20 @@ These settings will allow your GC storage bucket to serve uploaded tiles via a p
 
 1. Create the cloud bucket
 
-   ```shell
-   gsutil mb gs://my-new-bucket-with-a-unique-name
-   ```
+    ```shell
+    gsutil mb gs://my-new-bucket-with-a-unique-name
+    ```
 
 1. Give everyone read access to the bucket
 
-   ```shell
+    ```shell
     gsutil iam ch allUsers:objectViewer gs://my-new-bucket-with-a-unique-name
     ```
 
 1. Open up CORS all the way on the bucket
 
-   ```shell
-   echo '[{"origin": ["*"],"method": ["*"]}' > cors.json
-   gsutil cors set cors.json gs://my-new-bucket-with-a-unique-name
-   rm cors.json
-   ```
+    ```shell
+    echo '[{"origin": ["*"],"method": ["*"]}' > cors.json
+    gsutil cors set cors.json gs://my-new-bucket-with-a-unique-name
+    rm cors.json
+    ```

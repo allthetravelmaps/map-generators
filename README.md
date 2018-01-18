@@ -10,19 +10,18 @@
 
 ## Quickstart
 
-Ensure you have all the executables from the [dependencies](#command-line-dependencies) section available in your `PATH`, then:
+Ensure all the executables from the [dependencies](#dependencies) section are accessible in your `PATH`. Then:
 
 ```sh
-npm install
 jake        # will take a while...
 jake serve  # open http://localhost:8080/ in a browser
 jake upload # will prompt you for a google cloud storage path to upload to
 ```
 
-## Command-line dependencies
+## Dependencies
 
-* [npm](https://www.npmjs.com/get-npm)
 * [jake](https://www.npmjs.com/package/jake)
+* [yaml2json](https://github.com/bronze1man/yaml2json)
 * [get-overpass](https://www.npmjs.com/package/get-overpass)
 * [mapshapper](https://www.npmjs.com/package/mapshaper)
 * [geojson-cli-bbox](https://www.npmjs.com/package/geojson-cli-bbox)

@@ -1,9 +1,0 @@
-{
-  "name": "tiles",
-  "version": "1.0.0",
-  "repository": "github:allthetravelmaps/tiles",
-  "license": "ISC",
-  "dependencies": {
-    "js-yaml": "^3.10.0"
-  }
-}

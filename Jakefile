@@ -1,6 +1,6 @@
 const assert = require('assert')
+const child_process = require('child_process')
 const fs = require('fs')
-const yaml = require('js-yaml')
 
 /* double check we don't rm -rf anything we don't want to */
 const assertAndRm = (val, ref) => {
@@ -28,7 +28,9 @@ const getOSMGeojsonPath = osmId => `${osmDownloadsDir}/${osmId}.geojson`
 
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
 const getConf = layer =>
-  yaml.safeLoad(fs.readFileSync(getLayerConfPath(layer), 'utf8'))
+  JSON.parse(
+    child_process.execSync(`yaml2json < ${getLayerConfPath(layer)}`).toString()
+  )
 
 desc(`Create ${osmDownloadsDir} dir`)
 directory(osmDownloadsDir)

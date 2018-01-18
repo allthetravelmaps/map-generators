@@ -10,16 +10,23 @@
 
 ## Quickstart
 
+Ensure you have all the executables from the [dependencies](#command-line-dependencies) section available in your `PATH`, then:
+
 ```sh
-make        # will take a while...
-make serve  # open http://localhost:8080/ in a browser
-make upload # will prompt you for a google cloud storage path to upload to
+npm install
+jake        # will take a while...
+jake serve  # open http://localhost:8080/ in a browser
+jake upload # will prompt you for a google cloud storage path to upload to
 ```
 
-## Dependencies
+## Command-line dependencies
 
+* [npm](https://www.npmjs.com/get-npm)
+* [jake](https://www.npmjs.com/package/jake)
 * [get-overpass](https://www.npmjs.com/package/get-overpass)
+* [mapshapper](https://www.npmjs.com/package/mapshaper)
 * [geojson-cli-bbox](https://www.npmjs.com/package/geojson-cli-bbox)
+* [jq](https://stedolan.github.io/jq/)
 * [tippecanoe](https://github.com/mapbox/tippecanoe)
 * [tileserver-gl-light](https://www.npmjs.com/package/tileserver-gl-light) - for serving locally
 * [gsutil](https://cloud.google.com/storage/docs/gsutil) - for uploading

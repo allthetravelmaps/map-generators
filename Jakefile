@@ -32,6 +32,7 @@ const onSuccess = task => exitCode => {
 
 /* directory structure */
 const allMBTiles = 'all.mbtiles'
+const allStaticDir = 'all-static'
 const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
 const layerMBTilesDir = 'layer-mbtiles'
@@ -187,7 +188,16 @@ file(
   { async: true }
 )
 
-desc(`Default command, builds allMBTiles}`)
+desc(`Build ${allStaticDir} directory full of static MVT's`)
+task('all-static', [allMBTiles], function () {
+  jake.logger.log(`Building ${this.name} ...`)
+
+  const tileJoin = spawn('tile-join', ['-e', allStaticDir, allMBTiles])
+  tileJoin.on('exit', onFail(this, tileJoin))
+  tileJoin.on('exit', onSuccess(this))
+})
+
+desc(`Default command, builds ${allMBTiles}`)
 task('default', [allMBTiles])
 
 desc('Delete all build products except the raw downloads')
@@ -195,6 +205,7 @@ task('clean', [], function () {
   assertAndRm(entityGeojsonDir, 'entity-geojson')
   assertAndRm(layerMBTilesDir, 'layer-mbtiles')
   assertAndRm(allMBTiles, 'all.mbtiles')
+  assertAndRm(allStaticDir, 'all-static')
 })
 
 desc('Delete all build products')

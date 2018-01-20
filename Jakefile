@@ -30,28 +30,27 @@ const onSuccess = task => exitCode => {
   task.complete()
 }
 
+/* directory structure */
 const allMBTiles = 'all.mbtiles'
-
 const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
-
 const layerMBTilesDir = 'layer-mbtiles'
 const getLayerMBTilesPath = layer => `${layerMBTilesDir}/${layer}.mbtiles`
-
 const entityGeojsonDir = 'entity-geojson'
 const getEntityGeojsonLayerDir = layer => `${entityGeojsonDir}/${layer}`
 const getEntityGeojsonPath = (layer, entityId) => {
   const dir = getEntityGeojsonLayerDir(layer)
   return `${dir}/${entityId}.geojson`
 }
-
 const osmDownloadsDir = 'osm-downloads'
 const getOSMGeojsonPath = osmId => `${osmDownloadsDir}/${osmId}.geojson`
 
+/* parsing config files */
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
 const getConf = layer =>
   JSON.parse(execSync(`yaml2json < ${getLayerConfPath(layer)}`).toString())
 
+/* downloading features from OSM */
 desc(`Create ${osmDownloadsDir} dir`)
 directory(osmDownloadsDir)
 
@@ -87,6 +86,7 @@ layers.forEach(layer => {
     const excludedOSMGeojsons = (entity['excluded_osmids'] || []).map(getOSMGeojsonPath)
     */
 
+    /* builing geojson file for each entity with layer */
     desc(`Build ${entityGeojson}`)
     file(
       entityGeojson,
@@ -128,6 +128,7 @@ layers.forEach(layer => {
     entityGeojsons.push(entityGeojson)
   })
 
+  /* build one mbtiles file for each map */
   const layerMBTilesPath = getLayerMBTilesPath(layer)
   desc(`Build ${layerMBTilesPath}`)
   file(
@@ -158,6 +159,7 @@ layers.forEach(layer => {
   )
 })
 
+/* combine each map's mbtiles file to one master one */
 const layerMBTilesPaths = layers.map(getLayerMBTilesPath)
 desc(`Build master mbtiles file, ${allMBTiles}`)
 file(

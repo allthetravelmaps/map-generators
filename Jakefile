@@ -1,5 +1,6 @@
 const assert = require('assert')
 const { execSync, spawn } = require('child_process')
+const process = require('process')
 const fs = require('fs')
 
 /* double check we don't rm -rf anything we don't want to */
@@ -199,6 +200,15 @@ task('all-static', [allMBTiles], function () {
 
 desc(`Default command, builds ${allMBTiles}`)
 task('default', [allMBTiles])
+
+desc(`Serve ${allMBTiles} via a local webserver`)
+task('serve', [allMBTiles], function () {
+  jake.logger.log(`Serving ${allMBTiles} ... (cntrl-c to quit)`)
+
+  const tileJoin = spawn('tileserver-gl-light', [allMBTiles])
+  tileJoin.stdout.pipe(process.stdout)
+  tileJoin.stderr.pipe(process.stderr)
+})
 
 desc('Delete all build products except the raw downloads')
 task('clean', [], function () {

@@ -32,7 +32,7 @@ jake upload # will prompt you for a google cloud storage path to upload to
 
 ## Cleaning up
 
-Note that `make clean` cleans out everything except the raw downloaded data. To delete the raw downloads as well, use `make fullclean`.
+Note that `jake clean` cleans out everything except the raw downloaded data. To delete the raw downloads as well, use `jake fullclean`.
 
 ## Setting up a Google Cloud Storage Bucket for uploads
 
@@ -59,6 +59,10 @@ These settings will allow your GC storage bucket to serve uploaded tiles via a p
     ```
 
 ## Changelog
+
+### Master
+
+ * switched from `make` to [`jake`](https://www.npmjs.com/package/jake) to manage build process
 
 ### 0.2
 

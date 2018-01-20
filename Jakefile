@@ -1,7 +1,8 @@
 const assert = require('assert')
 const { execSync, spawn } = require('child_process')
-const process = require('process')
 const fs = require('fs')
+const process = require('process')
+const readline = require('readline')
 
 /* double check we don't rm -rf anything we don't want to */
 const assertAndRm = (val, ref) => {
@@ -10,16 +11,13 @@ const assertAndRm = (val, ref) => {
 }
 
 /* fail the task if an exitCode is non-zero */
-const onFail = (task, childProcess) => {
+const onFail = (task, childProcess, deleteTarget = true) => {
   const childCMD = childProcess.spawnargs.join(' ')
   const target = task.name
   const msg = `'${target}' failed while executing '${childCMD}'`
   return exitCode => {
     if (exitCode === 0) return
-    /* delete the target if it exists. Jake should really do this already */
-    try {
-      fs.unlinkSync(target)
-    } catch (err) {}
+    if (deleteTarget && fs.existsSync(target)) fs.unlinkSync(target)
     fail(msg)
   }
 }
@@ -182,7 +180,8 @@ file(
       layerName,
       ...layerMBTilesPaths
     ])
-
+    tileJoin.stdout.pipe(process.stdout)
+    tileJoin.stderr.pipe(process.stderr)
     tileJoin.on('exit', onFail(this, tileJoin))
     tileJoin.on('exit', onSuccess(this))
   },
@@ -190,13 +189,26 @@ file(
 )
 
 desc(`Build ${allStaticDir} directory full of static MVT's`)
-task('all-static', [allMBTiles], function () {
-  jake.logger.log(`Building ${this.name} ...`)
+task(
+  allStaticDir,
+  [allMBTiles],
+  function () {
+    jake.logger.log(`Building ${this.name} ...`)
 
-  const tileJoin = spawn('tile-join', ['-e', allStaticDir, allMBTiles])
-  tileJoin.on('exit', onFail(this, tileJoin))
-  tileJoin.on('exit', onSuccess(this))
-})
+    if (fs.existsSync(allStaticDir)) {
+      jake.logger.log(`${this.name} already exists, skipping`)
+      this.complete()
+      return
+    }
+
+    const tileJoin = spawn('tile-join', ['-e', allStaticDir, allMBTiles])
+    tileJoin.stdout.pipe(process.stdout)
+    tileJoin.stderr.pipe(process.stderr)
+    tileJoin.on('exit', onFail(this, tileJoin))
+    tileJoin.on('exit', onSuccess(this))
+  },
+  { async: true }
+)
 
 desc(`Default command, builds ${allMBTiles}`)
 task('default', [allMBTiles])
@@ -205,10 +217,77 @@ desc(`Serve ${allMBTiles} via a local webserver`)
 task('serve', [allMBTiles], function () {
   jake.logger.log(`Serving ${allMBTiles} ... (cntrl-c to quit)`)
 
-  const tileJoin = spawn('tileserver-gl-light', [allMBTiles])
-  tileJoin.stdout.pipe(process.stdout)
-  tileJoin.stderr.pipe(process.stderr)
+  const tileServer = spawn('tileserver-gl-light', [allMBTiles])
+  tileServer.stdout.pipe(process.stdout)
+  tileServer.stderr.pipe(process.stderr)
+  tileServer.on('exit', onFail(this, tileServer, false))
 })
+
+desc(`Upload ${allStaticDir} to Google Cloud Storage`)
+task(
+  'upload',
+  [allStaticDir],
+  function () {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    })
+
+    rl.question(
+      'Target Google Cloud Storage path (ex: my-bucket-id/some-path): ',
+      gcPath => {
+        const localSource = `${__dirname}/${allStaticDir}`
+        const gcFullPath = `${gcPath}/all`
+        const gcTarget = `gs://${gcFullPath}`
+
+        console.log()
+        console.log(
+          'Preparing to sync the contents (with deletes) of the following directories:'
+        )
+        console.log()
+        console.log(`  ${localSource}    -->    ${gcTarget}`)
+        console.log()
+
+        rl.question('Continue? This cannot be undone. (y/n): ', resp => {
+          if (resp !== 'y') {
+            console.log('Exiting')
+            process.exit(0)
+          }
+          rl.close()
+          console.log('Starting upload')
+
+          const gsutil = spawn('gsutil', [
+            '-m',
+            '-h',
+            'content-encoding:gzip',
+            '-h',
+            'content-type:application/octet-stream',
+            'rsync',
+            '-d',
+            '-r',
+            localSource,
+            gcTarget
+          ])
+          gsutil.stdout.pipe(process.stdout)
+          gsutil.stderr.pipe(process.stderr)
+
+          gsutil.on('exit', onFail(this, gsutil, false))
+          gsutil.on('exit', exitCode => {
+            if (exitCode !== 0) return
+            console.log('Upload finished successfully')
+            console.log('To use these uploaded tiles via mapbox-gl, set the')
+            console.log("'tiles' attribute of your vector layer source to")
+            console.log(
+              `https://storage.googleapis.com/${gcFullPath}/{z}/{x}/{y}.pbf`
+            )
+            this.complete()
+          })
+        })
+      }
+    )
+  },
+  { async: true }
+)
 
 desc('Delete all build products except the raw downloads')
 task('clean', [], function () {

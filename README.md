@@ -51,3 +51,15 @@ These settings will allow your GC storage bucket to serve uploaded tiles via a p
     gsutil cors set cors.json gs://my-new-bucket-with-a-unique-name
     rm cors.json
     ```
+
+## Changelog
+
+### 0.2
+
+ * switched to OSM (Open Street Map) as data source
+ * Makefile to manage build process
+
+### 0.1
+
+ * WOF (Who's on First) as data source
+ * shell scripts to manage build process

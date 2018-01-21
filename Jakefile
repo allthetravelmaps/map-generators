@@ -43,7 +43,7 @@ const serveMBTiles = mbtiles => {
 /* directory structure */
 const downloadsDir = 'downloads'
 const osmDownloadsDir = `${downloadsDir}/osm`
-const getOSMGeojsonPath = osmId =>
+const getDownloadsOSMPath = osmId =>
   `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
 
 const allMBTiles = 'all.mbtiles'
@@ -57,6 +57,8 @@ const getLayerDir = layer => `${layersDir}/${layer}`
 const getLayerMBTilesPath = layer => `${getLayerDir(layer)}/${layer}.mbtiles`
 const getLayerEntityPath = (layer, entityId) =>
   `${getLayerDir(layer)}/entities/${entityId}.geojson`
+const getLayerFeaturePath = (layer, entityId, featureId) =>
+  `${getLayerDir(layer)}/features/${entityId}-${featureId}.geojson`
 
 /* parsing config files */
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
@@ -69,7 +71,7 @@ directory(osmDownloadsDir)
 
 desc('Download a feature as geojson from OSM')
 rule(
-  /^downloads\/osm\/relation.[0-9]+.geojson$/,
+  /^downloads\/osm\/(node|way|relation).[0-9]+.geojson$/,
   osmDownloadsDir,
   { async: true },
   function () {
@@ -95,18 +97,47 @@ layers.forEach(layer => {
     const entityId = i + 1
     const entityPath = getLayerEntityPath(layer, entityId)
 
-    const featureGeojsonPaths = []
+    const featurePaths = []
     const features = entity['features'] || []
-    features.forEach(feature => {
-      const osmid = feature.osmid || `relation/${feature}`
-      featureGeojsonPaths.push(getOSMGeojsonPath(osmid))
+    features.forEach((featureConf, j) => {
+      const featureId = j + 1
+      const featurePath = getLayerFeaturePath(layer, entityId, featureId)
+      const osmPath = getDownloadsOSMPath(
+        featureConf.osmid || `relation/${featureConf}`
+      )
+      const excludePaths = (featureConf.excludes || []).map(getDownloadsOSMPath)
+
+      desc(`Build ${featurePath}`)
+      file(
+        featurePath,
+        [osmPath, ...excludePaths],
+        function () {
+          jake.logger.log(`Building ${this.name} ...`)
+          jake.mkdirP(path.dirname(featurePath))
+
+          const streamIn = fs.createReadStream(osmPath)
+          const geojsonCliDifference = spawn(
+            'geojson-cli-difference',
+            excludePaths
+          )
+          const streamOut = fs.createWriteStream(this.name)
+          streamIn.pipe(geojsonCliDifference.stdin)
+          geojsonCliDifference.stdout.pipe(streamOut)
+
+          geojsonCliDifference.on('exit', onFail(this, geojsonCliDifference))
+          streamOut.on('finish', () => onSuccess(this)(0))
+        },
+        { async: true }
+      )
+
+      featurePaths.push(featurePath)
     })
 
     /* builing geojson file for each entity with layer */
     desc(`Build ${entityPath}`)
     file(
       entityPath,
-      featureGeojsonPaths,
+      featurePaths,
       function () {
         jake.logger.log(`Building ${this.name} ...`)
         jake.mkdirP(path.dirname(entityPath))
@@ -114,7 +145,7 @@ layers.forEach(layer => {
         const mapshaper = spawn('mapshaper', [
           '-i',
           'combine-files',
-          ...featureGeojsonPaths,
+          ...featurePaths,
           '-drop',
           'fields=*',
           '-merge-layers',

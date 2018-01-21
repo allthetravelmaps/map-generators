@@ -34,10 +34,8 @@ const onSuccess = task => exitCode => {
 const serveMBTiles = mbtiles => {
   jake.logger.log(`Serving ${mbtiles} ... (cntrl-c to quit)`)
 
-  const tileServer = spawn('tileserver-gl-light', [mbtiles])
-  tileServer.stdout.pipe(process.stdout)
-  tileServer.stderr.pipe(process.stderr)
-  tileServer.on('exit', onFail(this, tileServer, false))
+  const cmd = spawn('tileserver-gl-light', [mbtiles], { stdio: 'inherit' })
+  cmd.on('exit', onFail(this, cmd, false))
 }
 
 /* directory structure */
@@ -80,11 +78,11 @@ rule(
       .replace('.', '/')
     jake.logger.log(`Downloading ${this.name} ...`)
 
-    const getOverpass = spawn('get-overpass', [osmId])
+    const cmd = spawn('get-overpass', [osmId])
     const streamOut = fs.createWriteStream(this.name)
-    getOverpass.stdout.pipe(streamOut)
+    cmd.stdout.pipe(streamOut)
 
-    getOverpass.on('exit', onFail(this, getOverpass))
+    cmd.on('exit', onFail(this, cmd))
     streamOut.on('finish', () => onSuccess(this)(0))
   }
 )
@@ -116,15 +114,12 @@ layers.forEach(layer => {
           jake.mkdirP(path.dirname(featurePath))
 
           const streamIn = fs.createReadStream(osmPath)
-          const geojsonCliDifference = spawn(
-            'geojson-cli-difference',
-            excludePaths
-          )
+          const cmd = spawn('geojson-cli-difference', excludePaths)
           const streamOut = fs.createWriteStream(this.name)
-          streamIn.pipe(geojsonCliDifference.stdin)
-          geojsonCliDifference.stdout.pipe(streamOut)
+          streamIn.pipe(cmd.stdin)
+          cmd.stdout.pipe(streamOut)
 
-          geojsonCliDifference.on('exit', onFail(this, geojsonCliDifference))
+          cmd.on('exit', onFail(this, cmd))
           streamOut.on('finish', () => onSuccess(this)(0))
         },
         { async: true }
@@ -142,7 +137,7 @@ layers.forEach(layer => {
         jake.logger.log(`Building ${this.name} ...`)
         jake.mkdirP(path.dirname(entityPath))
 
-        const mapshaper = spawn('mapshaper', [
+        const cmd1 = spawn('mapshaper', [
           '-i',
           'combine-files',
           ...featurePaths,
@@ -154,16 +149,16 @@ layers.forEach(layer => {
           'geojson-type=Feature',
           '-'
         ])
-        const geojsonCliBBox = spawn('geojson-cli-bbox', ['add'])
-        const jq = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
+        const cmd2 = spawn('geojson-cli-bbox', ['add'])
+        const cmd3 = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
         const streamOut = fs.createWriteStream(this.name)
-        mapshaper.stdout.pipe(geojsonCliBBox.stdin)
-        geojsonCliBBox.stdout.pipe(jq.stdin)
-        jq.stdout.pipe(streamOut)
+        cmd1.stdout.pipe(cmd2.stdin)
+        cmd2.stdout.pipe(cmd3.stdin)
+        cmd3.stdout.pipe(streamOut)
 
-        mapshaper.on('exit', onFail(this, mapshaper))
-        geojsonCliBBox.on('exit', onFail(this, geojsonCliBBox))
-        jq.on('exit', onFail(this, jq))
+        cmd1.on('exit', onFail(this, cmd1))
+        cmd2.on('exit', onFail(this, cmd2))
+        cmd3.on('exit', onFail(this, cmd3))
         streamOut.on('finish', () => onSuccess(this)(0))
       },
       {
@@ -185,19 +180,23 @@ layers.forEach(layer => {
       jake.logger.log(`Building ${this.name} ...`)
       jake.mkdirP(path.dirname(layerMBTilesPath))
 
-      const tippecanoe = spawn('tippecanoe', [
-        '-f',
-        '-zg',
-        '--detect-shared-borders',
-        '--detect-longitude-wraparound',
-        '-l',
-        layer,
-        '-o',
-        this.name,
-        ...entityPaths
-      ])
-      tippecanoe.on('exit', onFail(this, tippecanoe))
-      tippecanoe.on('exit', onSuccess(this))
+      const cmd = spawn(
+        'tippecanoe',
+        [
+          '-f',
+          '-zg',
+          '--detect-shared-borders',
+          '--detect-longitude-wraparound',
+          '-l',
+          layer,
+          '-o',
+          this.name,
+          ...entityPaths
+        ],
+        { stdio: 'inherit' }
+      )
+      cmd.on('exit', onFail(this, cmd))
+      cmd.on('exit', onSuccess(this))
     },
     {
       async: true,
@@ -216,21 +215,23 @@ file(
     jake.logger.log(`Building ${this.name} ...`)
 
     const layerName = 'All the Travel Maps'
-    const tileJoin = spawn('tile-join', [
-      '-f',
-      '-o',
-      this.name,
-      '-pk',
-      '-n',
-      layerName,
-      '-N',
-      layerName,
-      ...layerMBTilesPaths
-    ])
-    tileJoin.stdout.pipe(process.stdout)
-    tileJoin.stderr.pipe(process.stderr)
-    tileJoin.on('exit', onFail(this, tileJoin))
-    tileJoin.on('exit', onSuccess(this))
+    const cmd = spawn(
+      'tile-join',
+      [
+        '-f',
+        '-o',
+        this.name,
+        '-pk',
+        '-n',
+        layerName,
+        '-N',
+        layerName,
+        ...layerMBTilesPaths
+      ],
+      { stdio: 'inherit' }
+    )
+    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onSuccess(this))
   },
   { async: true }
 )
@@ -248,11 +249,11 @@ task(
       return
     }
 
-    const tileJoin = spawn('tile-join', ['-e', allStaticDir, allMBTiles])
-    tileJoin.stdout.pipe(process.stdout)
-    tileJoin.stderr.pipe(process.stderr)
-    tileJoin.on('exit', onFail(this, tileJoin))
-    tileJoin.on('exit', onSuccess(this))
+    const cmd = spawn('tile-join', ['-e', allStaticDir, allMBTiles], {
+      stdio: 'inherit'
+    })
+    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onSuccess(this))
   },
   { async: true }
 )
@@ -327,23 +328,25 @@ task(
           rl.close()
           console.log('Starting upload')
 
-          const gsutil = spawn('gsutil', [
-            '-m',
-            '-h',
-            'content-encoding:gzip',
-            '-h',
-            'content-type:application/octet-stream',
-            'rsync',
-            '-d',
-            '-r',
-            localSource,
-            gcTarget
-          ])
-          gsutil.stdout.pipe(process.stdout)
-          gsutil.stderr.pipe(process.stderr)
+          const cmd = spawn(
+            'gsutil',
+            [
+              '-m',
+              '-h',
+              'content-encoding:gzip',
+              '-h',
+              'content-type:application/octet-stream',
+              'rsync',
+              '-d',
+              '-r',
+              localSource,
+              gcTarget
+            ],
+            { stdio: 'inherit' }
+          )
 
-          gsutil.on('exit', onFail(this, gsutil, false))
-          gsutil.on('exit', exitCode => {
+          cmd.on('exit', onFail(this, cmd, false))
+          cmd.on('exit', exitCode => {
             if (exitCode !== 0) return
             console.log('Upload finished successfully')
             console.log('To use these uploaded tiles via mapbox-gl, set the')

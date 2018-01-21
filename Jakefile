@@ -30,6 +30,11 @@ const onSuccess = task => exitCode => {
 }
 
 /* directory structure */
+const downloadsDir = 'downloads'
+const osmDownloadsDir = `${downloadsDir}/osm`
+const getOSMGeojsonPath = osmId =>
+  `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
+
 const allMBTiles = 'all.mbtiles'
 const allStaticDir = 'all-static'
 const confDir = 'conf'
@@ -42,9 +47,6 @@ const getEntityGeojsonPath = (layer, entityId) => {
   const dir = getEntityGeojsonLayerDir(layer)
   return `${dir}/${entityId}.geojson`
 }
-const osmDownloadsDir = 'osm-downloads'
-const getOSMGeojsonPath = osmId =>
-  `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
 
 /* parsing config files */
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
@@ -57,12 +59,12 @@ directory(osmDownloadsDir)
 
 desc('Download a feature as geojson from OSM')
 rule(
-  /^osm-downloads\/relation.[0-9]+.geojson$/,
-  'osm-downloads',
+  /^downloads\/osm\/relation.[0-9]+.geojson$/,
+  osmDownloadsDir,
   { async: true },
   function () {
     const osmId = this.name
-      .slice('osm-downloads/'.length, -'.geojson'.length)
+      .slice('downloads/osm/'.length, -'.geojson'.length)
       .replace('.', '/')
     jake.logger.log(`Downloading ${this.name} ...`)
 
@@ -301,7 +303,7 @@ task('clean', [], function () {
   assertAndRm(allStaticDir, 'all-static')
 })
 
-desc('Delete all build products')
+desc('Delete all build products, including raw downloads')
 task('fullclean', ['clean'], function () {
-  assertAndRm(osmDownloadsDir, 'osm-downloads')
+  assertAndRm(downloadsDir, 'downloads')
 })

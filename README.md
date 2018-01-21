@@ -82,6 +82,7 @@ jake upload-static
 
 ### Master
 
+ * add support for excluding OSM features
  * switched from `make` to `jake` to manage build process
 
 ### 0.2

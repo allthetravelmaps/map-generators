@@ -15,14 +15,17 @@ Ensure all the executables from the [dependencies](#dependencies) section are ac
 ```sh
 jake        # will take a while...
 jake serve  # open http://localhost:8080/ in a browser
-jake upload # will prompt you for a google cloud storage path to upload to
+jake clean  # deletes everything except the raw downloads
 ```
+
+To see a full list of available tasks, run `jake -T`
 
 ## Dependencies
 
 * [jake](https://www.npmjs.com/package/jake)
 * [yaml2json](https://github.com/bronze1man/yaml2json)
 * [get-overpass](https://www.npmjs.com/package/get-overpass)
+* [geojson-cli-difference](https://www.npmjs.com/package/geojson-cli-difference)
 * [mapshapper](https://www.npmjs.com/package/mapshaper)
 * [geojson-cli-bbox](https://www.npmjs.com/package/geojson-cli-bbox)
 * [jq](https://stedolan.github.io/jq/)
@@ -30,39 +33,56 @@ jake upload # will prompt you for a google cloud storage path to upload to
 * [tileserver-gl-light](https://www.npmjs.com/package/tileserver-gl-light) - for serving locally
 * [gsutil](https://cloud.google.com/storage/docs/gsutil) - for uploading
 
-## Cleaning up
+## Building an individual layer
 
-Note that `jake clean` cleans out everything except the raw downloaded data. To delete the raw downloads as well, use `jake fullclean`.
+To see available layers, run `jake list-layers`.
 
-## Setting up a Google Cloud Storage Bucket for uploads
+```sh
+jake build-layer/my-cool-layer
+jake serve-layer/my-cool-layer  # opens webserver on http://localhost:8080
+jake clean-layer/my-cool-layer  # deletes all layer build products, except raw downloads
+```
+
+## Uploading to a Google Cloud Storage Bucket
+
+### Configuring the bucket
 
 These settings will allow your GC storage bucket to serve uploaded tiles via a public url such that the the mapbox-gl sdk can consume them. Note that these settings are permissive - they allow any website or unauthenticated user read access to the whole bucket. Use with care.
 
 1. Create the cloud bucket
 
-    ```shell
+    ```sh
     gsutil mb gs://my-new-bucket-with-a-unique-name
     ```
 
 1. Give everyone read access to the bucket
 
-    ```shell
+    ```sh
     gsutil iam ch allUsers:objectViewer gs://my-new-bucket-with-a-unique-name
     ```
 
 1. Open up CORS all the way on the bucket
 
-    ```shell
+    ```sh
     echo '[{"origin": ["*"],"method": ["*"]}' > cors.json
     gsutil cors set cors.json gs://my-new-bucket-with-a-unique-name
     rm cors.json
     ```
 
+### Building and uploading to the bucket
+
+It's technically sufficient to just run `jake upload-static` alone, but since that prompts for user input, and since `jake build-static` takes a while, you probably want to break the process up into two separate commands:
+
+```sh
+jake build-static
+jake upload-static
+```
+
 ## Changelog
 
 ### Master
 
- * switched from `make` to [`jake`](https://www.npmjs.com/package/jake) to manage build process
+ * switched from `make` to `jake` to manage build process
 
 ### 0.2
 

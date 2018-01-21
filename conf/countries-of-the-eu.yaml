@@ -6,67 +6,68 @@ desc: >
   Overseas Countries and Territories (OCT) not included.
 entities:
   - name: Austria
-    osmids: [16239]
+    features: [16239]
   - name: Belgium
-    osmids: [52411]
+    features: [52411]
   - name: Bulgaria
-    osmids: [186382]
+    features: [186382]
   - name: Croatia
-    osmids: [214885]
+    features: [214885]
   - name: Cyprus
-    osmids: [307787]
+    features: [307787]
   - name: Czech Republic
-    osmids: [51684]
+    features: [51684]
   - name: Denmark
-    osmids: [50046]
+    features: [50046]
   - name: Estonia
-    osmids: [79510]
+    features: [79510]
   - name: Finland
-    osmids: [54224]
+    features: [54224]
   - name: France
-    osmids: [1403916] # mainland and Corse
+    features: [1403916] # mainland and Corse
   - name: Greece
-    osmids: [192307]
+    features: [192307]
   - name: Germany
-    osmids: [51477]
+    features: [51477]
   - name: Hungary
-    osmids: [21335]
+    features: [21335]
   - name: Ireland
-    osmids: [62273]
+    features: [62273]
   - name: Italy
-    osmids: [365331]
+    features: [365331]
   - name: Latvia
-    osmids: [72594]
+    features: [72594]
   - name: Lithuania
-    osmids: [72596]
+    features: [72596]
   - name: Luxembourg
-    osmids: [2171347]
+    features: [2171347]
   - name: Malta
-    osmids: [365307]
+    features: [365307]
   - name: Netherlands
-    osmids: [47796] # mainland and Caribbean Netherlands
-    excluded_osmids:
-      - 1216720 # Netherlands - Caribbean Netherlands
+    features:
+      - osmid: relation/47796         # mainland and Caribbean Netherlands
+        excludes: [relation/1216720]  # Netherlands - Caribbean Netherlands
   - name: Poland
-    osmids: [49715]
+    features: [49715]
   - name: Portugal
-    osmids: [295480]
-    excluded_osmids:
-      - 1629146 # Azores
-      - 1629145 # Madiera
+    features:
+      - osmid: relation/295480
+        excludes:
+          - relation/1629146 # Azores
+          - relation/1629145 # Madiera
   - name: Romania
-    osmids: [90689]
+    features: [90689]
   - name: Slovakia
-    osmids: [14296]
+    features: [14296]
   - name: Slovenia
-    osmids: [218657]
+    features: [218657]
   - name: Spain
-    osmids: [1311341]
-    excluded_osmids:
-      - 7248699 # Canary Islands
+    features:
+      - osmid: relation/1311341
+        excludes: [relation/7248699] # Canary Islands
   - name: Sweden
-    osmids: [52822]
+    features: [52822]
   - name: United Kingdom (UK)
-    osmids:
+    features:
       - 62149   # mainland
       - 1278736 # Gibraltar

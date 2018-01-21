@@ -5,32 +5,32 @@ desc: >
   officially-defined neighborhoods.
 entities:
   - name: Comuna 1
-    osmids: [4261029]
+    features: [4261029]
   - name: Comuna 2
-    osmids: [4260905]
+    features: [4260905]
   - name: Comuna 3
-    osmids: [4260835]
+    features: [4260835]
   - name: Comuna 4
-    osmids: [4260419]
+    features: [4260419]
   - name: Comuna 5
-    osmids: [4260378]
+    features: [4260378]
   - name: Comuna 6
-    osmids: [4257895]
+    features: [4257895]
   - name: Comuna 7
-    osmids: [4256878]
+    features: [4256878]
   - name: Comuna 8
-    osmids: [4256826]
+    features: [4256826]
   - name: Comuna 9
-    osmids: [4256731]
+    features: [4256731]
   - name: Comuna 10
-    osmids: [4256510]
+    features: [4256510]
   - name: Comuna 11
-    osmids: [4240316]
+    features: [4240316]
   - name: Comuna 12
-    osmids: [4239028]
+    features: [4239028]
   - name: Comuna 13
-    osmids: [4238168]
+    features: [4238168]
   - name: Comuna 14
-    osmids: [4240239]
+    features: [4240239]
   - name: Comuna 15
-    osmids: [4239231]
+    features: [4239231]

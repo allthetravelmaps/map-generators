@@ -1,6 +1,7 @@
 const assert = require('assert')
 const { execSync, spawn } = require('child_process')
 const fs = require('fs')
+const path = require('path')
 const process = require('process')
 const readline = require('readline')
 
@@ -29,21 +30,33 @@ const onSuccess = task => exitCode => {
   task.complete()
 }
 
+/* serve an MBTiles file via a webserver */
+const serveMBTiles = mbtiles => {
+  jake.logger.log(`Serving ${mbtiles} ... (cntrl-c to quit)`)
+
+  const cmd = spawn('tileserver-gl-light', [mbtiles], { stdio: 'inherit' })
+  cmd.on('exit', onFail(this, cmd, false))
+}
+
 /* directory structure */
+const downloadsDir = 'downloads'
+const osmDownloadsDir = `${downloadsDir}/osm`
+const getDownloadsOSMPath = osmId =>
+  `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
+
 const allMBTiles = 'all.mbtiles'
-const allStaticDir = 'all-static'
+const allStaticDir = 'all.static'
+
 const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
-const layerMBTilesDir = 'layer-mbtiles'
-const getLayerMBTilesPath = layer => `${layerMBTilesDir}/${layer}.mbtiles`
-const entityGeojsonDir = 'entity-geojson'
-const getEntityGeojsonLayerDir = layer => `${entityGeojsonDir}/${layer}`
-const getEntityGeojsonPath = (layer, entityId) => {
-  const dir = getEntityGeojsonLayerDir(layer)
-  return `${dir}/${entityId}.geojson`
-}
-const osmDownloadsDir = 'osm-downloads'
-const getOSMGeojsonPath = osmId => `${osmDownloadsDir}/${osmId}.geojson`
+
+const layersDir = 'layers'
+const getLayerDir = layer => `${layersDir}/${layer}`
+const getLayerMBTilesPath = layer => `${getLayerDir(layer)}/${layer}.mbtiles`
+const getLayerEntityPath = (layer, entityId) =>
+  `${getLayerDir(layer)}/entities/${entityId}.geojson`
+const getLayerFeaturePath = (layer, entityId, featureId) =>
+  `${getLayerDir(layer)}/features/${entityId}-${featureId}.geojson`
 
 /* parsing config files */
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
@@ -56,18 +69,20 @@ directory(osmDownloadsDir)
 
 desc('Download a feature as geojson from OSM')
 rule(
-  /^osm-downloads\/[0-9]+.geojson$/,
-  'osm-downloads',
+  /^downloads\/osm\/(node|way|relation).[0-9]+.geojson$/,
+  osmDownloadsDir,
   { async: true },
   function () {
-    const osmId = this.name.slice('osm-downloads/'.length, -'.geojson'.length)
+    const osmId = this.name
+      .slice('downloads/osm/'.length, -'.geojson'.length)
+      .replace('.', '/')
     jake.logger.log(`Downloading ${this.name} ...`)
 
-    const getOverpass = spawn('get-overpass', [`relation/${osmId}`])
+    const cmd = spawn('get-overpass', [osmId])
     const streamOut = fs.createWriteStream(this.name)
-    getOverpass.stdout.pipe(streamOut)
+    cmd.stdout.pipe(streamOut)
 
-    getOverpass.on('exit', onFail(this, getOverpass))
+    cmd.on('exit', onFail(this, cmd))
     streamOut.on('finish', () => onSuccess(this)(0))
   }
 )
@@ -75,30 +90,57 @@ rule(
 const layers = getLayers()
 layers.forEach(layer => {
   const entities = getConf(layer).entities
-  const entityGeojsons = []
+  const entityPaths = []
   entities.forEach((entity, i) => {
     const entityId = i + 1
-    const entityGeojson = getEntityGeojsonPath(layer, entityId)
+    const entityPath = getLayerEntityPath(layer, entityId)
 
-    const includedOSMGeojsons = entity['osmids'].map(getOSMGeojsonPath)
+    const featurePaths = []
+    const features = entity['features'] || []
+    features.forEach((featureConf, j) => {
+      const featureId = j + 1
+      const featurePath = getLayerFeaturePath(layer, entityId, featureId)
+      const osmPath = getDownloadsOSMPath(
+        featureConf.osmid || `relation/${featureConf}`
+      )
+      const excludePaths = (featureConf.excludes || []).map(getDownloadsOSMPath)
 
-    /* TODO: remove excluded geojson
-    const excludedOSMGeojsons = (entity['excluded_osmids'] || []).map(getOSMGeojsonPath)
-    */
+      desc(`Build ${featurePath}`)
+      file(
+        featurePath,
+        [osmPath, ...excludePaths],
+        function () {
+          jake.logger.log(`Building ${this.name} ...`)
+          jake.mkdirP(path.dirname(featurePath))
+
+          const streamIn = fs.createReadStream(osmPath)
+          const cmd = spawn('geojson-cli-difference', excludePaths)
+          const streamOut = fs.createWriteStream(this.name)
+          streamIn.pipe(cmd.stdin)
+          cmd.stdout.pipe(streamOut)
+
+          cmd.on('exit', onFail(this, cmd))
+          streamOut.on('finish', () => onSuccess(this)(0))
+        },
+        { async: true }
+      )
+
+      featurePaths.push(featurePath)
+    })
 
     /* builing geojson file for each entity with layer */
-    desc(`Build ${entityGeojson}`)
+    desc(`Build ${entityPath}`)
     file(
-      entityGeojson,
-      includedOSMGeojsons,
+      entityPath,
+      featurePaths,
       function () {
         jake.logger.log(`Building ${this.name} ...`)
-        jake.mkdirP(getEntityGeojsonLayerDir(layer))
+        jake.mkdirP(path.dirname(entityPath))
 
-        const mapshaper = spawn('mapshaper', [
+        const cmd1 = spawn('mapshaper', [
           '-i',
           'combine-files',
-          ...includedOSMGeojsons,
+          ...featurePaths,
           '-drop',
           'fields=*',
           '-merge-layers',
@@ -107,16 +149,16 @@ layers.forEach(layer => {
           'geojson-type=Feature',
           '-'
         ])
-        const geojsonCliBBox = spawn('geojson-cli-bbox', ['add'])
-        const jq = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
+        const cmd2 = spawn('geojson-cli-bbox', ['add'])
+        const cmd3 = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
         const streamOut = fs.createWriteStream(this.name)
-        mapshaper.stdout.pipe(geojsonCliBBox.stdin)
-        geojsonCliBBox.stdout.pipe(jq.stdin)
-        jq.stdout.pipe(streamOut)
+        cmd1.stdout.pipe(cmd2.stdin)
+        cmd2.stdout.pipe(cmd3.stdin)
+        cmd3.stdout.pipe(streamOut)
 
-        mapshaper.on('exit', onFail(this, mapshaper))
-        geojsonCliBBox.on('exit', onFail(this, geojsonCliBBox))
-        jq.on('exit', onFail(this, jq))
+        cmd1.on('exit', onFail(this, cmd1))
+        cmd2.on('exit', onFail(this, cmd2))
+        cmd3.on('exit', onFail(this, cmd3))
         streamOut.on('finish', () => onSuccess(this)(0))
       },
       {
@@ -125,7 +167,7 @@ layers.forEach(layer => {
       }
     )
 
-    entityGeojsons.push(entityGeojson)
+    entityPaths.push(entityPath)
   })
 
   /* build one mbtiles file for each map */
@@ -133,24 +175,28 @@ layers.forEach(layer => {
   desc(`Build ${layerMBTilesPath}`)
   file(
     layerMBTilesPath,
-    entityGeojsons,
+    entityPaths,
     function () {
       jake.logger.log(`Building ${this.name} ...`)
-      jake.mkdirP(layerMBTilesDir)
+      jake.mkdirP(path.dirname(layerMBTilesPath))
 
-      const tippecanoe = spawn('tippecanoe', [
-        '-f',
-        '-zg',
-        '--detect-shared-borders',
-        '--detect-longitude-wraparound',
-        '-l',
-        layer,
-        '-o',
-        this.name,
-        ...entityGeojsons
-      ])
-      tippecanoe.on('exit', onFail(this, tippecanoe))
-      tippecanoe.on('exit', onSuccess(this))
+      const cmd = spawn(
+        'tippecanoe',
+        [
+          '-f',
+          '-zg',
+          '--detect-shared-borders',
+          '--detect-longitude-wraparound',
+          '-l',
+          layer,
+          '-o',
+          this.name,
+          ...entityPaths
+        ],
+        { stdio: 'inherit' }
+      )
+      cmd.on('exit', onFail(this, cmd))
+      cmd.on('exit', onSuccess(this))
     },
     {
       async: true,
@@ -169,21 +215,23 @@ file(
     jake.logger.log(`Building ${this.name} ...`)
 
     const layerName = 'All the Travel Maps'
-    const tileJoin = spawn('tile-join', [
-      '-f',
-      '-o',
-      this.name,
-      '-pk',
-      '-n',
-      layerName,
-      '-N',
-      layerName,
-      ...layerMBTilesPaths
-    ])
-    tileJoin.stdout.pipe(process.stdout)
-    tileJoin.stderr.pipe(process.stderr)
-    tileJoin.on('exit', onFail(this, tileJoin))
-    tileJoin.on('exit', onSuccess(this))
+    const cmd = spawn(
+      'tile-join',
+      [
+        '-f',
+        '-o',
+        this.name,
+        '-pk',
+        '-n',
+        layerName,
+        '-N',
+        layerName,
+        ...layerMBTilesPaths
+      ],
+      { stdio: 'inherit' }
+    )
+    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onSuccess(this))
   },
   { async: true }
 )
@@ -201,32 +249,56 @@ task(
       return
     }
 
-    const tileJoin = spawn('tile-join', ['-e', allStaticDir, allMBTiles])
-    tileJoin.stdout.pipe(process.stdout)
-    tileJoin.stderr.pipe(process.stderr)
-    tileJoin.on('exit', onFail(this, tileJoin))
-    tileJoin.on('exit', onSuccess(this))
+    const cmd = spawn('tile-join', ['-e', allStaticDir, allMBTiles], {
+      stdio: 'inherit'
+    })
+    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onSuccess(this))
   },
   { async: true }
 )
 
-desc(`Default command, builds ${allMBTiles}`)
-task('default', [allMBTiles])
+layers.forEach(layer => {
+  desc(`Build layer ${layer}`)
+  task(`build-layer/${layer}`, [getLayerMBTilesPath(layer)])
+})
+
+desc(`Build all layers in one mbtiles file, ${allMBTiles}`)
+task('build', [allMBTiles])
+
+layers.forEach(layer => {
+  const layerMBTiles = getLayerMBTilesPath(layer)
+  desc(`Serve layer ${layer}`)
+  task(`serve-layer/${layer}`, [layerMBTiles], function () {
+    serveMBTiles(layerMBTiles)
+  })
+})
 
 desc(`Serve ${allMBTiles} via a local webserver`)
 task('serve', [allMBTiles], function () {
-  jake.logger.log(`Serving ${allMBTiles} ... (cntrl-c to quit)`)
-
-  const tileServer = spawn('tileserver-gl-light', [allMBTiles])
-  tileServer.stdout.pipe(process.stdout)
-  tileServer.stderr.pipe(process.stderr)
-  tileServer.on('exit', onFail(this, tileServer, false))
+  serveMBTiles(allMBTiles)
 })
+
+layers.forEach(layer => {
+  desc(`Delete build products for layer ${layer}`)
+  task(`clean-layer/${layer}`, [], function () {
+    assertAndRm(getLayerDir(layer), `${layersDir}/${layer}`)
+  })
+})
+
+desc(`Delete ${allMBTiles} and ${layersDir}`)
+task('clean', [], function () {
+  assertAndRm(allMBTiles, 'all.mbtiles')
+  assertAndRm(layersDir, 'layers')
+})
+
+desc(`Build all layers in one static directory, ${allStaticDir}`)
+task('build-static', [allStaticDir])
 
 desc(`Upload ${allStaticDir} to Google Cloud Storage`)
 task(
-  'upload',
-  [allStaticDir],
+  'upload-static',
+  ['build-static'],
   function () {
     const rl = readline.createInterface({
       input: process.stdin,
@@ -256,23 +328,25 @@ task(
           rl.close()
           console.log('Starting upload')
 
-          const gsutil = spawn('gsutil', [
-            '-m',
-            '-h',
-            'content-encoding:gzip',
-            '-h',
-            'content-type:application/octet-stream',
-            'rsync',
-            '-d',
-            '-r',
-            localSource,
-            gcTarget
-          ])
-          gsutil.stdout.pipe(process.stdout)
-          gsutil.stderr.pipe(process.stderr)
+          const cmd = spawn(
+            'gsutil',
+            [
+              '-m',
+              '-h',
+              'content-encoding:gzip',
+              '-h',
+              'content-type:application/octet-stream',
+              'rsync',
+              '-d',
+              '-r',
+              localSource,
+              gcTarget
+            ],
+            { stdio: 'inherit' }
+          )
 
-          gsutil.on('exit', onFail(this, gsutil, false))
-          gsutil.on('exit', exitCode => {
+          cmd.on('exit', onFail(this, cmd, false))
+          cmd.on('exit', exitCode => {
             if (exitCode !== 0) return
             console.log('Upload finished successfully')
             console.log('To use these uploaded tiles via mapbox-gl, set the')
@@ -289,15 +363,23 @@ task(
   { async: true }
 )
 
-desc('Delete all build products except the raw downloads')
-task('clean', [], function () {
-  assertAndRm(entityGeojsonDir, 'entity-geojson')
-  assertAndRm(layerMBTilesDir, 'layer-mbtiles')
-  assertAndRm(allMBTiles, 'all.mbtiles')
-  assertAndRm(allStaticDir, 'all-static')
+desc(`Delete ${allStaticDir}`)
+task('clean-static', [], function () {
+  assertAndRm(allStaticDir, 'all.static')
+})
+
+desc('List layers')
+task('list-layers', [], function () {
+  layers.forEach(layer => console.log(layer))
+})
+
+desc('Delete the downloads dir')
+task('clean-downloads', [], function () {
+  assertAndRm(downloadsDir, 'downloads')
 })
 
 desc('Delete all build products')
-task('fullclean', ['clean'], function () {
-  assertAndRm(osmDownloadsDir, 'osm-downloads')
-})
+task('clean-everything', ['clean-static', 'clean', 'clean-downloads'])
+
+desc(`Build master mbtiles file, ${allMBTiles}`)
+task('default', ['build'])

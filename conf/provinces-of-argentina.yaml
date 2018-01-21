@@ -2,50 +2,50 @@ name: Provinces of Argentina
 desc: The 23 provinces and the one autonomous city (Buenos Aires) of Argentina.
 entities:
   - name: La Rioja
-    osmids: [153536]
+    features: [153536]
   - name: San Luis
-    osmids: [153538]
+    features: [153538]
   - name: San Juan
-    osmids: [153539]
+    features: [153539]
   - name: Mendoza
-    osmids: [153540]
+    features: [153540]
   - name: La Pampa
-    osmids: [153541]
+    features: [153541]
   - name: Santa Fe
-    osmids: [153543]
+    features: [153543]
   - name: Santiago del Estero
-    osmids: [153544]
+    features: [153544]
   - name: Catamarca
-    osmids: [153545]
+    features: [153545]
   - name: Río Negro
-    osmids: [153547]
+    features: [153547]
   - name: Chubut
-    osmids: [153548]
+    features: [153548]
   - name: Santa Cruz
-    osmids: [153549]
+    features: [153549]
   - name: Tierra del Fuego
-    osmids: [153550]
+    features: [153550]
   - name: Entre Ríos
-    osmids: [153551]
+    features: [153551]
   - name: Corrientes
-    osmids: [153552]
+    features: [153552]
   - name: Misiones
-    osmids: [153553]
+    features: [153553]
   - name: Chaco
-    osmids: [153554]
+    features: [153554]
   - name: Jujuy
-    osmids: [153556]
+    features: [153556]
   - name: Tucumán
-    osmids: [153558]
+    features: [153558]
   - name: Neuquén
-    osmids: [1606727]
+    features: [1606727]
   - name: Buenos Aires
-    osmids: [1632167]
+    features: [1632167]
   - name: Salta
-    osmids: [2405230]
+    features: [2405230]
   - name: Formosa
-    osmids: [2849847]
+    features: [2849847]
   - name: Autonomous City of Buenos Aires
-    osmids: [3082668]
+    features: [3082668]
   - name: Córdoba
-    osmids: [3592494]
+    features: [3592494]

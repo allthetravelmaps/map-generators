@@ -1,5 +1,4 @@
-osm-downloads
-entity-geojson
-layer-mbtiles
+downloads
+layers
 all.mbtiles
-all-static
+all.static

@@ -43,7 +43,8 @@ const getEntityGeojsonPath = (layer, entityId) => {
   return `${dir}/${entityId}.geojson`
 }
 const osmDownloadsDir = 'osm-downloads'
-const getOSMGeojsonPath = osmId => `${osmDownloadsDir}/${osmId}.geojson`
+const getOSMGeojsonPath = osmId =>
+  `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
 
 /* parsing config files */
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
@@ -56,13 +57,13 @@ directory(osmDownloadsDir)
 
 desc('Download a feature as geojson from OSM')
 rule(
-  /^osm-downloads\/relation-[0-9]+.geojson$/,
+  /^osm-downloads\/relation.[0-9]+.geojson$/,
   'osm-downloads',
   { async: true },
   function () {
     const osmId = this.name
       .slice('osm-downloads/'.length, -'.geojson'.length)
-      .replace('-', '/')
+      .replace('.', '/')
     jake.logger.log(`Downloading ${this.name} ...`)
 
     const getOverpass = spawn('get-overpass', [osmId])
@@ -82,19 +83,18 @@ layers.forEach(layer => {
     const entityId = i + 1
     const entityGeojson = getEntityGeojsonPath(layer, entityId)
 
-    /* TODO: rules for computed geojsons */
-
-    const relationGeojsons = (entity['relations'] || []).map(relationID =>
-      getOSMGeojsonPath(`relation-${relationID}`)
-    )
-
-    /* TODO: add computed geojsons to dependencies, mapshaper command */
+    const featureGeojsonPaths = []
+    const features = entity['features'] || []
+    features.forEach(feature => {
+      const osmid = feature.osmid || `relation/${feature}`
+      featureGeojsonPaths.push(getOSMGeojsonPath(osmid))
+    })
 
     /* builing geojson file for each entity with layer */
     desc(`Build ${entityGeojson}`)
     file(
       entityGeojson,
-      relationGeojsons,
+      featureGeojsonPaths,
       function () {
         jake.logger.log(`Building ${this.name} ...`)
         jake.mkdirP(getEntityGeojsonLayerDir(layer))
@@ -102,7 +102,7 @@ layers.forEach(layer => {
         const mapshaper = spawn('mapshaper', [
           '-i',
           'combine-files',
-          ...relationGeojsons,
+          ...featureGeojsonPaths,
           '-drop',
           'fields=*',
           '-merge-layers',

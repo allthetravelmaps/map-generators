@@ -2,118 +2,118 @@ name: Counties of California
 desc: The 58 counties of California, USA.
 entities:
   - name: Humboldt
-    relations: [396458]
+    features: [396458]
   - name: Tulare
-    relations: [396459]
+    features: [396459]
   - name: Sacramento
-    relations: [396460]
+    features: [396460]
   - name: Marin
-    relations: [396461]
+    features: [396461]
   - name: Contra Costa
-    relations: [396462]
+    features: [396462]
   - name: Napa
-    relations: [396463]
+    features: [396463]
   - name: Nevada
-    relations: [396464]
+    features: [396464]
   - name: Mariposa
-    relations: [396465]
+    features: [396465]
   - name: Orange
-    relations: [396466]
+    features: [396466]
   - name: San Joaquin
-    relations: [396467]
+    features: [396467]
   - name: Sonoma
-    relations: [396468]
+    features: [396468]
   - name: Lassen
-    relations: [396469]
+    features: [396469]
   - name: Calaveras
-    relations: [396470]
+    features: [396470]
   - name: Tuolumne
-    relations: [396471]
+    features: [396471]
   - name: Mono
-    relations: [396472]
+    features: [396472]
   - name: Santa Cruz
-    relations: [396473]
+    features: [396473]
   - name: Sierra
-    relations: [396474]
+    features: [396474]
   - name: Yuba
-    relations: [396475]
+    features: [396475]
   - name: Colusa
-    relations: [396476]
+    features: [396476]
   - name: Plumas
-    relations: [396477]
+    features: [396477]
   - name: Sutter
-    relations: [396478]
+    features: [396478]
   - name: Los Angeles
-    relations: [396479]
+    features: [396479]
   - name: Kings
-    relations: [396480]
+    features: [396480]
   - name: El Dorado
-    relations: [396481]
+    features: [396481]
   - name: San Diego
-    relations: [396482]
+    features: [396482]
   - name: Siskiyou
-    relations: [396483]
+    features: [396483]
   - name: Trinity
-    relations: [396484]
+    features: [396484]
   - name: Monterey
-    relations: [396485]
+    features: [396485]
   - name: Tehama
-    relations: [396486]
+    features: [396486]
   - name: San Francisco
-    relations: [396487]
+    features: [396487]
   - name: Madera
-    relations: [396488]
+    features: [396488]
   - name: Mendocino
-    relations: [396489]
+    features: [396489]
   - name: Amador
-    relations: [396490]
+    features: [396490]
   - name: Inyo
-    relations: [396491]
+    features: [396491]
   - name: Fresno
-    relations: [396492]
+    features: [396492]
   - name: Glen
-    relations: [396493]
+    features: [396493]
   - name: Kern
-    relations: [396494]
+    features: [396494]
   - name: Riverside
-    relations: [396495]
+    features: [396495]
   - name: San Luis Obispo
-    relations: [396496]
+    features: [396496]
   - name: Alpine
-    relations: [396497]
+    features: [396497]
   - name: San Mateo
-    relations: [396498]
+    features: [396498]
   - name: Alameda
-    relations: [396499]
+    features: [396499]
   - name: San Benito
-    relations: [396500]
+    features: [396500]
   - name: Santa Clara
-    relations: [396501]
+    features: [396501]
   - name: Lake
-    relations: [396502]
+    features: [396502]
   - name: Del Norte
-    relations: [396503]
+    features: [396503]
   - name: Merced
-    relations: [396504]
+    features: [396504]
   - name: Ventura
-    relations: [396505]
+    features: [396505]
   - name: Modoc
-    relations: [396506]
+    features: [396506]
   - name: Yolo
-    relations: [396507]
+    features: [396507]
   - name: Butte
-    relations: [396508]
+    features: [396508]
   - name: San Bernardino
-    relations: [396509]
+    features: [396509]
   - name: Santa Barbara
-    relations: [396510]
+    features: [396510]
   - name: Placer
-    relations: [396511]
+    features: [396511]
   - name: Shasta
-    relations: [396512]
+    features: [396512]
   - name: Solano
-    relations: [396513]
+    features: [396513]
   - name: Stanislaus
-    relations: [396514]
+    features: [396514]
   - name: Imperial
-    relations: [396515]
+    features: [396515]

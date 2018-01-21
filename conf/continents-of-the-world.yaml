@@ -2,7 +2,7 @@ name: Continents of the World
 desc: The 7 continents of the world.
 entities:
   - name: Europe
-    relations:
+    features:
       - 36989   # Vatican City (Holy See)
       - 2088990 # Kosovo
       - 53292   # Albania
@@ -59,12 +59,11 @@ entities:
       - 270009  # UK - Guernsey
       - 3263728 # UK - Akrotiri and Dhekelia (on Cypress, soverign military bases)
       - 1403916 # France - mainland and Corse
-    computed:
-      - included: [relation/47796]    # Netherlands - mainland and Caribbean Netherlands
-        excluded: [relation/1216720]  # Netherlands - Caribbean Netherlands
+      - osmid: relation/47796         # Netherlands - mainland and Caribbean Netherlands
+        excludes: [relation/1216720]  # Netherlands - Caribbean Netherlands
 
   - name: North America
-    relations:
+    features:
       - 536900  # Antigua and Barbuda
       - 547511  # Barbados
       - 547469  # The Bahamas
@@ -103,23 +102,21 @@ entities:
       - 1401835 # France - Guadeloupe
       - 1891495 # France - Martinique
       - 1891583 # France - Saint Martin
-    computed:
-      - included:
-          - relation/148838  # USA - mainland and all overseas territories
-        excluded:
-          - relation/7248460 # USA - Howland Island
-          - relation/7248461 # USA - Baker Island
-          - relation/7248458 # USA - Johnston Atoll
-          - relation/7248457 # USA - Kingman Reef
-          - relation/7248454 # USA - Palmyra Atoll
-          - relation/7248459 # USA - Jarvis Island
-          - relation/2177187 # USA - American Samoa
-          - relation/6430384 # USA - Wake Island
-          - relation/306001  # USA - Guam
-          - relation/306004  # USA - Northern Mariana Islands
+      - osmid: relation/148838  # USA - mainland and all overseas territories
+        excludes:
+          - relation/7248460    # USA - Howland Island
+          - relation/7248461    # USA - Baker Island
+          - relation/7248458    # USA - Johnston Atoll
+          - relation/7248457    # USA - Kingman Reef
+          - relation/7248454    # USA - Palmyra Atoll
+          - relation/7248459    # USA - Jarvis Island
+          - relation/2177187    # USA - American Samoa
+          - relation/6430384    # USA - Wake Island
+          - relation/306001     # USA - Guam
+          - relation/306004     # USA - Northern Mariana Islands
 
   - name: South America
-    relations:
+    features:
       - 286393  # Argentina
       - 252645  # Bolivia
       - 59470   # Brazil
@@ -139,12 +136,11 @@ entities:
       - 1983628 # UK - South Georgia and the South Sandwich Islands
       - 285454  # UK - British Virgin Islands
       - 1260551 # France - French Guiana
-    computed:
-      - included: [relation/272644] # Venezuela
-        excluded: [way/245555935]   # Venezuela - Isla Aves
+      - osmid: relation/272644    # Venezuela
+        excludes: [way/245555935] # Venezuela - Isla Aves
 
   - name: Africa
-    relations:
+    features:
       - 192756  # Algeria
       - 195267  # Angola
       - 192784  # Benin
@@ -203,7 +199,7 @@ entities:
       - 6063099 # France - "Scattered Islands in the Indian Ocean"
 
   - name: Asia
-    relations:
+    features:
       - 303427  # Afghanistan
       - 378734  # Bahrain
       - 184640  # Bangladesh
@@ -251,7 +247,7 @@ entities:
       - 1993867 # UK - British Indian Ocean Territory
 
   - name: Oceania
-    relations:
+    features:
       - 556706  # New Zealand
       - 2186600 # Tokelau
       - 571747  # Fiji
@@ -282,12 +278,11 @@ entities:
       - 6430384 # USA - Wake Island
       - 306001  # USA - Guam
       - 306004  # USA - Northern Mariana Islands
-    computed:
-      - included: [relation/80500]    # Australia - mainland and all islands
-        excluded: [relation/2177227]  # Australia - Heard Island and McDonald Islands
+      - osmid: relation/80500         # Australia - mainland and all islands
+        excludes: [relation/2177227]  # Australia - Heard Island and McDonald Islands
 
   - name: Antartica
-    relations:
+    features:
       - 2186646 # Antartic treaty border
 
 # Un-continentable...?

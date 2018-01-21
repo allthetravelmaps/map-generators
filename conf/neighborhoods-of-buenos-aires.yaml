@@ -2,98 +2,98 @@ name: Neighborhoods of Buenos Aires
 desc: The 48 government-defined neighborhoods of Buenos Aires, Argentina.
 entities:
   - name: Villa Santa Rita
-    relations: [2220602]
+    features: [2220602]
   - name: Villa del Parque
-    relations: [2220994]
+    features: [2220994]
   - name: Villa General Mitre
-    relations: [2221081]
+    features: [2221081]
   - name: Villa Devoto
-    relations: [2221264]
+    features: [2221264]
   - name: Villa Pueyrredón
-    relations: [2221272]
+    features: [2221272]
   - name: Agronomía
-    relations: [2221283]
+    features: [2221283]
   - name: La Paternal
-    relations: [2221308]
+    features: [2221308]
   - name: Parque Chas
-    relations: [2221316]
+    features: [2221316]
   - name: Chacarita
-    relations: [2221347]
+    features: [2221347]
   - name: Villa Ortúzar
-    relations: [2221396]
+    features: [2221396]
   - name: Villa Crespo
-    relations: [2221410]
+    features: [2221410]
   - name: Caballito
-    relations: [2221428]
+    features: [2221428]
   - name: Monte Castro
-    relations: [2221446]
+    features: [2221446]
   - name: Floresta
-    relations: [2221465]
+    features: [2221465]
   - name: Flores
-    relations: [2221479]
+    features: [2221479]
   - name: Villa Real
-    relations: [2222105]
+    features: [2222105]
   - name: Versalles
-    relations: [2222108]
+    features: [2222108]
   - name: Villa Luro
-    relations: [2222110]
+    features: [2222110]
   - name: Vélez Sarsfield
-    relations: [2222113]
+    features: [2222113]
   - name: Villa Urquiza
-    relations: [2222119]
+    features: [2222119]
   - name: Saavedra
-    relations: [2222167]
+    features: [2222167]
   - name: Núñez
-    relations: [2222173]
+    features: [2222173]
   - name: Colegiales
-    relations: [2222175]
+    features: [2222175]
   - name: Belgrano
-    relations: [2222180]
+    features: [2222180]
   - name: Palermo
-    relations: [2222226]
+    features: [2222226]
   - name: Liniers
-    relations: [2222235]
+    features: [2222235]
   - name: Mataderos
-    relations: [2222237]
+    features: [2222237]
   - name: Parque Avellaneda
-    relations: [2222250]
+    features: [2222250]
   - name: Parque Chacabuco
-    relations: [2222256]
+    features: [2222256]
   - name: Almagro
-    relations: [2222269]
+    features: [2222269]
   - name: Boedo
-    relations: [2222296]
+    features: [2222296]
   - name: Balvanera
-    relations: [2222813]
+    features: [2222813]
   - name: San Cristóbal
-    relations: [2222826]
+    features: [2222826]
   - name: Monserrat
-    relations: [2222917]
+    features: [2222917]
   - name: San Nicolás
-    relations: [2223057]
+    features: [2223057]
   - name: San Telmo
-    relations: [2223069]
+    features: [2223069]
   - name: Constitución
-    relations: [2223078]
+    features: [2223078]
   - name: Parque Patricios
-    relations: [2223088]
+    features: [2223088]
   - name: Nueva Pompeya
-    relations: [2223107]
+    features: [2223107]
   - name: Villa Lugano
-    relations: [2223126]
+    features: [2223126]
   - name: Villa Soldati
-    relations: [2223172]
+    features: [2223172]
   - name: Villa Riachuelo
-    relations: [2223176]
+    features: [2223176]
   - name: Barracas
-    relations: [2223536]
+    features: [2223536]
   - name: La Boca
-    relations: [2223879]
+    features: [2223879]
   - name: Recoleta
-    relations: [2224056]
+    features: [2224056]
   - name: Retiro
-    relations: [2224546]
+    features: [2224546]
   - name: Puerto Madero
-    relations: [2224562]
+    features: [2224562]
   - name: Coghlan
-    relations: [5328270]
+    features: [5328270]

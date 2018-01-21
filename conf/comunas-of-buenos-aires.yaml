@@ -5,32 +5,32 @@ desc: >
   officially-defined neighborhoods.
 entities:
   - name: Comuna 1
-    relations: [4261029]
+    features: [4261029]
   - name: Comuna 2
-    relations: [4260905]
+    features: [4260905]
   - name: Comuna 3
-    relations: [4260835]
+    features: [4260835]
   - name: Comuna 4
-    relations: [4260419]
+    features: [4260419]
   - name: Comuna 5
-    relations: [4260378]
+    features: [4260378]
   - name: Comuna 6
-    relations: [4257895]
+    features: [4257895]
   - name: Comuna 7
-    relations: [4256878]
+    features: [4256878]
   - name: Comuna 8
-    relations: [4256826]
+    features: [4256826]
   - name: Comuna 9
-    relations: [4256731]
+    features: [4256731]
   - name: Comuna 10
-    relations: [4256510]
+    features: [4256510]
   - name: Comuna 11
-    relations: [4240316]
+    features: [4240316]
   - name: Comuna 12
-    relations: [4239028]
+    features: [4239028]
   - name: Comuna 13
-    relations: [4238168]
+    features: [4238168]
   - name: Comuna 14
-    relations: [4240239]
+    features: [4240239]
   - name: Comuna 15
-    relations: [4239231]
+    features: [4239231]

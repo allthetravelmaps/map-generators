@@ -36,7 +36,7 @@ const getOSMGeojsonPath = osmId =>
   `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
 
 const allMBTiles = 'all.mbtiles'
-const allStaticDir = 'all-static'
+const allStaticDir = 'all.static'
 const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
 const layerMBTilesDir = 'layer-mbtiles'
@@ -295,12 +295,16 @@ task(
   { async: true }
 )
 
-desc('Delete all build products except the raw downloads')
-task('clean', [], function () {
-  assertAndRm(entityGeojsonDir, 'entity-geojson')
-  assertAndRm(layerMBTilesDir, 'layer-mbtiles')
+desc('Delete only final products: all.mbtiles, all.static')
+task('lightclean', [], function () {
+  assertAndRm(allStaticDir, 'all.static')
   assertAndRm(allMBTiles, 'all.mbtiles')
-  assertAndRm(allStaticDir, 'all-static')
+})
+
+desc('Delete all build products except the raw downloads')
+task('clean', ['lightclean'], function () {
+  assertAndRm(layerMBTilesDir, 'layer-mbtiles')
+  assertAndRm(entityGeojsonDir, 'entity-geojson')
 })
 
 desc('Delete all build products, including raw downloads')

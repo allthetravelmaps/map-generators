@@ -9,59 +9,59 @@ entities:
 
 # UN Observer Status
   - name: Palestine
-    osmids: [1703814]
+    relations: [1703814]
   - name: Vatican City (Holy See)
-    osmids: [36989]
+    relations: [36989]
 
 # UN specialized agency membership only
   - name: Cook Islands
-    osmids: [2184233]
+    relations: [2184233]
   - name: Kosovo
-    osmids: [2088990]
+    relations: [2088990]
   - name: Niue
-    osmids: [1558556]
+    relations: [1558556]
   - name: Taiwan
-    osmids: [449220]
+    relations: [449220]
 
 # UN Full Members follow
 
 # Europe
   - name: Albania
-    osmids: [53292]
+    relations: [53292]
   - name: Andorra
-    osmids: [9407]
+    relations: [9407]
   - name: Armenia
-    osmids: [364066]
+    relations: [364066]
   - name: Austria
-    osmids: [16239]
+    relations: [16239]
   - name: Azerbaijan
-    osmids: [364110]
+    relations: [364110]
   - name: Belarus
-    osmids: [59065]
+    relations: [59065]
   - name: Belgium
-    osmids: [52411]
+    relations: [52411]
   - name: Bosnia and Herzegovina
-    osmids: [2528142]
+    relations: [2528142]
   - name: Bulgaria
-    osmids: [186382]
+    relations: [186382]
   - name: Croatia
-    osmids: [214885]
+    relations: [214885]
   - name: Cyprus
-    osmids: [307787]
+    relations: [307787]
   - name: Czech Republic
-    osmids: [51684]
+    relations: [51684]
   - name: Denmark
-    osmids:
+    relations:
       - 50046
       - 52939     # Faroe Islands
       - 2184073   # Greenland
   - name: Estonia
-    osmids: [79510]
+    relations: [79510]
 
 # Finland dependencies included in country relation:
 #   Aland Islands
   - name: Finland
-    osmids: [54224]
+    relations: [54224]
 
 # France dependencies included in country relation:
 #   Saint Barthélemy
@@ -73,83 +73,83 @@ entities:
 #   Clipperton Island
 #   French Southern and Antarctic Lands (Antartic part excluded)
   - name: France
-    osmids: [2202162]
+    relations: [2202162]
 
   - name: Georgia
-    osmids: [28699]
+    relations: [28699]
   - name: Germany
-    osmids: [51477]
+    relations: [51477]
   - name: Greece
-    osmids: [192307]
+    relations: [192307]
   - name: Hungary
-    osmids: [21335]
+    relations: [21335]
   - name: Iceland
-    osmids: [299133]
+    relations: [299133]
   - name: Ireland
-    osmids: [62273]
+    relations: [62273]
   - name: Italy
-    osmids: [365331]
+    relations: [365331]
   - name: Latvia
-    osmids: [72594]
+    relations: [72594]
   - name: Liechtenstein
-    osmids: [1155955]
+    relations: [1155955]
   - name: Lithuania
-    osmids: [72596]
+    relations: [72596]
   - name: Luxembourg
-    osmids: [2171347]
+    relations: [2171347]
   - name: Macedonia
-    osmids: [53293]
+    relations: [53293]
   - name: Malta
-    osmids: [365307]
+    relations: [365307]
   - name: Moldova
-    osmids: [58974]
+    relations: [58974]
   - name: Monaco
-    osmids: [1124039]
+    relations: [1124039]
   - name: Montenegro
-    osmids: [53296]
+    relations: [53296]
 
 # Netherlands dependencies included in country relation:
 #   Aruba
 #   Curacao
 #   Sint Maarten
   - name: Netherlands
-    osmids: [2323309]
+    relations: [2323309]
 
 # Norway dependencies included in country relation:
 #   Bouvet Island
 #   Svalbard
 # Norway dependencies excluded as part of Antartca: Peter Island
   - name: Norway
-    osmids: [2978650]
+    relations: [2978650]
 
   - name: Poland
-    osmids: [49715]
+    relations: [49715]
   - name: Portugal
-    osmids: [295480]
+    relations: [295480]
   - name: Romania
-    osmids: [90689]
+    relations: [90689]
   - name: Russia
-    osmids: [60189]
+    relations: [60189]
   - name: San Marino
-    osmids: [54624]
+    relations: [54624]
   - name: Serbia
-    osmids: [1741311]
+    relations: [1741311]
   - name: Slovakia
-    osmids: [14296]
+    relations: [14296]
   - name: Slovenia
-    osmids: [218657]
+    relations: [218657]
   - name: Spain
-    osmids: [1311341]
+    relations: [1311341]
   - name: Sweden
-    osmids: [52822]
+    relations: [52822]
   - name: Switzerland
-    osmids: [51701]
+    relations: [51701]
   - name: Turkey
-    osmids: [174737]
+    relations: [174737]
   - name: Ukraine
-    osmids: [60199]
+    relations: [60199]
   - name: United Kingdom
-    osmids:
+    relations:
       - 62149
       - 2177161   # Anguilla
       - 1993208   # Bermuda
@@ -170,49 +170,49 @@ entities:
 
 # North America
   - name: Antigua and Barbuda
-    osmids: [536900]
+    relations: [536900]
   - name: Barbados
-    osmids: [547511]
+    relations: [547511]
   - name: The Bahamas
-    osmids: [547469]
+    relations: [547469]
   - name: Belize
-    osmids: [287827]
+    relations: [287827]
   - name: Canada
-    osmids: [1428125]
+    relations: [1428125]
   - name: Costa Rica
-    osmids: [287667]
+    relations: [287667]
   - name: Cuba
-    osmids: [307833]
+    relations: [307833]
   - name: Dominica
-    osmids: [307823]
+    relations: [307823]
   - name: Dominican Republic
-    osmids: [307828]
+    relations: [307828]
   - name: El Salvador
-    osmids: [1520612]
+    relations: [1520612]
   - name: Grenada
-    osmids: [550727]
+    relations: [550727]
   - name: Guatemala
-    osmids: [1521463]
+    relations: [1521463]
   - name: Hati
-    osmids: [307829]
+    relations: [307829]
   - name: Nicaragua
-    osmids: [287666]
+    relations: [287666]
   - name: Honduras
-    osmids: [287670]
+    relations: [287670]
   - name: Jamaica
-    osmids: [555017]
+    relations: [555017]
   - name: Mexico
-    osmids: [114686]
+    relations: [114686]
   - name: Panama
-    osmids: [287668]
+    relations: [287668]
   - name: Saint Kitts and Nevis
-    osmids: [536899]
+    relations: [536899]
   - name: Saint Lucia
-    osmids: [550728]
+    relations: [550728]
   - name: Saint Vincent and the Grenadines
-    osmids: [550725]
+    relations: [550725]
   - name: Trinidad and Tobago
-    osmids: [555717]
+    relations: [555717]
 
 # United States dependencies included in country relation:
 #   Gaum
@@ -230,236 +230,236 @@ entities:
 #   Navassa Island
 #   Palmyra Atoll
   - name: United States
-    osmids: [148838]
+    relations: [148838]
 
 # South America
   - name: Argentina
-    osmids: [286393]
+    relations: [286393]
   - name: Bolivia
-    osmids: [252645]
+    relations: [252645]
   - name: Brazil
-    osmids: [59470]
+    relations: [59470]
   - name: Chile
-    osmids: [167454]
+    relations: [167454]
   - name: Colombia
-    osmids: [120027]
+    relations: [120027]
   - name: Ecuador
-    osmids: [108089]
+    relations: [108089]
   - name: Guyana
-    osmids: [287083]
+    relations: [287083]
   - name: Paraguay
-    osmids: [287077]
+    relations: [287077]
   - name: Peru
-    osmids: [288247]
+    relations: [288247]
   - name: Suriname
-    osmids: [287082]
+    relations: [287082]
   - name: Uruguay
-    osmids: [287072]
+    relations: [287072]
   - name: Venezuela
-    osmids: [272644]
+    relations: [272644]
 
 # Africa
   - name: Algeria
-    osmids: [192756]
+    relations: [192756]
   - name: Angola
-    osmids: [195267]
+    relations: [195267]
   - name: Benin
-    osmids: [192784]
+    relations: [192784]
   - name: Botswana
-    osmids: [1889339]
+    relations: [1889339]
   - name: Burkina Faso
-    osmids: [192783]
+    relations: [192783]
   - name: Burundi
-    osmids: [195269]
+    relations: [195269]
   - name: Cameroon
-    osmids: [192830]
+    relations: [192830]
   - name: Cape Verde
-    osmids: [535774]
+    relations: [535774]
   - name: Central African Republic (CAR)
-    osmids: [192790]
+    relations: [192790]
   - name: Chad
-    osmids: [2361304]
+    relations: [2361304]
   - name: Comoros
-    osmids: [535790]
+    relations: [535790]
   - name: Democratic Republic of the Congo
-    osmids: [192795]
+    relations: [192795]
   - name: Republic of the Congo
-    osmids: [192794]
+    relations: [192794]
   - name: Cote d'Ivoire
-    osmids: [192779]
+    relations: [192779]
   - name: Djibouti
-    osmids: [192801]
+    relations: [192801]
   - name: Egypt
-    osmids: [1473947]
+    relations: [1473947]
   - name: Equatorial Guinea
-    osmids: [192791]
+    relations: [192791]
   - name: Eritrea
-    osmids: [296961]
+    relations: [296961]
   - name: Ethiopia
-    osmids: [192800]
+    relations: [192800]
   - name: Gabon
-    osmids: [192793]
+    relations: [192793]
   - name: Gambia
-    osmids: [192774]
+    relations: [192774]
   - name: Ghana
-    osmids: [192781]
+    relations: [192781]
   - name: Guinea
-    osmids: [192778]
+    relations: [192778]
   - name: Guinea-Bissau
-    osmids: [192776]
+    relations: [192776]
   - name: Kenya
-    osmids: [192798]
+    relations: [192798]
   - name: Lesotho
-    osmids: [2093234]
+    relations: [2093234]
   - name: Liberia
-    osmids: [192780]
+    relations: [192780]
   - name: Libya
-    osmids: [192758]
+    relations: [192758]
   - name: Madagascar
-    osmids: [447325]
+    relations: [447325]
   - name: Malawi
-    osmids: [195290]
+    relations: [195290]
   - name: Mali
-    osmids: [192785]
+    relations: [192785]
   - name: Mauritania
-    osmids: [192763]
+    relations: [192763]
   - name: Mauritius
-    osmids: [535828]
+    relations: [535828]
   - name: Morocco
-    osmids:
+    relations:
       - 3630439
       - 5441968 # Western Sarah / Sahrawi Arab Democratic Republic
   - name: Mozambique
-    osmids: [195273]
+    relations: [195273]
   - name: Namibia
-    osmids: [195266]
+    relations: [195266]
   - name: Niger
-    osmids: [192786]
+    relations: [192786]
   - name: Nigeria
-    osmids: [192787]
+    relations: [192787]
   - name: Rwanda
-    osmids: [171496]
+    relations: [171496]
   - name: Sao Tome and Principe
-    osmids: [535880]
+    relations: [535880]
   - name: Senegal
-    osmids: [192775]
+    relations: [192775]
   - name: Seychelles
-    osmids: [536765]
+    relations: [536765]
   - name: Sierra Leone
-    osmids: [192777]
+    relations: [192777]
   - name: Somalia
-    osmids: [192799]
+    relations: [192799]
   - name: South Africa
-    osmids: [87565]
+    relations: [87565]
   - name: South Sudan
-    osmids: [1656678]
+    relations: [1656678]
   - name: Sudan
-    osmids: [192789]
+    relations: [192789]
   - name: Swaziland
-    osmids: [88210]
+    relations: [88210]
   - name: Tanzania
-    osmids: [195270]
+    relations: [195270]
   - name: Togo
-    osmids: [192782]
+    relations: [192782]
   - name: Tunisia
-    osmids: [192757]
+    relations: [192757]
   - name: Uganda
-    osmids: [192796]
+    relations: [192796]
   - name: Zambia
-    osmids: [195271]
+    relations: [195271]
   - name: Zimbabwe
-    osmids: [195272]
+    relations: [195272]
 
 # Asia
   - name: Afghanistan
-    osmids: [303427]
+    relations: [303427]
   - name: Bahrain
-    osmids: [378734]
+    relations: [378734]
   - name: Bangladesh
-    osmids: [184640]
+    relations: [184640]
   - name: Bhutan
-    osmids: [184629]
+    relations: [184629]
   - name: Brunei
-    osmids: [2103120]
+    relations: [2103120]
   - name: Cambodia
-    osmids: [49898]
+    relations: [49898]
 
 # China dependencies included in country relation:
 #   Hong Kong
 #   Macau
   - name: China
-    osmids: [270056]
+    relations: [270056]
 
   - name: India
-    osmids: [304716]
+    relations: [304716]
   - name: Indonesia
-    osmids: [304751]
+    relations: [304751]
   - name: Iran
-    osmids: [304938]
+    relations: [304938]
   - name: Iraq
-    osmids: [304934]
+    relations: [304934]
   - name: Israel
-    osmids: [1473946]
+    relations: [1473946]
   - name: Japan
-    osmids: [382313]
+    relations: [382313]
   - name: Jordan
-    osmids: [184818]
+    relations: [184818]
   - name: Kazakhstan
-    osmids: [214665]
+    relations: [214665]
   - name: Kuwait
-    osmids: [305099]
+    relations: [305099]
   - name: Kyrgyzstan
-    osmids: [178009]
+    relations: [178009]
   - name: Laos
-    osmids: [49903]
+    relations: [49903]
   - name: Lebanon
-    osmids: [184843]
+    relations: [184843]
   - name: Malaysia
-    osmids: [2108121]
+    relations: [2108121]
   - name: Maldives
-    osmids: [536773]
+    relations: [536773]
   - name: Mongolia
-    osmids: [161033]
+    relations: [161033]
   - name: Myanmar (Burma)
-    osmids: [50371]
+    relations: [50371]
   - name: Nepal
-    osmids: [184633]
+    relations: [184633]
   - name: North Korea
-    osmids: [192734]
+    relations: [192734]
   - name: Oman
-    osmids: [305138]
+    relations: [305138]
   - name: Pakistan
-    osmids: [307573]
+    relations: [307573]
   - name: Philippines
-    osmids: [443174]
+    relations: [443174]
   - name: Qatar
-    osmids: [305095]
+    relations: [305095]
   - name: Saudi Arabia
-    osmids: [307584]
+    relations: [307584]
   - name: Singapore
-    osmids: [536780]
+    relations: [536780]
   - name: South Korea
-    osmids: [307756]
+    relations: [307756]
   - name: Sri Lanka
-    osmids: [536807]
+    relations: [536807]
   - name: Syria
-    osmids: [184840]
+    relations: [184840]
   - name: Tajikistan
-    osmids: [214626]
+    relations: [214626]
   - name: Thailand
-    osmids: [2067731]
+    relations: [2067731]
   - name: Timor-Leste
-    osmids: [305142]
+    relations: [305142]
   - name: Turkmenistan
-    osmids: [223026]
+    relations: [223026]
   - name: United Arab Emirates (UAE)
-    osmids: [307763]
+    relations: [307763]
   - name: Uzbekistan
-    osmids: [196240]
+    relations: [196240]
   - name: Vietnam
-    osmids: [49915]
+    relations: [49915]
   - name: Yemen
-    osmids: [305092]
+    relations: [305092]
 
 # Oceania
 
@@ -471,33 +471,33 @@ entities:
 #   Coral Sea Islands
 #   Heard Island and McDonald Islands
   - name: Australia
-    osmids: [80500]
+    relations: [80500]
 
   - name: Fiji
-    osmids: [571747]
+    relations: [571747]
   - name: Kiribati
-    osmids: [571178]
+    relations: [571178]
   - name: Marshall Islands
-    osmids: [571771]
+    relations: [571771]
   - name: Micronesia
-    osmids: [571802]
+    relations: [571802]
   - name: Nauru
-    osmids: [571804]
+    relations: [571804]
   - name: New Zealand
-    osmids:
+    relations:
       - 556706
       - 2186600 # Tokelau
   - name: Palau
-    osmids: [571805]
+    relations: [571805]
   - name: Papua New Guinea
-    osmids: [307866]
+    relations: [307866]
   - name: Samoa
-    osmids: [1872673]
+    relations: [1872673]
   - name: Solomon Islands
-    osmids: [1857436]
+    relations: [1857436]
   - name: Tonga
-    osmids: [2186665]
+    relations: [2186665]
   - name: Tuvalu
-    osmids: [2177266]
+    relations: [2177266]
   - name: Vanuatu
-    osmids: [2177246]
+    relations: [2177246]

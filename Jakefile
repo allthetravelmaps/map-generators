@@ -56,14 +56,16 @@ directory(osmDownloadsDir)
 
 desc('Download a feature as geojson from OSM')
 rule(
-  /^osm-downloads\/[0-9]+.geojson$/,
+  /^osm-downloads\/relation-[0-9]+.geojson$/,
   'osm-downloads',
   { async: true },
   function () {
-    const osmId = this.name.slice('osm-downloads/'.length, -'.geojson'.length)
+    const osmId = this.name
+      .slice('osm-downloads/'.length, -'.geojson'.length)
+      .replace('-', '/')
     jake.logger.log(`Downloading ${this.name} ...`)
 
-    const getOverpass = spawn('get-overpass', [`relation/${osmId}`])
+    const getOverpass = spawn('get-overpass', [osmId])
     const streamOut = fs.createWriteStream(this.name)
     getOverpass.stdout.pipe(streamOut)
 
@@ -80,17 +82,19 @@ layers.forEach(layer => {
     const entityId = i + 1
     const entityGeojson = getEntityGeojsonPath(layer, entityId)
 
-    const includedOSMGeojsons = entity['osmids'].map(getOSMGeojsonPath)
+    /* TODO: rules for computed geojsons */
 
-    /* TODO: remove excluded geojson
-    const excludedOSMGeojsons = (entity['excluded_osmids'] || []).map(getOSMGeojsonPath)
-    */
+    const relationGeojsons = (entity['relations'] || []).map(relationID =>
+      getOSMGeojsonPath(`relation-${relationID}`)
+    )
+
+    /* TODO: add computed geojsons to dependencies, mapshaper command */
 
     /* builing geojson file for each entity with layer */
     desc(`Build ${entityGeojson}`)
     file(
       entityGeojson,
-      includedOSMGeojsons,
+      relationGeojsons,
       function () {
         jake.logger.log(`Building ${this.name} ...`)
         jake.mkdirP(getEntityGeojsonLayerDir(layer))
@@ -98,7 +102,7 @@ layers.forEach(layer => {
         const mapshaper = spawn('mapshaper', [
           '-i',
           'combine-files',
-          ...includedOSMGeojsons,
+          ...relationGeojsons,
           '-drop',
           'fields=*',
           '-merge-layers',

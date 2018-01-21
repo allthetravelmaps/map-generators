@@ -2,118 +2,118 @@ name: Counties of California
 desc: The 58 counties of California, USA.
 entities:
   - name: Humboldt
-    osmids: [396458]
+    relations: [396458]
   - name: Tulare
-    osmids: [396459]
+    relations: [396459]
   - name: Sacramento
-    osmids: [396460]
+    relations: [396460]
   - name: Marin
-    osmids: [396461]
+    relations: [396461]
   - name: Contra Costa
-    osmids: [396462]
+    relations: [396462]
   - name: Napa
-    osmids: [396463]
+    relations: [396463]
   - name: Nevada
-    osmids: [396464]
+    relations: [396464]
   - name: Mariposa
-    osmids: [396465]
+    relations: [396465]
   - name: Orange
-    osmids: [396466]
+    relations: [396466]
   - name: San Joaquin
-    osmids: [396467]
+    relations: [396467]
   - name: Sonoma
-    osmids: [396468]
+    relations: [396468]
   - name: Lassen
-    osmids: [396469]
+    relations: [396469]
   - name: Calaveras
-    osmids: [396470]
+    relations: [396470]
   - name: Tuolumne
-    osmids: [396471]
+    relations: [396471]
   - name: Mono
-    osmids: [396472]
+    relations: [396472]
   - name: Santa Cruz
-    osmids: [396473]
+    relations: [396473]
   - name: Sierra
-    osmids: [396474]
+    relations: [396474]
   - name: Yuba
-    osmids: [396475]
+    relations: [396475]
   - name: Colusa
-    osmids: [396476]
+    relations: [396476]
   - name: Plumas
-    osmids: [396477]
+    relations: [396477]
   - name: Sutter
-    osmids: [396478]
+    relations: [396478]
   - name: Los Angeles
-    osmids: [396479]
+    relations: [396479]
   - name: Kings
-    osmids: [396480]
+    relations: [396480]
   - name: El Dorado
-    osmids: [396481]
+    relations: [396481]
   - name: San Diego
-    osmids: [396482]
+    relations: [396482]
   - name: Siskiyou
-    osmids: [396483]
+    relations: [396483]
   - name: Trinity
-    osmids: [396484]
+    relations: [396484]
   - name: Monterey
-    osmids: [396485]
+    relations: [396485]
   - name: Tehama
-    osmids: [396486]
+    relations: [396486]
   - name: San Francisco
-    osmids: [396487]
+    relations: [396487]
   - name: Madera
-    osmids: [396488]
+    relations: [396488]
   - name: Mendocino
-    osmids: [396489]
+    relations: [396489]
   - name: Amador
-    osmids: [396490]
+    relations: [396490]
   - name: Inyo
-    osmids: [396491]
+    relations: [396491]
   - name: Fresno
-    osmids: [396492]
+    relations: [396492]
   - name: Glen
-    osmids: [396493]
+    relations: [396493]
   - name: Kern
-    osmids: [396494]
+    relations: [396494]
   - name: Riverside
-    osmids: [396495]
+    relations: [396495]
   - name: San Luis Obispo
-    osmids: [396496]
+    relations: [396496]
   - name: Alpine
-    osmids: [396497]
+    relations: [396497]
   - name: San Mateo
-    osmids: [396498]
+    relations: [396498]
   - name: Alameda
-    osmids: [396499]
+    relations: [396499]
   - name: San Benito
-    osmids: [396500]
+    relations: [396500]
   - name: Santa Clara
-    osmids: [396501]
+    relations: [396501]
   - name: Lake
-    osmids: [396502]
+    relations: [396502]
   - name: Del Norte
-    osmids: [396503]
+    relations: [396503]
   - name: Merced
-    osmids: [396504]
+    relations: [396504]
   - name: Ventura
-    osmids: [396505]
+    relations: [396505]
   - name: Modoc
-    osmids: [396506]
+    relations: [396506]
   - name: Yolo
-    osmids: [396507]
+    relations: [396507]
   - name: Butte
-    osmids: [396508]
+    relations: [396508]
   - name: San Bernardino
-    osmids: [396509]
+    relations: [396509]
   - name: Santa Barbara
-    osmids: [396510]
+    relations: [396510]
   - name: Placer
-    osmids: [396511]
+    relations: [396511]
   - name: Shasta
-    osmids: [396512]
+    relations: [396512]
   - name: Solano
-    osmids: [396513]
+    relations: [396513]
   - name: Stanislaus
-    osmids: [396514]
+    relations: [396514]
   - name: Imperial
-    osmids: [396515]
+    relations: [396515]

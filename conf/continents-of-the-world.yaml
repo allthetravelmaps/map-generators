@@ -2,7 +2,7 @@ name: Continents of the World
 desc: The 7 continents of the world.
 entities:
   - name: Europe
-    osmids:
+    relations:
       - 36989   # Vatican City (Holy See)
       - 2088990 # Kosovo
       - 53292   # Albania
@@ -52,7 +52,6 @@ entities:
       - 60199   # Ukraine
       - 1059668 # Norway - mainland
       - 3245620 # Norway - Svalbard and Jan Mayen islands
-      - 47796   # Netherlands - mainland and Caribbean Netherlands
       - 62149   # UK - mainland
       - 1278736 # UK - Gibraltar
       - 367988  # UK - Jersey
@@ -60,11 +59,12 @@ entities:
       - 270009  # UK - Guernsey
       - 3263728 # UK - Akrotiri and Dhekelia (on Cypress, soverign military bases)
       - 1403916 # France - mainland and Corse
-    excluded_osmids:
-      - 1216720 # Netherlands - Caribbean Netherlands
+    computed:
+      - included: [relation/47796]    # Netherlands - mainland and Caribbean Netherlands
+        excluded: [relation/1216720]  # Netherlands - Caribbean Netherlands
 
   - name: North America
-    osmids:
+    relations:
       - 536900  # Antigua and Barbuda
       - 547511  # Barbados
       - 547469  # The Bahamas
@@ -103,21 +103,23 @@ entities:
       - 1401835 # France - Guadeloupe
       - 1891495 # France - Martinique
       - 1891583 # France - Saint Martin
-      - 148838  # USA - mainland and all overseas territories
-    excluded_osmids:
-      - 7248460 # USA - Howland Island
-      - 7248461 # USA - Baker Island
-      - 7248458 # USA - Johnston Atoll
-      - 7248457 # USA - Kingman Reef
-      - 7248454 # USA - Palmyra Atoll
-      - 7248459 # USA - Jarvis Island
-      - 2177187 # USA - American Samoa
-      - 6430384 # USA - Wake Island
-      - 306001  # USA - Guam
-      - 306004  # USA - Northern Mariana Islands
+    computed:
+      - included:
+          - relation/148838  # USA - mainland and all overseas territories
+        excluded:
+          - relation/7248460 # USA - Howland Island
+          - relation/7248461 # USA - Baker Island
+          - relation/7248458 # USA - Johnston Atoll
+          - relation/7248457 # USA - Kingman Reef
+          - relation/7248454 # USA - Palmyra Atoll
+          - relation/7248459 # USA - Jarvis Island
+          - relation/2177187 # USA - American Samoa
+          - relation/6430384 # USA - Wake Island
+          - relation/306001  # USA - Guam
+          - relation/306004  # USA - Northern Mariana Islands
 
   - name: South America
-    osmids:
+    relations:
       - 286393  # Argentina
       - 252645  # Bolivia
       - 59470   # Brazil
@@ -129,7 +131,6 @@ entities:
       - 288247  # Peru
       - 287082  # Suriname
       - 287072  # Uruguay
-      - 272644  # Venezuela
       - 555717  # Trinidad and Tobago
       - 1231749 # Netherlands - Aruba
       - 1216719 # Netherlands - Curacao
@@ -138,11 +139,12 @@ entities:
       - 1983628 # UK - South Georgia and the South Sandwich Islands
       - 285454  # UK - British Virgin Islands
       - 1260551 # France - French Guiana
-    excluded_osmids:
-      - 3473022 # Venezuela - Isla Aves
+    computed:
+      - included: [relation/272644] # Venezuela
+        excluded: [way/245555935]   # Venezuela - Isla Aves
 
   - name: Africa
-    osmids:
+    relations:
       - 192756  # Algeria
       - 195267  # Angola
       - 192784  # Benin
@@ -201,7 +203,7 @@ entities:
       - 6063099 # France - "Scattered Islands in the Indian Ocean"
 
   - name: Asia
-    osmids:
+    relations:
       - 303427  # Afghanistan
       - 378734  # Bahrain
       - 184640  # Bangladesh
@@ -249,7 +251,7 @@ entities:
       - 1993867 # UK - British Indian Ocean Territory
 
   - name: Oceania
-    osmids:
+    relations:
       - 556706  # New Zealand
       - 2186600 # Tokelau
       - 571747  # Fiji
@@ -266,7 +268,6 @@ entities:
       - 2177246 # Vanuatu
       - 2184233 # Cook Islands
       - 1558556 # Niue
-      - 80500   # Australia - mainland and all islands
       - 2185375 # UK - Pitcairn Islands
       - 3412448 # France - Wallis and Futuna
       - 3412620 # France - French Polynesia
@@ -281,11 +282,12 @@ entities:
       - 6430384 # USA - Wake Island
       - 306001  # USA - Guam
       - 306004  # USA - Northern Mariana Islands
-    excluded_osmids:
-      - 2177227 # Australia - Heard Island and McDonald Islands
+    computed:
+      - included: [relation/80500]    # Australia - mainland and all islands
+        excluded: [relation/2177227]  # Australia - Heard Island and McDonald Islands
 
   - name: Antartica
-    osmids:
+    relations:
       - 2186646 # Antartic treaty border
 
 # Un-continentable...?

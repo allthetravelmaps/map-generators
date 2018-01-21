@@ -6,67 +6,68 @@ desc: >
   Overseas Countries and Territories (OCT) not included.
 entities:
   - name: Austria
-    osmids: [16239]
+    relations: [16239]
   - name: Belgium
-    osmids: [52411]
+    relations: [52411]
   - name: Bulgaria
-    osmids: [186382]
+    relations: [186382]
   - name: Croatia
-    osmids: [214885]
+    relations: [214885]
   - name: Cyprus
-    osmids: [307787]
+    relations: [307787]
   - name: Czech Republic
-    osmids: [51684]
+    relations: [51684]
   - name: Denmark
-    osmids: [50046]
+    relations: [50046]
   - name: Estonia
-    osmids: [79510]
+    relations: [79510]
   - name: Finland
-    osmids: [54224]
+    relations: [54224]
   - name: France
-    osmids: [1403916] # mainland and Corse
+    relations: [1403916] # mainland and Corse
   - name: Greece
-    osmids: [192307]
+    relations: [192307]
   - name: Germany
-    osmids: [51477]
+    relations: [51477]
   - name: Hungary
-    osmids: [21335]
+    relations: [21335]
   - name: Ireland
-    osmids: [62273]
+    relations: [62273]
   - name: Italy
-    osmids: [365331]
+    relations: [365331]
   - name: Latvia
-    osmids: [72594]
+    relations: [72594]
   - name: Lithuania
-    osmids: [72596]
+    relations: [72596]
   - name: Luxembourg
-    osmids: [2171347]
+    relations: [2171347]
   - name: Malta
-    osmids: [365307]
+    relations: [365307]
   - name: Netherlands
-    osmids: [47796] # mainland and Caribbean Netherlands
-    excluded_osmids:
-      - 1216720 # Netherlands - Caribbean Netherlands
+    computed:
+      - included: [relation/47796]    # mainland and Caribbean Netherlands
+        excluded: [relation/1216720]  # Netherlands - Caribbean Netherlands
   - name: Poland
-    osmids: [49715]
+    relations: [49715]
   - name: Portugal
-    osmids: [295480]
-    excluded_osmids:
-      - 1629146 # Azores
-      - 1629145 # Madiera
+    computed:
+      - included: [relation/295480]
+        excluded:
+          - relation/1629146 # Azores
+          - relation/1629145 # Madiera
   - name: Romania
-    osmids: [90689]
+    relations: [90689]
   - name: Slovakia
-    osmids: [14296]
+    relations: [14296]
   - name: Slovenia
-    osmids: [218657]
+    relations: [218657]
   - name: Spain
-    osmids: [1311341]
-    excluded_osmids:
-      - 7248699 # Canary Islands
+    computed:
+      - included: [relation/1311341]
+      - excluded: [relation/7248699] # Canary Islands
   - name: Sweden
-    osmids: [52822]
+    relations: [52822]
   - name: United Kingdom (UK)
-    osmids:
+    relations:
       - 62149   # mainland
       - 1278736 # Gibraltar

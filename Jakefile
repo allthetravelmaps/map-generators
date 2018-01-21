@@ -1,6 +1,7 @@
 const assert = require('assert')
 const { execSync, spawn } = require('child_process')
 const fs = require('fs')
+const path = require('path')
 const process = require('process')
 const readline = require('readline')
 
@@ -29,6 +30,16 @@ const onSuccess = task => exitCode => {
   task.complete()
 }
 
+/* serve an MBTiles file via a webserver */
+const serveMBTiles = mbtiles => {
+  jake.logger.log(`Serving ${mbtiles} ... (cntrl-c to quit)`)
+
+  const tileServer = spawn('tileserver-gl-light', [mbtiles])
+  tileServer.stdout.pipe(process.stdout)
+  tileServer.stderr.pipe(process.stderr)
+  tileServer.on('exit', onFail(this, tileServer, false))
+}
+
 /* directory structure */
 const downloadsDir = 'downloads'
 const osmDownloadsDir = `${downloadsDir}/osm`
@@ -37,16 +48,15 @@ const getOSMGeojsonPath = osmId =>
 
 const allMBTiles = 'all.mbtiles'
 const allStaticDir = 'all.static'
+
 const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
-const layerMBTilesDir = 'layer-mbtiles'
-const getLayerMBTilesPath = layer => `${layerMBTilesDir}/${layer}.mbtiles`
-const entityGeojsonDir = 'entity-geojson'
-const getEntityGeojsonLayerDir = layer => `${entityGeojsonDir}/${layer}`
-const getEntityGeojsonPath = (layer, entityId) => {
-  const dir = getEntityGeojsonLayerDir(layer)
-  return `${dir}/${entityId}.geojson`
-}
+
+const layersDir = 'layers'
+const getLayerDir = layer => `${layersDir}/${layer}`
+const getLayerMBTilesPath = layer => `${getLayerDir(layer)}/${layer}.mbtiles`
+const getLayerEntityPath = (layer, entityId) =>
+  `${getLayerDir(layer)}/entities/${entityId}.geojson`
 
 /* parsing config files */
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
@@ -80,10 +90,10 @@ rule(
 const layers = getLayers()
 layers.forEach(layer => {
   const entities = getConf(layer).entities
-  const entityGeojsons = []
+  const entityPaths = []
   entities.forEach((entity, i) => {
     const entityId = i + 1
-    const entityGeojson = getEntityGeojsonPath(layer, entityId)
+    const entityPath = getLayerEntityPath(layer, entityId)
 
     const featureGeojsonPaths = []
     const features = entity['features'] || []
@@ -93,13 +103,13 @@ layers.forEach(layer => {
     })
 
     /* builing geojson file for each entity with layer */
-    desc(`Build ${entityGeojson}`)
+    desc(`Build ${entityPath}`)
     file(
-      entityGeojson,
+      entityPath,
       featureGeojsonPaths,
       function () {
         jake.logger.log(`Building ${this.name} ...`)
-        jake.mkdirP(getEntityGeojsonLayerDir(layer))
+        jake.mkdirP(path.dirname(entityPath))
 
         const mapshaper = spawn('mapshaper', [
           '-i',
@@ -131,7 +141,7 @@ layers.forEach(layer => {
       }
     )
 
-    entityGeojsons.push(entityGeojson)
+    entityPaths.push(entityPath)
   })
 
   /* build one mbtiles file for each map */
@@ -139,10 +149,10 @@ layers.forEach(layer => {
   desc(`Build ${layerMBTilesPath}`)
   file(
     layerMBTilesPath,
-    entityGeojsons,
+    entityPaths,
     function () {
       jake.logger.log(`Building ${this.name} ...`)
-      jake.mkdirP(layerMBTilesDir)
+      jake.mkdirP(path.dirname(layerMBTilesPath))
 
       const tippecanoe = spawn('tippecanoe', [
         '-f',
@@ -153,7 +163,7 @@ layers.forEach(layer => {
         layer,
         '-o',
         this.name,
-        ...entityGeojsons
+        ...entityPaths
       ])
       tippecanoe.on('exit', onFail(this, tippecanoe))
       tippecanoe.on('exit', onSuccess(this))
@@ -216,23 +226,47 @@ task(
   { async: true }
 )
 
-desc(`Default command, builds ${allMBTiles}`)
-task('default', [allMBTiles])
+layers.forEach(layer => {
+  desc(`Build layer ${layer}`)
+  task(`build-layer/${layer}`, [getLayerMBTilesPath(layer)])
+})
+
+desc(`Build all layers in one mbtiles file, ${allMBTiles}`)
+task('build', [allMBTiles])
+
+layers.forEach(layer => {
+  const layerMBTiles = getLayerMBTilesPath(layer)
+  desc(`Serve layer ${layer}`)
+  task(`serve-layer/${layer}`, [layerMBTiles], function () {
+    serveMBTiles(layerMBTiles)
+  })
+})
 
 desc(`Serve ${allMBTiles} via a local webserver`)
 task('serve', [allMBTiles], function () {
-  jake.logger.log(`Serving ${allMBTiles} ... (cntrl-c to quit)`)
-
-  const tileServer = spawn('tileserver-gl-light', [allMBTiles])
-  tileServer.stdout.pipe(process.stdout)
-  tileServer.stderr.pipe(process.stderr)
-  tileServer.on('exit', onFail(this, tileServer, false))
+  serveMBTiles(allMBTiles)
 })
+
+layers.forEach(layer => {
+  desc(`Delete build products for layer ${layer}`)
+  task(`clean-layer/${layer}`, [], function () {
+    assertAndRm(getLayerDir(layer), `${layersDir}/${layer}`)
+  })
+})
+
+desc(`Delete ${allMBTiles} and ${layersDir}`)
+task('clean', [], function () {
+  assertAndRm(allMBTiles, 'all.mbtiles')
+  assertAndRm(layersDir, 'layers')
+})
+
+desc(`Build all layers in one static directory, ${allStaticDir}`)
+task('build-static', [allStaticDir])
 
 desc(`Upload ${allStaticDir} to Google Cloud Storage`)
 task(
-  'upload',
-  [allStaticDir],
+  'upload-static',
+  ['build-static'],
   function () {
     const rl = readline.createInterface({
       input: process.stdin,
@@ -295,19 +329,23 @@ task(
   { async: true }
 )
 
-desc('Delete only final products: all.mbtiles, all.static')
-task('lightclean', [], function () {
+desc(`Delete ${allStaticDir}`)
+task('clean-static', [], function () {
   assertAndRm(allStaticDir, 'all.static')
-  assertAndRm(allMBTiles, 'all.mbtiles')
 })
 
-desc('Delete all build products except the raw downloads')
-task('clean', ['lightclean'], function () {
-  assertAndRm(layerMBTilesDir, 'layer-mbtiles')
-  assertAndRm(entityGeojsonDir, 'entity-geojson')
+desc('List layers')
+task('list-layers', [], function () {
+  layers.forEach(layer => console.log(layer))
 })
 
-desc('Delete all build products, including raw downloads')
-task('fullclean', ['clean'], function () {
+desc('Delete the downloads dir')
+task('clean-downloads', [], function () {
   assertAndRm(downloadsDir, 'downloads')
 })
+
+desc('Delete all build products')
+task('clean-everything', ['clean-static', 'clean', 'clean-downloads'])
+
+desc(`Build master mbtiles file, ${allMBTiles}`)
+task('default', ['build'])

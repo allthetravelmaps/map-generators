@@ -53,8 +53,9 @@ entities:
     features:
       - osmid: relation/295480
         excludes:
-          - relation/1629146 # Azores
-          - relation/1629145 # Madiera
+          - way/46419226      # Azores
+          - way/46419293      # Madiera
+          - way/300680026     # Savage Islands territorial waters
   - name: Romania
     features: [90689]
   - name: Slovakia
@@ -64,7 +65,7 @@ entities:
   - name: Spain
     features:
       - osmid: relation/1311341
-        excludes: [relation/7248699] # Canary Islands
+        excludes: [relation/7248699]  # Canary Islands
   - name: Sweden
     features: [52822]
   - name: United Kingdom (UK)

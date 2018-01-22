@@ -7,23 +7,18 @@ entities:
       - 2088990 # Kosovo
       - 53292   # Albania
       - 9407    # Andorra
-      - 364066  # Armenia
       - 16239   # Austria
-      - 364110  # Azerbaijan
       - 59065   # Belarus
       - 52411   # Belgium
       - 2528142 # Bosnia and Herzegovina
       - 186382  # Bulgaria
       - 214885  # Croatia
-      - 307787  # Cyprus
       - 51684   # Czech Republic
       - 50046   # Denmark
       - 52939   # Denmark - Faroe Islands
       - 79510   # Estonia
       - 54224   # Finland
-      - 28699   # Georgia
       - 51477   # Germany
-      - 192307  # Greece
       - 21335   # Hungary
       - 299133  # Iceland
       - 62273   # Ireland
@@ -38,17 +33,18 @@ entities:
       - 1124039 # Monaco
       - 53296   # Montenegro
       - 49715   # Poland
-      - 295480  # Portugal
       - 90689   # Romania
-      - 60189   # Russia
+      - 389344  # Russia - North Caucasus federal district
+      - 1059500 # Russia - South federal district
+      - 1029256 # Russia - Central Federal District
+      - 1075831 # Russia - Volga Federal District
+      - 1216601 # Russia - Northwestern Federal District
       - 54624   # San Marino
       - 1741311 # Serbia
       - 14296   # Slovakia
       - 218657  # Slovenia
-      - 1311341 # Spain
       - 52822   # Sweden
       - 51701   # Switzerland
-      - 174737  # Turkey
       - 60199   # Ukraine
       - 1059668 # Norway - mainland
       - 3245620 # Norway - Svalbard and Jan Mayen islands
@@ -57,10 +53,19 @@ entities:
       - 367988  # UK - Jersey
       - 62269   # UK - Isle of Man
       - 270009  # UK - Guernsey
-      - 3263728 # UK - Akrotiri and Dhekelia (on Cypress, soverign military bases)
       - 1403916 # France - mainland and Corse
+      - 4016746 # Balkans - includes European mainland of Turkey
+      - 1815263 # Imbros - Turkish island closer to European part
       - osmid: relation/47796         # Netherlands - mainland and Caribbean Netherlands
         excludes: [relation/1216720]  # Netherlands - Caribbean Netherlands
+      - osmid: relation/192307    # Greece
+        excludes: [way/137410518] # Greece - Kastellorizo
+      - osmid: relation/295480  # Portugal
+        excludes:
+          - way/46419293        # Portugal - Madiera
+          - way/300680026       # Portugal - Savage Islands territorial waters
+      - osmid: relation/1311341       # Spain
+        excludes: [relation/7248699]  # Spain - Canary Islands
 
   - name: North America
     features:
@@ -96,7 +101,9 @@ entities:
       - 2185366 # UK - Cayman Islands
       - 537257  # UK - Montserrat
       - 547479  # UK - Turks and Caicos Islands
+      - 285454  # UK - British Virgin Islands
       - 3473022 # Venezuela - Isla Aves
+      - 2181889 # Colombia - San Andres islands
       - 537967  # France - Saint Barthélemy
       - 1891583 # France - Saint Martin
       - 1401835 # France - Guadeloupe
@@ -104,6 +111,7 @@ entities:
       - 1891583 # France - Saint Martin
       - osmid: relation/148838  # USA - mainland and all overseas territories
         excludes:
+          - relation/279045     # USA - Hawaii Territorial waters
           - relation/7248460    # USA - Howland Island
           - relation/7248461    # USA - Baker Island
           - relation/7248458    # USA - Johnston Atoll
@@ -112,16 +120,23 @@ entities:
           - relation/7248459    # USA - Jarvis Island
           - relation/2177187    # USA - American Samoa
           - relation/6430384    # USA - Wake Island
-          - relation/306001     # USA - Guam
-          - relation/306004     # USA - Northern Mariana Islands
+          - way/43356824        # USA - Guam (territorial waters)
+          - way/43356823        # USA - Northern Mariana Islands (territorial waters)
+          - way/43356825        #     - ^^ more ...
+          - way/43356822
+          - way/43356821
+          - way/43356830
+          - way/43356828
+          - way/43356827
+          - way/43356826
+          - way/43356832
+      - osmid: way/245555935 # Venezuela - Isla Aves
 
   - name: South America
     features:
       - 286393  # Argentina
       - 252645  # Bolivia
       - 59470   # Brazil
-      - 167454  # Chile
-      - 120027  # Colombia
       - 108089  # Ecuador
       - 287083  # Guyana
       - 287077  # Paraguay
@@ -134,10 +149,15 @@ entities:
       - 2324450 # Netherlands - Caribbean Netherlands - Bonaire
       - 2185374 # UK - Falkland Islands
       - 1983628 # UK - South Georgia and the South Sandwich Islands
-      - 285454  # UK - British Virgin Islands
       - 1260551 # France - French Guiana
       - osmid: relation/272644    # Venezuela
         excludes: [way/245555935] # Venezuela - Isla Aves
+      - osmid: relation/120027        # Colombia
+        excludes: [relation/2181889]  # Colombia - San Andres islands
+      - osmid: relation/167454  # Chile
+        excludes:
+          - way/51943989        # Chile - Eater Island
+          - way/537856050       # Chile - Sala y Gomez Island
 
   - name: Africa
     features:
@@ -156,7 +176,6 @@ entities:
       - 192794  # Republic of the Congo
       - 192779  # Cote d'Ivoire
       - 192801  # Djibouti
-      - 1473947 # Egypt
       - 192791  # Equatorial Guinea
       - 296961  # Eritrea
       - 192800  # Ethiopia
@@ -197,18 +216,30 @@ entities:
       - 3630439 # Morocco
       - 5441968 # Morocco - Western Sarah / Sahrawi Arab Democratic Republic
       - 6063099 # France - "Scattered Islands in the Indian Ocean"
+      - 1964272 # UK - Saint Helena, Ascension and Tristan da Cunha
+      - 7248699 # Spain - Canary Islands
+      - osmid: way/46419293   # Portugal - Madiera
+      - osmid: way/300680026  # Portugal - Savage Islands territorial waters
+      - osmid: relation/1473947 # Egypt
+        excludes:
+          - relation/3060793    # Egypt - South Sinai Governorate
+          - relation/3060792    # Egypt - North Sianai Governorate
+          - relation/5632534    # Egypt - Sinai Peninsula
 
   - name: Asia
     features:
       - 303427  # Afghanistan
+      - 364066  # Armenia
+      - 364110  # Azerbaijan
       - 378734  # Bahrain
       - 184640  # Bangladesh
       - 184629  # Bhutan
       - 2103120 # Brunei
       - 49898   # Cambodia
       - 270056  # China
+      - 307787  # Cyprus
+      - 28699   # Georgia
       - 304716  # India
-      - 304751  # Indonesia
       - 304938  # Iran
       - 304934  # Iraq
       - 1473946 # Israel
@@ -245,6 +276,22 @@ entities:
       - 1703814 # Palestine
       - 449220  # Taiwan
       - 1993867 # UK - British Indian Ocean Territory
+      - 3263728 # UK - British bases in Cyprus
+      - 3060793 # Egypt - South Sinai Governorate
+      - 3060792 # Egypt - North Sianai Governorate
+      - 5632534 # Egypt - Sinai Peninsula
+      - 1113276 # Russia - Ural Federal District
+      - 1221148 # Russia - Siberian Federal District
+      - 1221185 # Russia - Far Eastern Federal District
+      - 2177207 # Australia - Christmas Island
+      - 82636   # Australia - Cocos Islands
+      - osmid: way/137410518  # Greece - Kastellorizo
+      - osmid: relation/174737        # Turkey
+        excludes: [relation/4016746]  # Balkans - includes European mainland of Turkey
+      - osmid: relation/304751  # Indonesia
+        excludes:
+          - relation/4521144    # Indonesia - Papua
+          - relation/4521145    # Indonesia - West Papua
 
   - name: Oceania
     features:
@@ -268,6 +315,7 @@ entities:
       - 3412448 # France - Wallis and Futuna
       - 3412620 # France - French Polynesia
       - 3407643 # France - New Caledonia
+      - 279045  # USA - Hawaii Territorial waters
       - 7248460 # USA - Howland Island
       - 7248461 # USA - Baker Island
       - 7248458 # USA - Johnston Atoll
@@ -278,17 +326,20 @@ entities:
       - 6430384 # USA - Wake Island
       - 306001  # USA - Guam
       - 306004  # USA - Northern Mariana Islands
-      - osmid: relation/80500         # Australia - mainland and all islands
-        excludes: [relation/2177227]  # Australia - Heard Island and McDonald Islands
+      - 4521144 # Indonesia - Papua
+      - 4521145 # Indonesia - West Papua
+      - osmid: way/51943989   # Chile - Eater Island
+      - osmid: way/537856050  # Chile - Sala y Gomez Island
+      - osmid: relation/80500 # Australia - mainland and all islands
+        excludes:
+        - relation/2177227    # Australia - Heard Island and McDonald Islands
+        - relation/2177207    # Australia - Christmas Island
+        - relation/82636      # Australia - Cocos Islands
 
   - name: Antartica
     features:
       - 2186646 # Antartic treaty border
-
-# Un-continentable...?
-#  - Bouvet Island - Norway (2425963)
-#  - Heard Island and McDonald Islands - Australia (2177227)
-#  - Saint Helena, Ascension and Tristan da Cunha - UK (1964272)
-#  - Most of French Southern and Antarctic Lands - France (6063098)
-#    Excluding the islands by Africa, which are included in 6063099
-#    And the part of Antartica, which is included in the Antartic continent
+      - 2177227 # Australia - Heard Island and McDonald Islands
+      - 2425963 # Norway - Bouvet Island
+      - osmid: relation/2186658       # France - Southern and Antarctic Lands
+        excludes: [relation/6063099]  # France - "Scattered Islands in the Indian Ocean"

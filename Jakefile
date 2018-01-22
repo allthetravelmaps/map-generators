@@ -43,6 +43,9 @@ const downloadsDir = 'downloads'
 const osmDownloadsDir = `${downloadsDir}/osm`
 const getDownloadsOSMPath = osmId =>
   `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
+const waterDownloadsPath = `${downloadsDir}/water/water-polygons-split-4326.zip`
+const waterRemoteUrl =
+  'http://data.openstreetmapdata.com/water-polygons-split-4326.zip'
 
 const allMBTiles = 'all.mbtiles'
 const allStaticDir = 'all.static'
@@ -62,6 +65,24 @@ const getLayerFeaturePath = (layer, entityId, featureId) =>
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
 const getConf = layer =>
   JSON.parse(execSync(`yaml2json < ${getLayerConfPath(layer)}`).toString())
+
+/* downloading OSM water: http://openstreetmapdata.com/data/water-polygons */
+desc('Download OSM water from openstreetmapdata.com')
+file(
+  waterDownloadsPath,
+  [],
+  function () {
+    jake.mkdirP(path.dirname(this.name))
+    const cmd = spawn('curl', [waterRemoteUrl])
+    const streamOut = fs.createWriteStream(this.name)
+    cmd.stdout.pipe(streamOut)
+    cmd.stderr.pipe(process.stderr)
+
+    cmd.on('exit', onFail(this, cmd))
+    streamOut.on('finish', () => onSuccess(this)(0))
+  },
+  { async: true }
+)
 
 /* downloading features from OSM */
 desc(`Create ${osmDownloadsDir} dir`)

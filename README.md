@@ -23,11 +23,12 @@ To see a full list of available tasks, run `jake -T`
 ## Dependencies
 
 * [jake](https://www.npmjs.com/package/jake)
+* [curl](https://curl.haxx.se/)
 * [yaml2json](https://github.com/bronze1man/yaml2json)
 * [get-overpass](https://www.npmjs.com/package/get-overpass)
 * [geojson-cli-difference](https://www.npmjs.com/package/geojson-cli-difference)
-* [mapshapper](https://www.npmjs.com/package/mapshaper)
 * [geojson-cli-bbox](https://www.npmjs.com/package/geojson-cli-bbox)
+* [mapshapper](https://www.npmjs.com/package/mapshaper)
 * [jq](https://stedolan.github.io/jq/)
 * [tippecanoe](https://github.com/mapbox/tippecanoe)
 * [tileserver-gl-light](https://www.npmjs.com/package/tileserver-gl-light) - for serving locally

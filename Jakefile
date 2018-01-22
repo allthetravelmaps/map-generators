@@ -53,6 +53,8 @@ const allStaticDir = 'all.static'
 const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
 
+const waterDir = 'water'
+
 const layersDir = 'layers'
 const getLayerDir = layer => `${layersDir}/${layer}`
 const getLayerMBTilesPath = layer => `${getLayerDir(layer)}/${layer}.mbtiles`
@@ -72,6 +74,7 @@ file(
   waterDownloadsPath,
   [],
   function () {
+    jake.logger.log(`Downloading ${this.name} ...`)
     jake.mkdirP(path.dirname(this.name))
     const cmd = spawn('curl', [waterRemoteUrl])
     const streamOut = fs.createWriteStream(this.name)
@@ -80,6 +83,23 @@ file(
 
     cmd.on('exit', onFail(this, cmd))
     streamOut.on('finish', () => onSuccess(this)(0))
+  },
+  { async: true }
+)
+
+desc('Unzip downloaded water data zipfile')
+task(
+  'unzip-water',
+  [waterDownloadsPath],
+  function () {
+    jake.logger.log(`Unzipping water ...`)
+    jake.mkdirP(waterDir)
+
+    const cmd = spawn('unzip', [waterDownloadsPath, '-d', waterDir], {
+      stdio: 'inherit'
+    })
+    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onSuccess(this))
   },
   { async: true }
 )

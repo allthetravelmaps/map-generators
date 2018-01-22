@@ -24,6 +24,7 @@ To see a full list of available tasks, run `jake -T`
 
 * [jake](https://www.npmjs.com/package/jake)
 * [curl](https://curl.haxx.se/)
+* [unzip](http://www.info-zip.org/)
 * [yaml2json](https://github.com/bronze1man/yaml2json)
 * [get-overpass](https://www.npmjs.com/package/get-overpass)
 * [geojson-cli-difference](https://www.npmjs.com/package/geojson-cli-difference)

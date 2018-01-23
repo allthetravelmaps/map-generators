@@ -54,6 +54,7 @@ const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
 
 const waterDir = 'water'
+const waterFeaturesDir = `${waterDir}/features`
 const waterShpPath = `${waterDir}/water-polygons-split-4326/water_polygons.shp`
 const waterGeojsonPath = `${waterDir}/water.geojson`
 
@@ -334,6 +335,28 @@ layers.forEach(layer => {
   task(`build-layer/${layer}`, [getLayerMBTilesPath(layer)])
 })
 
+desc('Explode water feature collection to individual features')
+task(
+  'build-water',
+  [waterGeojsonPath],
+  function () {
+    jake.logger.log('Exploding water feature collection')
+
+    const streamIn = fs.createReadStream(waterGeojsonPath)
+    const cmd = spawn('geojson-cli-explode', [
+      '-d',
+      waterFeaturesDir,
+      '--include-bboxes-in-filenames'
+    ])
+    streamIn.pipe(cmd.stdin)
+    cmd.stderr.pipe(process.stderr)
+
+    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onSuccess(this))
+  },
+  { async: true }
+)
+
 desc(`Build all layers in one mbtiles file, ${allMBTiles}`)
 task('build', [allMBTiles])
 
@@ -355,6 +378,11 @@ layers.forEach(layer => {
   task(`clean-layer/${layer}`, [], function () {
     assertAndRm(getLayerDir(layer), `${layersDir}/${layer}`)
   })
+})
+
+desc('Delete build products for water')
+task('clean-water', [], function () {
+  assertAndRm(waterDir, 'water')
 })
 
 desc(`Delete ${allMBTiles} and ${layersDir}`)

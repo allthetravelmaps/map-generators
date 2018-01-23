@@ -54,6 +54,8 @@ const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
 
 const waterDir = 'water'
+const waterShpPath = `${waterDir}/water-polygons-split-4326/water_polygons.shp`
+const waterGeojsonPath = `${waterDir}/water.geojson`
 
 const layersDir = 'layers'
 const getLayerDir = layer => `${layersDir}/${layer}`
@@ -88,8 +90,8 @@ file(
 )
 
 desc('Unzip downloaded water data zipfile')
-task(
-  'unzip-water',
+file(
+  waterShpPath,
   [waterDownloadsPath],
   function () {
     jake.logger.log(`Unzipping water ...`)
@@ -99,7 +101,35 @@ task(
       stdio: 'inherit'
     })
     cmd.on('exit', onFail(this, cmd))
-    cmd.on('exit', onSuccess(this))
+    cmd.on('exit', exitCode => {
+      if (exitCode !== 0) return
+      /* update file timestamps so jake doesn't re-do this step unnecessarily */
+      const cmd2 = spawn('touch', [this.name])
+      cmd2.on('exit', onFail(this, cmd))
+      cmd2.on('exit', onSuccess(this))
+    })
+  },
+  { async: true }
+)
+
+desc('Convert water data to geojson')
+file(
+  waterGeojsonPath,
+  [waterShpPath],
+  function () {
+    jake.logger.log(`Converting water data to geojson ...`)
+
+    const cmd = spawn('mapshaper', [
+      waterShpPath,
+      '-o',
+      'format=geojson',
+      waterGeojsonPath
+    ])
+    const streamOut = fs.createWriteStream(this.name)
+    cmd.stdout.pipe(streamOut)
+
+    cmd.on('exit', onFail(this, cmd))
+    streamOut.on('finish', () => onSuccess(this)(0))
   },
   { async: true }
 )

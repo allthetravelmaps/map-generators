@@ -1,0 +1,36 @@
+name: Counties of Maine
+desc: The 16 counties of Maine, USA.
+entities:
+  - name: Piscataquis
+    features: [2535186]
+  - name: Aroostook
+    features: [2535177]
+  - name: Washington
+    features: [2535191]  # slow to build
+  - name: Penobscot
+    features: [2535185]
+  - name: Somerset
+    features: [2535189]
+  - name: Waldo
+    features: [2535190]
+  - name: Franklin
+    features: [2535179]
+  - name: Kennebec
+    features: [2535181]
+  - name: Androscoggin
+    features: [2535176]
+  - name: Cumberland
+    features: [2535178]
+  - name: Oxford
+    features: [2535184]
+  - name: York
+    features: [2021652]
+  - name: Hancock
+    features: [2535180]
+  - name: Sagadahoc
+    features: [2535187]
+  - name: Lincoln
+    features: [2535183]
+  # Causes build error
+  #- name: Knox
+  #  features: [2535182]

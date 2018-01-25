@@ -186,7 +186,11 @@ layers.forEach(layer => {
           jake.mkdirP(path.dirname(featurePath))
 
           const streamIn = fs.createReadStream(osmPath)
-          const cmd = spawn('geojson-cli-difference', excludePaths)
+          const cmd = spawn('geojson-cli-difference', [
+            '--respect-bboxes-in-filenames',
+            waterFeaturesDir,
+            ...excludePaths
+          ])
           const streamOut = fs.createWriteStream(this.name)
           streamIn.pipe(cmd.stdin)
           cmd.stdout.pipe(streamOut)
@@ -233,10 +237,7 @@ layers.forEach(layer => {
         cmd3.on('exit', onFail(this, cmd3))
         streamOut.on('finish', () => onSuccess(this)(0))
       },
-      {
-        async: true,
-        parallelLimit: 8
-      }
+      { async: true }
     )
 
     entityPaths.push(entityPath)
@@ -272,7 +273,7 @@ layers.forEach(layer => {
     },
     {
       async: true,
-      parallelLimit: 8
+      parallelLimit: 4
     }
   )
 })

@@ -20,10 +20,11 @@ const assertAndRm = (val, ref) => {
 }
 
 /* fail the task if an exitCode is non-zero */
-const onFail = (task, childProcess, deleteTarget = true) => {
-  const childCMD = childProcess.spawnargs.join(' ')
+const onFail = (task, childProcesses, deleteTarget = true) => {
+  const failedExe = childProcesses[childProcesses.length - 1].spawnargs[0]
+  const fullCmd = childProcesses.map(cp => cp.spawnargs.join(' ')).join(' | ')
   const target = task.name
-  const msg = `'${target}' failed while executing '${childCMD}'`
+  const msg = `'${target}' failed. ${failedExe} failed while excecuting '${fullCmd}'`
   return exitCode => {
     if (exitCode === 0) return
     if (deleteTarget && fs.existsSync(target)) fs.unlinkSync(target)
@@ -43,7 +44,7 @@ const serveMBTiles = mbtiles => {
   jake.logger.log(`Serving ${mbtiles} ... (cntrl-c to quit)`)
 
   const cmd = spawn('tileserver-gl-light', [mbtiles], { stdio: 'inherit' })
-  cmd.on('exit', onFail(this, cmd, false))
+  cmd.on('exit', onFail(this, [cmd], false))
 }
 
 /* directory structure */
@@ -92,7 +93,7 @@ file(
     cmd.stderr.pipe(process.stderr)
     cmd.stdout.pipe(streamOut)
 
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     streamOut.on('finish', () => onSuccess(this)(0))
   },
   { async: true }
@@ -109,12 +110,12 @@ file(
     const cmd = spawn('unzip', [waterDownloadsPath, '-d', waterDir], {
       stdio: 'inherit'
     })
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     cmd.on('exit', exitCode => {
       if (exitCode !== 0) return
       /* update file timestamps so jake doesn't re-do this step unnecessarily */
       const cmd2 = spawn('touch', [this.name])
-      cmd2.on('exit', onFail(this, cmd))
+      cmd2.on('exit', onFail(this, [cmd]))
       cmd2.on('exit', onSuccess(this))
     })
   },
@@ -138,7 +139,7 @@ file(
     cmd.stderr.pipe(process.stderr)
     cmd.stdout.pipe(streamOut)
 
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     streamOut.on('finish', () => onSuccess(this)(0))
   },
   { async: true }
@@ -164,7 +165,7 @@ rule(
     cmd.stderr.pipe(process.stderr)
     cmd.stdout.pipe(streamOut)
 
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     streamOut.on('finish', () => onSuccess(this)(0))
   }
 )
@@ -195,18 +196,22 @@ layers.forEach(layer => {
           jake.logger.log(`Building ${this.name} ...`)
           jake.mkdirP(path.dirname(featurePath))
 
-          const streamIn = fs.createReadStream(osmPath)
-          const cmd = spawn('geojson-cli-difference', [
+          const cmd1 = spawn('cat', [osmPath])
+          const cmd2 = spawn('geojson-cli-difference', [
             '--respect-bboxes-in-filenames',
             waterFeaturesDir,
             ...excludePaths
           ])
           const streamOut = fs.createWriteStream(this.name)
-          streamIn.pipe(cmd.stdin)
-          cmd.stderr.pipe(process.stderr)
-          cmd.stdout.pipe(streamOut)
 
-          cmd.on('exit', onFail(this, cmd))
+          cmd1.stdout.pipe(cmd2.stdin)
+          cmd2.stdout.pipe(streamOut)
+
+          cmd1.stderr.pipe(process.stderr)
+          cmd2.stderr.pipe(process.stderr)
+
+          cmd1.on('exit', onFail(this, [cmd1]))
+          cmd2.on('exit', onFail(this, [cmd1, cmd2]))
           streamOut.on('finish', () => onSuccess(this)(0))
         },
         { async: true }
@@ -228,6 +233,7 @@ layers.forEach(layer => {
         const cmd2 = spawn('geojson-cli-union')
         const cmd3 = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
         const streamOut = fs.createWriteStream(this.name)
+
         cmd1.stdout.pipe(cmd2.stdin)
         cmd2.stdout.pipe(cmd3.stdin)
         cmd3.stdout.pipe(streamOut)
@@ -236,9 +242,9 @@ layers.forEach(layer => {
         cmd2.stderr.pipe(process.stderr)
         cmd3.stderr.pipe(process.stderr)
 
-        cmd1.on('exit', onFail(this, cmd1))
-        cmd2.on('exit', onFail(this, cmd2))
-        cmd3.on('exit', onFail(this, cmd3))
+        cmd1.on('exit', onFail(this, [cmd1]))
+        cmd2.on('exit', onFail(this, [cmd1, cmd2]))
+        cmd3.on('exit', onFail(this, [cmd1, cmd2, cmd3]))
         streamOut.on('finish', () => onSuccess(this)(0))
       },
       { async: true }
@@ -272,7 +278,7 @@ layers.forEach(layer => {
         ],
         { stdio: 'inherit' }
       )
-      cmd.on('exit', onFail(this, cmd))
+      cmd.on('exit', onFail(this, [cmd]))
       cmd.on('exit', onSuccess(this))
     },
     {
@@ -307,7 +313,7 @@ file(
       ],
       { stdio: 'inherit' }
     )
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     cmd.on('exit', onSuccess(this))
   },
   { async: true }
@@ -329,7 +335,7 @@ task(
     const cmd = spawn('tile-join', ['-e', allStaticDir, allMBTiles], {
       stdio: 'inherit'
     })
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     cmd.on('exit', onSuccess(this))
   },
   { async: true }
@@ -347,17 +353,21 @@ task(
   function () {
     jake.logger.log('Exploding water feature collection')
 
-    const streamIn = fs.createReadStream(waterGeojsonPath)
-    const cmd = spawn('geojson-cli-explode', [
+    const cmd1 = spawn('cat', [waterGeojsonPath])
+    const cmd2 = spawn('geojson-cli-explode', [
       '-d',
       waterFeaturesDir,
       '--include-bboxes-in-filenames'
     ])
-    streamIn.pipe(cmd.stdin)
-    cmd.stderr.pipe(process.stderr)
 
-    cmd.on('exit', onFail(this, cmd))
-    cmd.on('exit', onSuccess(this))
+    cmd1.stdout.pipe(cmd2.stdin)
+
+    cmd1.stderr.pipe(process.stderr)
+    cmd2.stderr.pipe(process.stderr)
+
+    cmd1.on('exit', onFail(this, [cmd1]))
+    cmd2.on('exit', onFail(this, [cmd1, cmd2]))
+    cmd2.on('exit', onSuccess(this))
   },
   { async: true }
 )
@@ -449,7 +459,7 @@ task(
             { stdio: 'inherit' }
           )
 
-          cmd.on('exit', onFail(this, cmd, false))
+          cmd.on('exit', onFail(this, [cmd], false))
           cmd.on('exit', exitCode => {
             if (exitCode !== 0) return
             console.log('Upload finished successfully')

@@ -1,3 +1,6 @@
+/* global jake:false, desc:false, directory:false, fail:false, file:false */
+/* global rule:false, task:false */
+
 const assert = require('assert')
 const { execSync, spawn } = require('child_process')
 const fs = require('fs')

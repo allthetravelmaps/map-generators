@@ -5,6 +5,14 @@ const path = require('path')
 const process = require('process')
 const readline = require('readline')
 
+const maxConcurrency = 4
+
+/* Defaults to 10.
+ * The most readables we have piped to stderr within a
+ * task is 3 (currently).
+ * One additional for node itself. */
+process.stderr.setMaxListeners(maxConcurrency * 3 + 1)
+
 /* double check we don't rm -rf anything we don't want to */
 const assertAndRm = (val, ref) => {
   assert.equal(val, ref)
@@ -81,8 +89,8 @@ file(
     jake.mkdirP(path.dirname(this.name))
     const cmd = spawn('curl', [waterRemoteUrl])
     const streamOut = fs.createWriteStream(this.name)
-    cmd.stdout.pipe(streamOut)
     cmd.stderr.pipe(process.stderr)
+    cmd.stdout.pipe(streamOut)
 
     cmd.on('exit', onFail(this, cmd))
     streamOut.on('finish', () => onSuccess(this)(0))
@@ -127,6 +135,7 @@ file(
       waterGeojsonPath
     ])
     const streamOut = fs.createWriteStream(this.name)
+    cmd.stderr.pipe(process.stderr)
     cmd.stdout.pipe(streamOut)
 
     cmd.on('exit', onFail(this, cmd))
@@ -152,6 +161,7 @@ rule(
 
     const cmd = spawn('get-overpass', [osmId])
     const streamOut = fs.createWriteStream(this.name)
+    cmd.stderr.pipe(process.stderr)
     cmd.stdout.pipe(streamOut)
 
     cmd.on('exit', onFail(this, cmd))
@@ -193,6 +203,7 @@ layers.forEach(layer => {
           ])
           const streamOut = fs.createWriteStream(this.name)
           streamIn.pipe(cmd.stdin)
+          cmd.stderr.pipe(process.stderr)
           cmd.stdout.pipe(streamOut)
 
           cmd.on('exit', onFail(this, cmd))
@@ -213,24 +224,17 @@ layers.forEach(layer => {
         jake.logger.log(`Building ${this.name} ...`)
         jake.mkdirP(path.dirname(entityPath))
 
-        const cmd1 = spawn('mapshaper', [
-          '-i',
-          'combine-files',
-          ...featurePaths,
-          '-drop',
-          'fields=*',
-          '-merge-layers',
-          '-dissolve',
-          '-o',
-          'geojson-type=Feature',
-          '-'
-        ])
-        const cmd2 = spawn('geojson-cli-bbox', ['add'])
+        const cmd1 = spawn('cat', featurePaths)
+        const cmd2 = spawn('geojson-cli-union')
         const cmd3 = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
         const streamOut = fs.createWriteStream(this.name)
         cmd1.stdout.pipe(cmd2.stdin)
         cmd2.stdout.pipe(cmd3.stdin)
         cmd3.stdout.pipe(streamOut)
+
+        cmd1.stderr.pipe(process.stderr)
+        cmd2.stderr.pipe(process.stderr)
+        cmd3.stderr.pipe(process.stderr)
 
         cmd1.on('exit', onFail(this, cmd1))
         cmd2.on('exit', onFail(this, cmd2))
@@ -273,7 +277,7 @@ layers.forEach(layer => {
     },
     {
       async: true,
-      parallelLimit: 4
+      parallelLimit: maxConcurrency
     }
   )
 })

@@ -157,12 +157,11 @@ entities:
     features: [1833645]
   - name: Lafayette
     features: [1833631]
-  # Each of these four counties cause a build error. Need to investigate...
-  #- name: Jeffereson
-  #  features: [1833629]
-  #- name: Yazoo
-  #  features: [1833667]
-  #- name: Sharkey
-  #  features: [1833652]
-  #- name: Issaquena
-  #  features: [1833626]
+  - name: Jeffereson
+    features: [1833629]
+  - name: Yazoo
+    features: [1833667]
+  - name: Sharkey
+    features: [1833652]
+  - name: Issaquena
+    features: [1833626]

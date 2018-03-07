@@ -2,13 +2,14 @@
 /* global rule:false, task:false */
 
 const assert = require('assert')
-const { execSync, spawn } = require('child_process')
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 const process = require('process')
 const readline = require('readline')
+const { execSync, spawn } = require('child_process')
 
-const maxConcurrency = 4
+const maxConcurrency = os.cpus().length
 
 /* Defaults to 10.
  * The most readables we have piped to stderr within a

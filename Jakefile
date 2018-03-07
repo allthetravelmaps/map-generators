@@ -234,7 +234,7 @@ layers.forEach(layer => {
         jake.mkdirP(path.dirname(entityPath))
 
         const cmd1 = spawn('cat', featurePaths)
-        const cmd2 = spawn('geojson-cli-union')
+        const cmd2 = spawn('geojson-clipping', ['union'])
         const cmd3 = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
         const streamOut = fs.createWriteStream(this.name)
 

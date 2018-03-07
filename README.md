@@ -30,6 +30,7 @@ To see a full list of available tasks, run `jake -T`
 * [geojson-cli-bbox](https://www.npmjs.com/package/geojson-cli-bbox)
 * [geojson-cli-difference](https://www.npmjs.com/package/geojson-cli-difference)
 * [geojson-cli-explode](https://www.npmjs.com/package/geojson-cli-explode)
+* [geojson-clipping](https://www.npmjs.com/package/geojson-clipping)
 * [mapshapper](https://www.npmjs.com/package/mapshaper)
 * [jq](https://stedolan.github.io/jq/)
 * [tippecanoe](https://github.com/mapbox/tippecanoe)

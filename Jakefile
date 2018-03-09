@@ -201,8 +201,9 @@ layers.forEach(layer => {
           jake.mkdirP(path.dirname(featurePath))
 
           const cmd1 = spawn('cat', [osmPath])
-          const cmd2 = spawn('geojson-cli-difference', [
-            '--respect-bboxes-in-filenames',
+          const cmd2 = spawn('geojson-clipping', [
+            'difference',
+            '-b',
             waterFeaturesDir,
             ...excludePaths
           ])

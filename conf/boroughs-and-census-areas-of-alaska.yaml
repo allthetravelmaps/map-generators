@@ -1,0 +1,61 @@
+name: Counties of Maine
+desc: The 19 boroughs and 10 census areas of Alaska, USA.
+entities:
+  - name: Fairbanks North Star
+    features: [2605273]
+  - name: Denali
+    features: [2605269]
+  - name: Matanuska-Susitna
+    features: [2605292]
+  - name: Anchorage
+    features: [2605259]
+  - name: Kenai Peninsula
+    features: [2605325]
+    #- name: Valdez-Cordova
+    #features: [2605315]
+  - name: Yakutat
+    features: [2605317]
+  - name: Hoonah-Angoon
+    features: [2605280]
+    #- name: Haines
+    #features: [2605277]
+    #- name: Juneau
+    #features: [2605281]
+  - name: Sitka
+    features: [2605309]
+    #- name: Petersburg
+    #features: [2605308]
+    #- name: Prince of Wales-Hyder
+    #features: [2605249]
+    #- name: Ketchikan Gateway
+    #features: [2605248]
+  - name: Lake and Peninsula
+    features: [2605288]
+    #- name: Kodiak Island
+    #features: [2605284]
+    #- name: Aleutians East
+    #features: [2605253]
+    #- name: Aleutians West
+    #features: [2605254]
+  - name: Bethel
+    features: [2605260]
+  - name: Kusilvak
+    features: [2605316]
+  - name: Nome
+    features: [2605295]
+  - name: Northwest Arctic
+    features: [2605297]
+  - name: North Slope
+    features: [2605296]
+  - name: Yukon-Koyukuk
+    features: [2605326]
+  - name: Southeast Fairbanks
+    features: [2605314]
+  - name: Wrangell
+    features: [2605235]
+  - name: Skagway
+    features: [2605310]
+  - name: Bristol Bay
+    features: [2605265]
+  - name: Dillingham
+    features: [2605270]

@@ -200,24 +200,23 @@ layers.forEach(layer => {
           jake.logger.log(`Building ${this.name} ...`)
           jake.mkdirP(path.dirname(featurePath))
 
-          const cmd1 = spawn('cat', [osmPath])
-          const cmd2 = spawn('geojson-clipping', [
-            'difference',
-            '-b',
-            waterFeaturesDir,
-            ...excludePaths
-          ])
-          const streamOut = fs.createWriteStream(this.name)
+          const cmd = spawn(
+            'geojson-clipping',
+            [
+              'difference',
+              '-s',
+              osmPath,
+              '-o',
+              this.name,
+              '-b',
+              waterFeaturesDir,
+              ...excludePaths
+            ],
+            { stdio: 'inherit' } // without this it waits for input in stdin
+          )
 
-          cmd1.stdout.pipe(cmd2.stdin)
-          cmd2.stdout.pipe(streamOut)
-
-          cmd1.stderr.pipe(process.stderr)
-          cmd2.stderr.pipe(process.stderr)
-
-          cmd1.on('exit', onFail(this, [cmd1]))
-          cmd2.on('exit', onFail(this, [cmd1, cmd2]))
-          streamOut.on('finish', () => onSuccess(this)(0))
+          cmd.on('exit', onFail(this, [cmd]))
+          cmd.on('exit', onSuccess(this))
         },
         { async: true }
       )
@@ -234,23 +233,14 @@ layers.forEach(layer => {
         jake.logger.log(`Building ${this.name} ...`)
         jake.mkdirP(path.dirname(entityPath))
 
-        const cmd1 = spawn('cat', featurePaths)
-        const cmd2 = spawn('geojson-clipping', ['union'])
-        const cmd3 = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
-        const streamOut = fs.createWriteStream(this.name)
+        const cmd = spawn(
+          'geojson-clipping',
+          ['union', '-i', entityId, '-o', this.name, ...featurePaths],
+          { stdio: 'inherit' } // without this it waits for input in stdin
+        )
 
-        cmd1.stdout.pipe(cmd2.stdin)
-        cmd2.stdout.pipe(cmd3.stdin)
-        cmd3.stdout.pipe(streamOut)
-
-        cmd1.stderr.pipe(process.stderr)
-        cmd2.stderr.pipe(process.stderr)
-        cmd3.stderr.pipe(process.stderr)
-
-        cmd1.on('exit', onFail(this, [cmd1]))
-        cmd2.on('exit', onFail(this, [cmd1, cmd2]))
-        cmd3.on('exit', onFail(this, [cmd1, cmd2, cmd3]))
-        streamOut.on('finish', () => onSuccess(this)(0))
+        cmd.on('exit', onFail(this, [cmd]))
+        cmd.on('exit', onSuccess(this))
       },
       { async: true }
     )

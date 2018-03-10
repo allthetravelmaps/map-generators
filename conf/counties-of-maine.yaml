@@ -6,7 +6,7 @@ entities:
   - name: Aroostook
     features: [2535177]
   - name: Washington
-    features: [2535191]  # slow to build
+    features: [2535191]
   - name: Penobscot
     features: [2535185]
   - name: Somerset
@@ -31,6 +31,5 @@ entities:
     features: [2535187]
   - name: Lincoln
     features: [2535183]
-  # Causes build error
-  #- name: Knox
-  #  features: [2535182]
+  - name: Knox
+    features: [2535182]

@@ -11,32 +11,18 @@ entities:
     features: [2605259]
   - name: Kenai Peninsula
     features: [2605325]
-    #- name: Valdez-Cordova
-    #features: [2605315]
   - name: Yakutat
     features: [2605317]
   - name: Hoonah-Angoon
     features: [2605280]
-    #- name: Haines
-    #features: [2605277]
-    #- name: Juneau
-    #features: [2605281]
+  - name: Haines
+    features: [2605277]
+  - name: Juneau
+    features: [2605281]
   - name: Sitka
     features: [2605309]
-    #- name: Petersburg
-    #features: [2605308]
-    #- name: Prince of Wales-Hyder
-    #features: [2605249]
-    #- name: Ketchikan Gateway
-    #features: [2605248]
   - name: Lake and Peninsula
     features: [2605288]
-    #- name: Kodiak Island
-    #features: [2605284]
-    #- name: Aleutians East
-    #features: [2605253]
-    #- name: Aleutians West
-    #features: [2605254]
   - name: Bethel
     features: [2605260]
   - name: Kusilvak
@@ -59,3 +45,17 @@ entities:
     features: [2605265]
   - name: Dillingham
     features: [2605270]
+  - name: Petersburg
+    features: [2605308]
+  - name: Ketchikan Gateway
+    features: [2605248]
+  - name: Prince of Wales-Hyder
+    features: [2605249]
+  - name: Valdez-Cordova
+    features: [2605315]
+  - name: Kodiak Island
+    features: [2605284]
+  - name: Aleutians East
+    features: [2605253]
+  - name: Aleutians West
+    features: [2605254]

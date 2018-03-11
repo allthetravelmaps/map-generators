@@ -1,0 +1,131 @@
+name: States of the USA
+desc: The 64 parishes of Louisiana, USA.
+entities:
+  - name: Saint Bernard
+    features: [1836430]
+  - name: Terrebonne
+    features: [1836620]
+  - name: St. Mary
+    features: [1837809]
+  - name: Iberia
+    features: [1837804]
+  - name: Vermilion
+    features: [1838162]
+  - name: Cameron
+    features: [1838146]
+  - name: Calcasieu
+    features: [1838144]
+  - name: Beauregard
+    features: [1838142]
+  - name: Vernon
+    features: [1838163]
+  - name: Sabine
+    features: [1838160]
+  - name: De Soto
+    features: [1827487]
+  - name: Caddo
+    features: [1827485]
+  - name: Bossier
+    features: [1827484]
+  - name: Webster
+    features: [1827490]
+  - name: Claiborne
+    features: [1827486]
+  - name: Lincoln
+    features: [1838153]
+  - name: Union
+    features: [1826829]
+  - name: Morehouse
+    features: [1826824]
+  - name: West Carroll
+    features: [1828967]
+  - name: East Carroll
+    features: [1828965]
+  - name: Madison
+    features: [1838154]
+  - name: Tensas
+    features: [1838161]
+  - name: Catahoula
+    features: [1838147]
+  - name: Concordia
+    features: [1837802]
+  - name: Avoyelles
+    features: [1837801]
+  - name: West Feliciana
+    features: [1836623]
+  - name: Pointe Coupee
+    features: [1837805]
+  - name: Iberville
+    features: [1836611]
+  - name: East Baton Rouge
+    features: [1836609]
+  - name: Livingston
+    features: [1836613]
+  - name: Saint Helena
+    features: [1836616]
+  - name: Tangipahoa
+    features: [1836619]
+  - name: St. Tammany
+    features: [1836431]
+  - name: Washington
+    features: [1836621]
+  - name: Jefferson
+    features: [1836614]
+  - name: Orleans
+    features: [1836428]
+  - name: St. John the Baptist
+    features: [1836618]
+  - name: St. James
+    features: [1836617]
+  - name: East Feliciana
+    features: [1836610]
+  - name: West Baton Rouge
+    features: [1836622]
+  - name: St. Martin
+    features: [1837807]
+  - name: Lafayette
+    features: [1837810]
+  - name: Acadia
+    features: [1838140]
+  - name: Jefferson Davis
+    features: [1838151]
+  - name: Allen
+    features: [1838141]
+  - name: Rapides
+    features: [1838157]
+  - name: Evangeline
+    features: [1837803]
+  - name: St. Landry
+    features: [1837806]
+  - name: La Salle
+    features: [1838152]
+  - name: Grant
+    features: [1838149]
+  - name: Natchitoches
+    features: [1838155]
+  - name: Red River
+    features: [1838158]
+  - name: Bienville
+    features: [1838143]
+  - name: Jackson
+    features: [1838150]
+  - name: Ouachita
+    features: [1838156]
+  - name: Richland
+    features: [1838159]
+  - name: Franklin
+    features: [1838148]
+  - name: Caldwell
+    features: [1838145]
+  - name: Winn
+    features: [1838164]
+  - name: Ascension
+    features: [1836607]
+  - name: Assumption
+    features: [1836608]
+  - name: St. Charles
+    features: [1836615]
+  - name: Plaquemines
+    features: [1836429]
+  - name: Lafourche
+    features: [1836612]

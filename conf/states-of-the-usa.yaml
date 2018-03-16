@@ -3,8 +3,14 @@ desc: >
   The 50 states and one federal district (AKA the District of Columbia)
   of the United States of America.
 entities:
-  - name: Vermont
-    features: [60759]
+  - name: Alaska
+    features: [1116270]
+  - name: Florida
+    features: [162050]
+  - name: Louisiana
+    features: [224922]
+  - name: California
+    features: [165475]
   - name: Massachusetts
     features: [61315]
   - name: New York
@@ -15,6 +21,42 @@ entities:
     features: [67213]
   - name: Texas
     features: [114690]
+  - name: Mississippi
+    features: [161943]
+  - name: Alabama
+    features: [161950]
+  - name: Georgia
+    features: [161957]
+  - name: District of Columbia
+    features: [162069]
+  - name: Pennsylvania
+    features: [162109]
+  - name: Delaware
+    features: [162110]
+  - name: Maryland
+    features: [162112]
+  - name: Oregon
+    features: [165476]
+  - name: Washington
+    features: [165479]
+  - name: Michigan
+    features: [165789]
+  - name: Connecticut
+    features: [165794]
+  - name: Hawaii
+    features: [166563]
+  - name: South Carolina
+    features: [224040]
+  - name: Virginia
+    features: [224042]
+  - name: North Carolina
+    features: [224045]
+  - name: New Jersey
+    features: [224951]
+  - name: Rhode Island
+    features: [392915]
+  - name: Vermont
+    features: [60759]
   - name: Illinois
     features: [122586]
   - name: Missouri
@@ -39,12 +81,6 @@ entities:
     features: [161816]
   - name: Tennessee
     features: [161838]
-  - name: Mississippi
-    features: [161943]
-  - name: Alabama
-    features: [161950]
-  - name: Georgia
-    features: [161957]
   - name: Colorado
     features: [161961]
   - name: Wyoming
@@ -55,20 +91,10 @@ entities:
     features: [162014]
   - name: Arizona
     features: [162018]
-  - name: Florida
-    features: [162050]
   - name: Ohio
     features: [162061]
   - name: West Virginia
     features: [162068]
-  - name: District of Columbia
-    features: [162069]
-  - name: Pennsylvania
-    features: [162109]
-  - name: Delaware
-    features: [162110]
-  - name: Maryland
-    features: [162112]
   - name: Montana
     features: [162115]
   - name: Idaho
@@ -79,60 +105,3 @@ entities:
     features: [165471]
   - name: Nevada
     features: [165473]
-  - name: California
-    features: [165475]
-  - name: Oregon
-    features: [165476]
-  - name: Washington
-    features: [165479]
-  - name: Michigan
-    features: [165789]
-  - name: Connecticut
-    features: [165794]
-  - name: Hawaii
-    features: [166563]
-  - name: South Carolina
-    features: [224040]
-  - name: Virginia
-    features: [224042]
-  - name: North Carolina
-    features: [224045]
-  - name: Louisiana
-    features: [224922]
-  - name: New Jersey
-    features: [224951]
-  - name: Rhode Island
-    features: [392915]
-  - name: Alaska
-    # features: [1116270] # state as a whole
-    # broken up into its parts to avoid js out-of-mem error
-    features:
-      - 2605273
-      - 2605269
-      - 2605292
-      - 2605259
-      - 2605325
-      - 2605317
-      - 2605280
-      - 2605277
-      - 2605281
-      - 2605309
-      - 2605288
-      - 2605260
-      - 2605316
-      - 2605295
-      - 2605297
-      - 2605296
-      - 2605326
-      - 2605314
-      - 2605235
-      - 2605310
-      - 2605265
-      - 2605270
-      - 2605308
-      - 2605248
-      - 2605249
-      - 2605315
-      - 2605284
-      - 2605253
-      - 2605254

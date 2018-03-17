@@ -84,6 +84,11 @@ const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
 const getConf = layer =>
   JSON.parse(execSync(`yaml2json < ${getLayerConfPath(layer)}`).toString())
 
+/* executable we need to run with extra mem */
+const geojsonClipping = execSync(`which geojson-clipping`, {
+  encoding: 'utf-8'
+}).trim()
+
 /* downloading OSM water: http://openstreetmapdata.com/data/water-polygons */
 desc('Download OSM water from openstreetmapdata.com')
 file(
@@ -201,8 +206,10 @@ layers.forEach(layer => {
           jake.mkdirP(path.dirname(featurePath))
 
           const cmd = spawn(
-            'geojson-clipping',
+            'node',
             [
+              '--max_old_space_size=4096',
+              geojsonClipping,
               'difference',
               '-s',
               osmPath,

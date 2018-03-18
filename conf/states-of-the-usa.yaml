@@ -14,7 +14,11 @@ entities:
   - name: Massachusetts
     features: [61315]
   - name: New York
-    features: [61320]
+    features:
+      - osmid: relation/61320
+        excludes:
+          - relation/4039900
+          - relation/1206310
   - name: Maine
     features: [63512]
   - name: New Hampshire
@@ -30,7 +34,10 @@ entities:
   - name: District of Columbia
     features: [162069]
   - name: Pennsylvania
-    features: [162109]
+    features:
+      - osmid: relation/162109
+        excludes:
+          - relation/4039900
   - name: Delaware
     features: [162110]
   - name: Maryland
@@ -40,7 +47,12 @@ entities:
   - name: Washington
     features: [165479]
   - name: Michigan
-    features: [165789]
+    features:
+      - osmid: relation/165789
+        excludes:
+          - relation/1205149
+          - relation/4039486
+          - relation/1205151
   - name: Connecticut
     features: [165794]
   - name: Hawaii
@@ -58,7 +70,10 @@ entities:
   - name: Vermont
     features: [60759]
   - name: Illinois
-    features: [122586]
+    features:
+      - osmid: relation/122586
+        excludes:
+          - relation/1205149
   - name: Missouri
     features: [161638]
   - name: Kansas
@@ -78,7 +93,10 @@ entities:
   - name: Kentucky
     features: [161655]
   - name: Indiana
-    features: [161816]
+    features:
+      - osmid: relation/161816
+        excludes:
+          - relation/1205149
   - name: Tennessee
     features: [161838]
   - name: Colorado
@@ -92,7 +110,10 @@ entities:
   - name: Arizona
     features: [162018]
   - name: Ohio
-    features: [162061]
+    features:
+      - osmid: relation/162061
+        excludes:
+          - relation/4039900
   - name: West Virginia
     features: [162068]
   - name: Montana
@@ -100,8 +121,15 @@ entities:
   - name: Idaho
     features: [162116]
   - name: Wisconsin
-    features: [165466]
+    features:
+      - osmid: relation/165466
+        excludes:
+          - relation/4039486
+          - relation/1205149
   - name: Minnesota
-    features: [165471]
+    features:
+      - osmid: relation/165471
+        excludes:
+          - relation/4039486
   - name: Nevada
     features: [165473]

@@ -241,8 +241,17 @@ layers.forEach(layer => {
         jake.mkdirP(path.dirname(entityPath))
 
         const cmd = spawn(
-          'geojson-clipping',
-          ['union', '-i', entityId, '-o', this.name, ...featurePaths],
+          'node',
+          [
+            '--max_old_space_size=4096',
+            geojsonClipping,
+            'union',
+            '-i',
+            entityId,
+            '-o',
+            this.name,
+            ...featurePaths
+          ],
           { stdio: 'inherit' } // without this it waits for input in stdin
         )
 

@@ -178,7 +178,14 @@ entities:
   - name: Belize
     features: [287827]
   - name: Canada
-    features: [1428125]
+    features:
+      - osmid: relation/1428125
+        excludes:  # Great lakes
+          - relation/4039486
+          - relation/4039900
+          - relation/1206310
+          - relation/1205149
+          - relation/1205151
   - name: Costa Rica
     features: [287667]
   - name: Cuba
@@ -230,7 +237,14 @@ entities:
 #   Navassa Island
 #   Palmyra Atoll
   - name: United States
-    features: [148838]
+    features:
+      - osmid: relation/148838
+        excludes:  # Great lakes
+          - relation/4039486
+          - relation/4039900
+          - relation/1206310
+          - relation/1205149
+          - relation/1205151
 
 # South America
   - name: Argentina

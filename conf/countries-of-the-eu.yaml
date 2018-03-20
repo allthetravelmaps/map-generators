@@ -5,8 +5,13 @@ desc: >
   The 28 member states of the European Union. Outermost Regions (OMR) and
   Overseas Countries and Territories (OCT) not included.
 entities:
-  - name: Austria
-    features: [16239]
+  - name: Sweden  # lots of water detail, takes a long time
+    features: [52822]
+  # quadrapoint b/t Austria & Germany is causing the downloaded geojson to
+  # have a 'self-intersecting ring' and polygon-clipping is barfing
+  # https://en.wikipedia.org/wiki/Sorgschrofen
+  #- name: Austria
+  #  features: [16239]
   - name: Belgium
     features: [52411]
   - name: Bulgaria
@@ -27,8 +32,11 @@ entities:
     features: [1403916] # mainland and Corse
   - name: Greece
     features: [192307]
-  - name: Germany
-    features: [51477]
+  # quadrapoint b/t Austria & Germany is causing the downloaded geojson to
+  # have a 'self-intersecting ring' and polygon-clipping is barfing
+  # https://en.wikipedia.org/wiki/Sorgschrofen
+  #- name: Germany
+  #  features: [51477]
   - name: Hungary
     features: [21335]
   - name: Ireland
@@ -66,8 +74,6 @@ entities:
     features:
       - osmid: relation/1311341
         excludes: [relation/7248699]  # Canary Islands
-  - name: Sweden
-    features: [52822]
   - name: United Kingdom (UK)
     features:
       - 62149   # mainland

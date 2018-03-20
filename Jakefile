@@ -205,25 +205,37 @@ layers.forEach(layer => {
           jake.logger.log(`Building ${this.name} ...`)
           jake.mkdirP(path.dirname(featurePath))
 
-          const cmd = spawn(
-            'node',
-            [
-              '--max_old_space_size=4096',
+          // in the event that we need to subract both some land features
+          // and water, do the land features first to the bounding box can
+          // be smaller for the water subtraction
+          let cmd1
+          if (excludePaths.length > 0) {
+            cmd1 = spawn(
               geojsonClipping,
-              'difference',
-              '-s',
-              osmPath,
-              '-o',
-              this.name,
-              '-b',
-              waterFeaturesDir,
-              ...excludePaths
-            ],
-            { stdio: 'inherit' } // without this it waits for input in stdin
-          )
+              ['difference', '-s', osmPath, ...excludePaths],
+              { stdio: ['inherit', 'pipe', 'pipe'] } // without this it waits for input in stdin
+            )
+          } else {
+            cmd1 = spawn('cat', [osmPath])
+          }
 
-          cmd.on('exit', onFail(this, [cmd]))
-          cmd.on('exit', onSuccess(this))
+          const cmd2 = spawn('node', [
+            '--max_old_space_size=8192',
+            geojsonClipping,
+            'difference',
+            '-b',
+            waterFeaturesDir,
+            '-o',
+            this.name
+          ])
+
+          cmd1.stdout.pipe(cmd2.stdin)
+          cmd1.stderr.pipe(process.stderr)
+          cmd2.stderr.pipe(process.stderr)
+
+          cmd1.on('exit', onFail(this, [cmd1]))
+          cmd2.on('exit', onFail(this, [cmd1, cmd2]))
+          cmd2.on('exit', onSuccess(this))
         },
         { async: true }
       )
@@ -243,7 +255,7 @@ layers.forEach(layer => {
         const cmd = spawn(
           'node',
           [
-            '--max_old_space_size=4096',
+            '--max_old_space_size=8192',
             geojsonClipping,
             'union',
             '-i',

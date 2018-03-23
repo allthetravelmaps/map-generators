@@ -7,11 +7,9 @@ desc: >
 entities:
   - name: Sweden  # lots of water detail, takes a long time
     features: [52822]
-  # quadrapoint b/t Austria & Germany is causing the downloaded geojson to
-  # have a 'self-intersecting ring' and polygon-clipping is barfing
-  # https://en.wikipedia.org/wiki/Sorgschrofen
-  #- name: Austria
-  #  features: [16239]
+  # quadrapoint b/t Austria & Germany https://en.wikipedia.org/wiki/Sorgschrofen
+  - name: Austria
+    features: [16239]
   - name: Belgium
     features: [52411]
   - name: Bulgaria
@@ -32,11 +30,9 @@ entities:
     features: [1403916] # mainland and Corse
   - name: Greece
     features: [192307]
-  # quadrapoint b/t Austria & Germany is causing the downloaded geojson to
-  # have a 'self-intersecting ring' and polygon-clipping is barfing
-  # https://en.wikipedia.org/wiki/Sorgschrofen
-  #- name: Germany
-  #  features: [51477]
+  # quadrapoint b/t Austria & Germany https://en.wikipedia.org/wiki/Sorgschrofen
+  - name: Germany
+    features: [51477]
   - name: Hungary
     features: [21335]
   - name: Ireland

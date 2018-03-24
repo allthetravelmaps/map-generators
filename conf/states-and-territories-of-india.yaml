@@ -1,0 +1,75 @@
+name: States and territories of India
+desc: The 29 states and 7 territories of India.
+entities:
+  - name: Tamil Nadu
+    features: [96905]
+  - name:  Kerala
+    features: [2018151]
+  - name: Karnataka
+    features: [2019939]
+  - name: Telangana
+    features: [3250963]
+  - name: Chhattisgarh
+    features: [1972004]
+  - name: Andhra Pradesh
+    features: [2022095]
+  - name: Odisha
+    features: [1984022]
+  - name: West Bengal
+    features: [1960177]
+  - name: Jharkhand
+    features: [1960191]
+  - name: Bihar
+    features: [1958982]
+  - name: Assam
+    features: [2025886]
+  - name: Arunachal Pradesh
+    features: [2027346]
+  - name: Nagaland
+    features: [2027973]
+  - name: Manipur
+    features: [2027869]
+  - name: Mizoram
+    features: [2029046]
+  - name: Tripura
+    features: [2026458]
+  - name: Sikkim
+    features: [1791324]
+  - name: Goa
+    features: [1997192]
+  - name: Maharashtra
+    features: [1950884]
+  - name: Gujarat
+    features: [1949080]
+  - name: Madhya Pradesh
+    features: [1950071]
+  - name: Rajasthan
+    features: [1942920]
+  - name: Uttar Pradesh
+    features: [1942587]
+  - name: Haryana
+    features: [1942601]
+  - name: Uttarakhand
+    features: [374810]
+  - name: Himachal Pradesh
+    features: [364186]
+  - name: Punjab
+    features: [1942686]
+  - name: Jammu and Kashmir
+    features: [1943188]
+  - name: Delhi
+    features: [1942586]
+  - name: Puducherry
+    features: [107001]
+  - name: Lakshadweep
+    features: [2027460]
+  - name: Andaman and Nicobar Islands
+    features: [2025855]
+  - name: Dadra and Nagar Haveli
+    features: [1952530]
+  - name: Daman and Diu
+    features: [1953041]
+  - name: Chandigarh
+    features: [1942809]
+  - name: Meghalaya
+    features: [2027521]

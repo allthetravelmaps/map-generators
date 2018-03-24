@@ -1,0 +1,21 @@
+name: States and territories of Australia
+desc: The 6 states and 3 mainland territories of Australia. External territories are excluded.
+entities:
+  - name: Western Australia
+    features: [2316598]
+  - name: Northern Territory
+    features: [2316594]
+  - name: South Australia
+    features: [2316596]
+  - name: Queensland
+    features: [2316595]
+  - name: New South Wales
+    features: [2316593]
+  - name: Victoria
+    features: [2316741]
+  - name: Australian Capital Territory
+    features: [2354197]
+  - name: Tasmania
+    features: [2369652]
+  - name: Jervis Bay Territory
+    features: [2357330]

@@ -1,0 +1,184 @@
+name: Federal Subjects of Russia
+desc: >
+  The 46 oblasts, 22 republics, 9 krais, 4 autonomous okrugs, 3 federal cities
+  and 1 autonomous oblast of Russia.
+entities:
+  - name: Kamchatka Krai
+    features: [151233]
+  - name: Magadan Oblast
+    features: [151228]
+  - name: Chukotka Autonomous Okrug
+    features: [151231]
+  - name: Khabarovsk Krai
+    features: [151223]
+  - name: Sakha Republic
+    features: [151234]
+  - name: Amur Oblast
+    features: [147166]
+  - name: Primorsky Krai
+    features: [151225]
+  - name: Jewish Autonomous Oblast
+    features: [147167]
+  - name: Zabaykalsky Krai
+    features: [145730]
+  - name: Buryatia
+    features: [145729]
+  - name: Irkutsk Oblast
+    features: [145454]
+  - name: Krasnoyarsk Krai
+    features: [190090]
+  - name: Tuva
+    features: [145195]
+  - name: Khakassia
+    features: [190911]
+  - name: Kemerovo Oblast
+    features: [144763]
+  - name: Altai Republic
+    features: [145194]
+  - name: Altai Krai
+    features: [144764]
+  - name: Novosibirsk Oblast
+    features: [140294]
+  - name: Omsk Oblast
+    features: [140292]
+  - name: Tomsk Oblast
+    features: [140295]
+  - name: Tyumen Oblast
+    features: [140291]
+  - name: Khanty-Mansiysk Autonomous Okrug – Ugra
+    features: [140296]
+  - name: Yamalo-Nenets Autonomous Okrug
+    features: [191706]
+  - name: Komi Republic
+    features: [115136]
+  - name: Nenets Autonomous Okrug
+    features: [274048]
+  - name: Orenburg Oblast
+    features: [77669]
+  - name: Bashkortostan
+    features: [77677]
+  - name: Chelyabinsk Oblast
+    features: [77687]
+  - name: Udmurtia
+    features: [115134]
+  - name: Perm Krai
+    features: [115135]
+  - name: Kirov Oblast
+    features: [115100]
+  - name: Republic of Crimea
+    features: [3795586]
+  - name: Krasnodar Krai
+    features: [108082]
+  - name: Karachay-Cherkessia
+    features: [109878]
+  - name: Stavropol Krai
+    features: [108081]
+  - name: Kabardino-Balkaria
+    features: [109879]
+  - name: North Ossetia–Alania
+    features: [110032]
+  - name: Ingushetia
+    features: [253252]
+  - name: Chechnya
+    features: [109877]
+  - name: Dagestan
+    features:
+      - osmid: relation/109876
+        excludes:
+          - relation/3987743  # Caspian Sea
+  - name: Rostov Oblast
+    features: [85606]
+  - name: Volgograd Oblast
+    features: [77665]
+  - name: Kalmykia
+    features:
+      - osmid: relation/108083
+        excludes:
+          - relation/3987743  # Caspian Sea
+  - name: Astrakhan Oblast
+    features:
+      - osmid: relation/112819
+        excludes:
+          - relation/3987743  # Caspian Sea
+  - name: Saratov Oblast
+    features: [72193]
+  - name: Ulyanovsk Oblast
+    features: [72192]
+  - name: Penza Oblast
+    features: [72182]
+  - name: Samara Oblast
+    features: [72194]
+  - name: Tatarstan
+    features: [79374]
+  - name: Republic of Karelia
+    features: [393980]
+  - name: Arkhangelsk Oblast
+    features: [140337]
+  - name: Murmansk Oblast
+    features: [2099216]
+  - name: Kurgan Oblast
+    features: [140290]
+  - name: Sverdlovsk Oblast
+    features: [79379]
+  - name: Adygea
+    features: [253256]
+  - name: Republic of Mordovia
+    features: [72196]
+  - name: Nizhny Novgorod Oblast
+    features: [72195]
+  - name: Chuvashia
+    features: [80513]
+  - name: Mari El
+    features: [115114]
+  - name: Kostroma Oblast
+    features: [85963]
+  - name: Yaroslavl Oblast
+    features: [81994]
+  - name: Vologda Oblast
+    features: [115106]
+  - name: Novgorod Oblast
+    features: [89331]
+  - name: Pskov Oblast
+    features: [155262]
+  - name: Leningrad oblast
+    features: [176095]
+  - name: Kaliningrad
+    features: [103906]
+  - name: Tver Oblast
+    features: [2095259]
+  - name: Smolensk Oblast
+    features: [81996]
+  - name: Moscow Oblast
+    features: [51490]
+  - name: Moscow
+    features: [102269]
+  - name: Vladimir Oblast
+    features: [72197]
+  - name: Ivanovo Oblast
+    features: [85617]
+  - name: Ryazan Oblast
+    features: [71950]
+  - name: Tula Oblast
+    features: [81993]
+  - name: Lipetsk Oblast
+    features: [72169]
+  - name: Kaluga Oblast
+    features: [81995]
+  - name: Bryansk Oblast
+    features: [81997]
+  - name: Oryol Oblast
+    features: [72224]
+  - name: Belgorod Oblast
+    features: [83184]
+  - name: Voronezh Oblast
+    features: [72181]
+  - name: Kursk Oblast
+    features: [72223]
+  - name: Tambov Oblast
+    features: [72180]
+  - name: Saint Petersburg
+    features: [337422]
+  - name: Sevastopol
+    features: [3788485]
+  - name: Sakhalin Oblast
+    features: [394235]

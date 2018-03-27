@@ -72,8 +72,8 @@ entities:
 #   New Caledonia
 #   Clipperton Island
 #   French Southern and Antarctic Lands (Antartic part excluded)
-  - name: France
-    features: [2202162]
+# - name: France
+#    features: [2202162]
 
   - name: Georgia
     features: [28699]
@@ -119,8 +119,8 @@ entities:
 #   Bouvet Island
 #   Svalbard
 # Norway dependencies excluded as part of Antartca: Peter Island
-  - name: Norway
-    features: [2978650]
+#  - name: Norway
+#    features: [2978650]
 
   - name: Poland
     features: [49715]
@@ -128,8 +128,8 @@ entities:
     features: [295480]
   - name: Romania
     features: [90689]
-  - name: Russia
-    features: [60189]
+    #  - name: Russia
+    #features: [60189]
   - name: San Marino
     features: [54624]
   - name: Serbia
@@ -177,15 +177,15 @@ entities:
     features: [547469]
   - name: Belize
     features: [287827]
-  - name: Canada
-    features:
-      - osmid: relation/1428125
-        excludes:  # Great lakes
-          - relation/4039486
-          - relation/4039900
-          - relation/1206310
-          - relation/1205149
-          - relation/1205151
+    #  - name: Canada
+    #features:
+    #  - osmid: relation/1428125
+    #    excludes:  # Great lakes
+    #      - relation/4039486
+    #      - relation/4039900
+    #      - relation/1206310
+    #      - relation/1205149
+    #      - relation/1205151
   - name: Costa Rica
     features: [287667]
   - name: Cuba
@@ -236,15 +236,15 @@ entities:
 #   Kingman Reef
 #   Navassa Island
 #   Palmyra Atoll
-  - name: United States
-    features:
-      - osmid: relation/148838
-        excludes:  # Great lakes
-          - relation/4039486
-          - relation/4039900
-          - relation/1206310
-          - relation/1205149
-          - relation/1205151
+#  - name: United States
+#    features:
+#      - osmid: relation/148838
+#        excludes:  # Great lakes
+#          - relation/4039486
+#          - relation/4039900
+#          - relation/1206310
+#          - relation/1205149
+#          - relation/1205151
 
 # South America
   - name: Argentina

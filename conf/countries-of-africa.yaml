@@ -1,0 +1,114 @@
+name: Countries of Africa
+desc: >
+  The 54 independent countries of Africa.
+entities:
+  - name: Algeria
+    features: [192756]
+  - name: Angola
+    features: [195267]
+  - name: Benin
+    features: [192784]
+  - name: Botswana
+    features: [1889339]
+  - name: Burkina Faso
+    features: [192783]
+  - name: Burundi
+    features: [195269]
+  - name: Cameroon
+    features: [192830]
+  - name: Cape Verde
+    features: [535774]
+  - name: Central African Republic (CAR)
+    features: [192790]
+  - name: Chad
+    features: [2361304]
+  - name: Comoros
+    features: [535790]
+  - name: Democratic Republic of the Congo
+    features: [192795]
+  - name: Republic of the Congo
+    features: [192794]
+  - name: Cote d'Ivoire
+    features: [192779]
+  - name: Djibouti
+    features: [192801]
+  - name: Egypt
+    features: [1473947]
+  - name: Equatorial Guinea
+    features: [192791]
+  - name: Eritrea
+    features: [296961]
+  - name: Ethiopia
+    features: [192800]
+  - name: Gabon
+    features: [192793]
+  - name: Gambia
+    features: [192774]
+  - name: Ghana
+    features: [192781]
+  - name: Guinea
+    features: [192778]
+  - name: Guinea-Bissau
+    features: [192776]
+  - name: Kenya
+    features: [192798]
+  - name: Lesotho
+    features: [2093234]
+  - name: Liberia
+    features: [192780]
+  - name: Libya
+    features: [192758]
+  - name: Madagascar
+    features: [447325]
+  - name: Malawi
+    features: [195290]
+  - name: Mali
+    features: [192785]
+  - name: Mauritania
+    features: [192763]
+  - name: Mauritius
+    features: [535828]
+  - name: Morocco
+    features:
+      - 3630439
+      - 5441968 # Western Sarah / Sahrawi Arab Democratic Republic
+  - name: Mozambique
+    features: [195273]
+  - name: Namibia
+    features: [195266]
+  - name: Niger
+    features: [192786]
+  - name: Nigeria
+    features: [192787]
+  - name: Rwanda
+    features: [171496]
+  - name: Sao Tome and Principe
+    features: [535880]
+  - name: Senegal
+    features: [192775]
+  - name: Seychelles
+    features: [536765]
+  - name: Sierra Leone
+    features: [192777]
+  - name: Somalia
+    features: [192799]
+  - name: South Africa
+    features: [87565]
+  - name: South Sudan
+    features: [1656678]
+  - name: Sudan
+    features: [192789]
+  - name: Swaziland
+    features: [88210]
+  - name: Tanzania
+    features: [195270]
+  - name: Togo
+    features: [192782]
+  - name: Tunisia
+    features: [192757]
+  - name: Uganda
+    features: [192796]
+  - name: Zambia
+    features: [195271]
+  - name: Zimbabwe
+    features: [195272]

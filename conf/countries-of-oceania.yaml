@@ -1,0 +1,47 @@
+name: Countries of Oceania
+desc: >
+  The 16 independent countries of Oceania. Included are states with full
+  member status in the United Nations, and states with membership only in
+  various specialised agencies (Cook Islands, Niue).
+entities:
+  - name: Cook Islands
+    features: [2184233]
+  - name: Niue
+    features: [1558556]
+# Australia dependencies included in country relation:
+#   Christmas Island
+#   Cocos (Keeling) Islands
+#   Norfolk Island
+#   Ashmore and Cartier Islnads
+#   Coral Sea Islands
+#   Heard Island and McDonald Islands
+  - name: Australia
+    features: [80500]
+  - name: Fiji
+    features: [571747]
+  - name: Kiribati
+    features: [571178]
+  - name: Marshall Islands
+    features: [571771]
+  - name: Micronesia
+    features: [571802]
+  - name: Nauru
+    features: [571804]
+  - name: New Zealand
+    features:
+      - 556706
+      - 2186600 # Tokelau
+  - name: Palau
+    features: [571805]
+  - name: Papua New Guinea
+    features: [307866]
+  - name: Samoa
+    features: [1872673]
+  - name: Solomon Islands
+    features: [1857436]
+  - name: Tonga
+    features: [2186665]
+  - name: Tuvalu
+    features: [2177266]
+  - name: Vanuatu
+    features: [2177246]

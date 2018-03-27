@@ -1,0 +1,79 @@
+name: Countries of North America
+desc: >
+  The 23 independent countries of North America.
+entities:
+  - name: Antigua and Barbuda
+    features: [536900]
+  - name: Barbados
+    features: [547511]
+  - name: The Bahamas
+    features: [547469]
+  - name: Belize
+    features: [287827]
+    # - name: Canada
+    #features:
+    #  - osmid: relation/1428125
+    #    excludes:  # Great lakes
+    #      - relation/4039486
+    #      - relation/4039900
+    #      - relation/1206310
+    #      - relation/1205149
+    #      - relation/1205151
+  - name: Costa Rica
+    features: [287667]
+  - name: Cuba
+    features: [307833]
+  - name: Dominica
+    features: [307823]
+  - name: Dominican Republic
+    features: [307828]
+  - name: El Salvador
+    features: [1520612]
+  - name: Grenada
+    features: [550727]
+  - name: Guatemala
+    features: [1521463]
+  - name: Hati
+    features: [307829]
+  - name: Nicaragua
+    features: [287666]
+  - name: Honduras
+    features: [287670]
+  - name: Jamaica
+    features: [555017]
+  - name: Mexico
+    features: [114686]
+  - name: Panama
+    features: [287668]
+  - name: Saint Kitts and Nevis
+    features: [536899]
+  - name: Saint Lucia
+    features: [550728]
+  - name: Saint Vincent and the Grenadines
+    features: [550725]
+  - name: Trinidad and Tobago
+    features: [555717]
+# United States dependencies included in country relation:
+#   Gaum
+#   Northern Mariana Islands
+#   Puerto Rico
+#   US Virgin Islands
+#   American Samoa
+#   Midway Atoll
+#   Wake Island
+#   Baker Island
+#   Howland Island
+#   Jarvis Island
+#   Johnston Atoll
+#   Kingman Reef
+#   Navassa Island
+#   Palmyra Atoll
+# - name: United States
+#    features:
+#      - osmid: relation/148838
+#        excludes:  # Great lakes
+#          - relation/4039486
+#          - relation/4039900
+#          - relation/1206310
+#          - relation/1205149
+#          - relation/1205151

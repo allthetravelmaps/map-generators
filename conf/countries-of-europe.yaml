@@ -1,0 +1,148 @@
+# https://en.wikipedia.org/wiki/List_of_sovereign_states
+# https://www.countries-ofthe-world.com/
+name: Countries of Europe
+desc: >
+  The 50 independent countries of Europe. Included are states with full
+  member status in the United Nations, states with just observer status,
+  (Vatican City), and states with membership only in various
+  specialised agencies (Kosovo).
+entities:
+  - name: Vatican City (Holy See)
+    features: [36989]
+  - name: Kosovo
+    features: [2088990]
+  - name: Albania
+    features: [53292]
+  - name: Andorra
+    features: [9407]
+  - name: Armenia
+    features: [364066]
+  - name: Austria
+    features: [16239]
+  - name: Azerbaijan
+    features: [364110]
+  - name: Belarus
+    features: [59065]
+  - name: Belgium
+    features: [52411]
+  - name: Bosnia and Herzegovina
+    features: [2528142]
+  - name: Bulgaria
+    features: [186382]
+  - name: Croatia
+    features: [214885]
+  - name: Cyprus
+    features: [307787]
+  - name: Czech Republic
+    features: [51684]
+  - name: Denmark
+    features:
+      - 50046
+      - 52939     # Faroe Islands
+      - 2184073   # Greenland
+  - name: Estonia
+    features: [79510]
+# Finland dependencies included in country relation:
+#   Aland Islands
+  - name: Finland
+    features: [54224]
+# France dependencies included in country relation:
+#   Saint Barthélemy
+#   Saint Martin
+#   Saint Pierre and Miquelon
+#   Wallis and Futuna
+#   French Polynesia
+#   New Caledonia
+#   Clipperton Island
+#   French Southern and Antarctic Lands (Antartic part excluded)
+#- name: France
+#    features: [2202162]
+  - name: Georgia
+    features: [28699]
+  - name: Germany
+    features: [51477]
+  - name: Greece
+    features: [192307]
+  - name: Hungary
+    features: [21335]
+  - name: Iceland
+    features: [299133]
+  - name: Ireland
+    features: [62273]
+  - name: Italy
+    features: [365331]
+  - name: Latvia
+    features: [72594]
+  - name: Liechtenstein
+    features: [1155955]
+  - name: Lithuania
+    features: [72596]
+  - name: Luxembourg
+    features: [2171347]
+  - name: Macedonia
+    features: [53293]
+  - name: Malta
+    features: [365307]
+  - name: Moldova
+    features: [58974]
+  - name: Monaco
+    features: [1124039]
+  - name: Montenegro
+    features: [53296]
+# Netherlands dependencies included in country relation:
+#   Aruba
+#   Curacao
+#   Sint Maarten
+  - name: Netherlands
+    features: [2323309]
+# Norway dependencies included in country relation:
+#   Bouvet Island
+#   Svalbard
+# Norway dependencies excluded as part of Antartca: Peter Island
+# - name: Norway
+#    features: [2978650]
+  - name: Poland
+    features: [49715]
+  - name: Portugal
+    features: [295480]
+  - name: Romania
+    features: [90689]
+    #- name: Russia
+    #features: [60189]
+  - name: San Marino
+    features: [54624]
+  - name: Serbia
+    features: [1741311]
+  - name: Slovakia
+    features: [14296]
+  - name: Slovenia
+    features: [218657]
+  - name: Spain
+    features: [1311341]
+  - name: Sweden
+    features: [52822]
+  - name: Switzerland
+    features: [51701]
+  - name: Turkey
+    features: [174737]
+  - name: Ukraine
+    features: [60199]
+  - name: United Kingdom
+    features:
+      - 62149
+      - 2177161   # Anguilla
+      - 1993208   # Bermuda
+      - 1993867   # British Indian Ocean Territory
+      - 285454    # British Virgin Islands
+      - 2185366   # Cayman Islands
+      - 2185374   # Falkland Islands
+      - 1278736   # Gibraltar
+      - 537257    # Montserrat
+      - 2185375   # Pitcairn Islands
+      - 1964272   # Saint Helena, Ascension and Tristan da Cunha
+      - 547479    # Turks and Caicos Islands
+      - 1983628   # South Georgia and the South Sandwich Islands
+      - 3263728   # Akrotiri and Dhekelia
+      - 270009    # Guernsey
+      - 367988    # Jersey
+      - 62269     # Isle of Man

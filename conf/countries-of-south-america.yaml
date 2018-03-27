@@ -1,0 +1,28 @@
+name: Countries of South America
+desc: >
+  The 12 independent countries of South America.
+entities:
+  - name: Argentina
+    features: [286393]
+  - name: Bolivia
+    features: [252645]
+  - name: Brazil
+    features: [59470]
+  - name: Chile
+    features: [167454]
+  - name: Colombia
+    features: [120027]
+  - name: Ecuador
+    features: [108089]
+  - name: Guyana
+    features: [287083]
+  - name: Paraguay
+    features: [287077]
+  - name: Peru
+    features: [288247]
+  - name: Suriname
+    features: [287082]
+  - name: Uruguay
+    features: [287072]
+  - name: Venezuela
+    features: [272644]

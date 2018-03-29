@@ -33,7 +33,12 @@ entities:
   - name: Djibouti
     features: [192801]
   - name: Egypt
-    features: [1473947]
+    features:
+      - osmid: relation/1473947
+        excludes:
+          - relation/3060792  # North Sinai Governorate
+          - relation/3060793  # South Sinai Governorate
+          - relation/5632534  # Sinai Peninsula
   - name: Equatorial Guinea
     features: [192791]
   - name: Eritrea

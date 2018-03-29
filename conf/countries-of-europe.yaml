@@ -147,11 +147,15 @@ entities:
           - relation/2232893  # Savage Islands
   - name: Romania
     features: [90689]
-    # TODO:
-    #   - fill this in with regions or provinces
-    #   - comment out the ones that aren't in Europe
-    #- name: Russia
-    #features: [60189]
+  - name: Russia
+    features:
+      - 1029256   # Central Federal District
+      - 1216601   # Northwestern Federal District
+      - 1075831   # Volga Federal District
+      - osmid: relation/1059500       # South federal district
+        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: relation/389344        # North Caucasus federal
+        excludes: [relation/3987743]  # Caspian Sea
   - name: San Marino
     features: [54624]
   - name: Serbia
@@ -172,7 +176,11 @@ entities:
   - name: Switzerland
     features: [51701]
   - name: Ukraine
-    features: [60199]
+    features:
+      - osmid: relation/60199
+        excludes:
+          - relation/72639    # Autonomous Republic of Crimea
+          - relation/1574364  # Sevastopol
   - name: United Kingdom
     features:
       - 58447     # England

@@ -157,8 +157,18 @@ entities:
     features: [295480]
   - name: Romania
     features: [90689]
-    #  - name: Russia
-    #features: [60189]
+  - name: Russia
+    features:
+      - 1029256   # Central Federal District
+      - 1216601   # Northwestern Federal District
+      - 1075831   # Volga Federal District
+      - osmid: relation/1059500       # South federal district
+        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: relation/389344        # North Caucasus federal
+        excludes: [relation/3987743]  # Caspian Sea
+      - 1113276   # Ural Federal District
+      - 1221148   # Siberian Federal District
+      - 1221185   # Far Eastern Federal District
   - name: San Marino
     features: [54624]
   - name: Serbia
@@ -174,7 +184,11 @@ entities:
   - name: Switzerland
     features: [51701]
   - name: Ukraine
-    features: [60199]
+    features:
+      - osmid: relation/60199
+        excludes:
+          - relation/72639    # Autonomous Republic of Crimea
+          - relation/1574364  # Sevastopol
   - name: United Kingdom
     features:
       - 58447     # England
@@ -420,7 +434,9 @@ entities:
   - name: Armenia
     features: [364066]
   - name: Azerbaijan
-    features: [364110]
+    features:
+      - osmid: relation/364110
+        excludes: [relation/3987743]  # Caspian Sea
   - name: Bahrain
     features: [378734]
   - name: Bangladesh
@@ -445,7 +461,9 @@ entities:
   - name: Indonesia
     features: [304751]
   - name: Iran
-    features: [304938]
+    features:
+      - osmid: relation/304938
+        excludes: [relation/3987743]  # Caspian Sea
   - name: Iraq
     features: [304934]
   - name: Israel
@@ -455,7 +473,9 @@ entities:
   - name: Jordan
     features: [184818]
   - name: Kazakhstan
-    features: [214665]
+    features:
+      - osmid: relation/214665
+        excludes: [relation/3987743]  # Caspian Sea
   - name: Kuwait
     features: [305099]
   - name: Kyrgyzstan
@@ -503,7 +523,9 @@ entities:
   - name: Turkey
     features: [174737]
   - name: Turkmenistan
-    features: [223026]
+    features:
+      - osmid: relation/223026
+        excludes: [relation/3987743]  # Caspian Sea
   - name: United Arab Emirates (UAE)
     features: [307763]
   - name: Uzbekistan

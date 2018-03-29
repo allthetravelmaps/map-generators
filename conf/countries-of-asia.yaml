@@ -93,7 +93,9 @@ entities:
   - name: Timor-Leste
     features: [305142]
   - name: Turkey
-    features: [174737]
+    features:
+      - osmid: relation/174737
+        excludes: [relation/4016746]  # Balkans (incluces european Turkey)
   - name: Turkmenistan
     features: [223026]
   - name: United Arab Emirates (UAE)

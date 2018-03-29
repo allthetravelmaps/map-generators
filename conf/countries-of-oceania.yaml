@@ -17,7 +17,9 @@ entities:
 #   Coral Sea Islands
 #   Heard Island and McDonald Islands
   - name: Australia
-    features: [80500]
+    features:
+      - osmid: relation/80500
+        excludes: [relation/2177227]  # Heard Island and McDonald Islands
   - name: Fiji
     features: [571747]
   - name: Kiribati

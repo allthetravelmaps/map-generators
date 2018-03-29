@@ -9,7 +9,9 @@ entities:
   - name: Brazil
     features: [59470]
   - name: Chile
-    features: [167454]
+    features:
+      - osmid: relation/167454
+        excludes: [relation/1773340]  # Easter Island Province
   - name: Colombia
     features: [120027]
   - name: Ecuador

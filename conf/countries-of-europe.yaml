@@ -2,10 +2,10 @@
 # https://www.countries-ofthe-world.com/
 name: Countries of Europe
 desc: >
-  The 50 independent countries of Europe. Included are states with full
-  member status in the United Nations, states with just observer status,
-  (Vatican City), and states with membership only in various
-  specialised agencies (Kosovo).
+  The 45 independent countries of with capital cities in Europe.
+  Included are states with full member status in the United Nations,
+  states with just observer status, (Vatican City),
+  and states with membership only in various specialised agencies (Kosovo).
 entities:
   - name: Vatican City (Holy See)
     features: [36989]
@@ -15,12 +15,8 @@ entities:
     features: [53292]
   - name: Andorra
     features: [9407]
-  - name: Armenia
-    features: [364066]
   - name: Austria
     features: [16239]
-  - name: Azerbaijan
-    features: [364110]
   - name: Belarus
     features: [59065]
   - name: Belgium
@@ -39,26 +35,29 @@ entities:
     features:
       - 50046
       - 52939     # Faroe Islands
-      - 2184073   # Greenland
+        #- 2184073   # Greenland
   - name: Estonia
     features: [79510]
-# Finland dependencies included in country relation:
-#   Aland Islands
   - name: Finland
-    features: [54224]
-# France dependencies included in country relation:
-#   Saint Barthélemy
-#   Saint Martin
-#   Saint Pierre and Miquelon
-#   Wallis and Futuna
-#   French Polynesia
-#   New Caledonia
-#   Clipperton Island
-#   French Southern and Antarctic Lands (Antartic part excluded)
-#- name: France
-#    features: [2202162]
-  - name: Georgia
-    features: [28699]
+    features:
+      - 2375172
+      - 1650407  # Aland Islands
+  - name: France
+    features:
+      - 1403916
+        #- 537967    # Saint Barthélemy
+        #- 1891583   # Saint Martin
+        #- 3406826   # Saint Pierre and Miquelon
+        #- 290162    # Wallis and Futuna
+        #- 3412620   # French Polynesia
+        #- 3407643   # New Caledonia
+        #- 2573009   # Clipperton Island
+        #- 2186658   # French Southern and Antarctic Lands (Antartic part excluded)
+        #- 1401835   # Guadeloupe
+        #- 1891495   # Martinique
+        #- 1260551   # French Guiana
+        #- 1785276   # Réunion
+        #- 1259885   # Mayotte
   - name: Germany
     features: [51477]
   - name: Greece
@@ -89,24 +88,68 @@ entities:
     features: [1124039]
   - name: Montenegro
     features: [53296]
-# Netherlands dependencies included in country relation:
-#   Aruba
-#   Curacao
-#   Sint Maarten
+
+  # breaking up into provinces because there is no 'european netherlands'
+  # relation, and including european & caribbean together covers a lot of water
   - name: Netherlands
-    features: [2323309]
-# Norway dependencies included in country relation:
-#   Bouvet Island
-#   Svalbard
-# Norway dependencies excluded as part of Antartca: Peter Island
-# - name: Norway
-#    features: [2978650]
+    features:
+      - 47826     # Groningen
+      - 47381     # Friesland
+      - 47540     # Drenthe
+      - 47608     # Overijssel
+      - 47554     # Gelderland
+      - 47608     # Overijssel
+      - 47654     # North Holland
+      - 47772     # South Holland
+      - 47806     # Zeeland
+      - 47696     # North Brabant
+      - 47793     # Limburg
+      - 47407     # Flevoland
+      - 47667     # Utrecht
+        #- 1216720   # Caribbean Netherlands
+        #- 1231749   # Aruba
+        #- 1216719   # Curacao
+        #- 1231790   # Saint Martin
+
+  # excludes Peter Island, considering that to be part of Anartica
+  # dividing up into states so that it processing takes up less memory
+  - name: Norway
+    features:
+      - 406567   # Trøndelag
+      - 408105   # Nordland
+      - 407717   # Troms
+      - 406389   # Finnmark
+      - 406868   # Møre og Romsdal
+      - 412377   # Oppland
+      - 407787   # Sogn og Fjordane
+      - 412436   # Hedmark
+      - 406106   # Akershus
+      - 406060   # Østfold
+      - 412297   # Buskerud
+      - 404589   # Vestfold
+      - 405156   # Telemark
+      - 406015   # East Agder
+      - 405929   # West Agder
+      - 405836   # Rogaland
+      - 404144   # Hordaland
+      - 406091   # Oslo
+      - 3245620  # Svalbard and Jan Mayen (islands to the north)
+        #- 2425963  # Bouvet Island (island in south atlantic)
+
   - name: Poland
     features: [49715]
   - name: Portugal
-    features: [295480]
+    features:
+      - osmid: relation/295480
+        excludes:
+          - way/46419293      # Archipelago of Madeira
+          - relation/8010660  # Arquipélago dos Açores
+          - relation/2232893  # Savage Islands
   - name: Romania
     features: [90689]
+    # TODO:
+    #   - fill this in with regions or provinces
+    #   - comment out the ones that aren't in Europe
     #- name: Russia
     #features: [60189]
   - name: San Marino
@@ -118,30 +161,36 @@ entities:
   - name: Slovenia
     features: [218657]
   - name: Spain
-    features: [1311341]
+    features:
+      - osmid: relation/1311341
+        excludes:
+          - relation/7248699  # Canary Islands
+          - relation/1154756  # Ceuta
+          - relation/1154757  # Melilla
   - name: Sweden
     features: [52822]
   - name: Switzerland
     features: [51701]
-  - name: Turkey
-    features: [174737]
   - name: Ukraine
     features: [60199]
   - name: United Kingdom
     features:
-      - 62149
-      - 2177161   # Anguilla
-      - 1993208   # Bermuda
-      - 1993867   # British Indian Ocean Territory
-      - 285454    # British Virgin Islands
-      - 2185366   # Cayman Islands
-      - 2185374   # Falkland Islands
+      - 58447     # England
+      - 58437     # Wales
+      - 58446     # Scotland
+      - 156393    # Northern Ireland
+        #- 2177161   # Anguilla
+        #- 1993208   # Bermuda
+        #- 1993867   # British Indian Ocean Territory
+        #- 285454    # British Virgin Islands
+        #- 2185366   # Cayman Islands
+        #- 2185374   # Falkland Islands
       - 1278736   # Gibraltar
-      - 537257    # Montserrat
-      - 2185375   # Pitcairn Islands
-      - 1964272   # Saint Helena, Ascension and Tristan da Cunha
-      - 547479    # Turks and Caicos Islands
-      - 1983628   # South Georgia and the South Sandwich Islands
+        #- 537257    # Montserrat
+        #- 2185375   # Pitcairn Islands
+        #- 1964272   # Saint Helena, Ascension and Tristan da Cunha
+        #- 547479    # Turks and Caicos Islands
+        #- 1983628   # South Georgia and the South Sandwich Islands
       - 3263728   # Akrotiri and Dhekelia
       - 270009    # Guernsey
       - 367988    # Jersey

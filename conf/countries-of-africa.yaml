@@ -1,6 +1,6 @@
 name: Countries of Africa
 desc: >
-  The 54 independent countries of Africa.
+  The 54 independent countries with capital cities in Africa.
 entities:
   - name: Algeria
     features: [192756]

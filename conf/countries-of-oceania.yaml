@@ -1,8 +1,9 @@
 name: Countries of Oceania
 desc: >
-  The 16 independent countries of Oceania. Included are states with full
-  member status in the United Nations, and states with membership only in
-  various specialised agencies (Cook Islands, Niue).
+  The 16 independent countries with capital cities in Oceania.
+  Included are states with full member status in the United Nations,
+  and states with membership only in various specialised agencies
+  (Cook Islands, Niue).
 entities:
   - name: Cook Islands
     features: [2184233]

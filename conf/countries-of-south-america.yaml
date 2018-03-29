@@ -1,6 +1,6 @@
 name: Countries of South America
 desc: >
-  The 12 independent countries of South America.
+  The 12 independent countries with capital cites in South America.
 entities:
   - name: Argentina
     features: [286393]

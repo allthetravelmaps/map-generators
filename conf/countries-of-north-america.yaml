@@ -1,6 +1,6 @@
 name: Countries of North America
 desc: >
-  The 23 independent countries of North America.
+  The 23 independent countries with capital cities in North America.
 entities:
   - name: Antigua and Barbuda
     features: [536900]

@@ -171,8 +171,29 @@ entities:
           - relation/7248699  # Canary Islands
           - relation/1154756  # Ceuta
           - relation/1154757  # Melilla
-  - name: Sweden
-    features: [52822]
+  - name: Sweden  # splitting it up for faster processing
+    features:
+      - 52824   # Norrbottens län
+      - 52825   # Västerbottens län
+      - 52827   # Västernorrlands län
+      - 52832   # Gävleborgs län
+      - 52826   # Jämtlands län
+      - 52834   # Dalecarlia
+      - 54223   # Värmlands län
+      - 54222   # Örebro län
+      - 54367   # Västra Götalands län
+      - 940675  # Östergötlands län
+      - 54374   # Jönköpings län
+      - 54403   # Hallands län
+      - 54412   # Kronobergs län
+      - 54409   # Skåne län
+      - 54413   # Blekinge län
+      - 54417   # Kalmar län
+      - 54386   # Södermanlands län
+      - 941530  # Gotland County
+      - 54221   # Västmanlands län
+      - 54220   # Uppsala län
+      - 54391   # Stockholm County
   - name: Switzerland
     features: [51701]
   - name: Ukraine

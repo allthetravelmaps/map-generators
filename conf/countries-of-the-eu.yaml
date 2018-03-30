@@ -5,8 +5,29 @@ desc: >
   The 28 member states of the European Union. Outermost Regions (OMR) and
   Overseas Countries and Territories (OCT) not included.
 entities:
-  - name: Sweden  # lots of water detail, takes a long time
-    features: [52822]
+  - name: Sweden  # splitting it up for faster processing
+    features:
+      - 52824   # Norrbottens län
+      - 52825   # Västerbottens län
+      - 52827   # Västernorrlands län
+      - 52832   # Gävleborgs län
+      - 52826   # Jämtlands län
+      - 52834   # Dalecarlia
+      - 54223   # Värmlands län
+      - 54222   # Örebro län
+      - 54367   # Västra Götalands län
+      - 940675  # Östergötlands län
+      - 54374   # Jönköpings län
+      - 54403   # Hallands län
+      - 54412   # Kronobergs län
+      - 54409   # Skåne län
+      - 54413   # Blekinge län
+      - 54417   # Kalmar län
+      - 54386   # Södermanlands län
+      - 941530  # Gotland County
+      - 54221   # Västmanlands län
+      - 54220   # Uppsala län
+      - 54391   # Stockholm County
   # quadrapoint b/t Austria & Germany https://en.wikipedia.org/wiki/Sorgschrofen
   - name: Austria
     features: [16239]
@@ -47,10 +68,25 @@ entities:
     features: [2171347]
   - name: Malta
     features: [365307]
+
+  # breaking up into provinces because there is no 'european netherlands'
+  # relation, and including european & caribbean together covers a lot of water
   - name: Netherlands
     features:
-      - osmid: relation/47796         # mainland and Caribbean Netherlands
-        excludes: [relation/1216720]  # Netherlands - Caribbean Netherlands
+      - 47826     # Groningen
+      - 47381     # Friesland
+      - 47540     # Drenthe
+      - 47608     # Overijssel
+      - 47554     # Gelderland
+      - 47608     # Overijssel
+      - 47654     # North Holland
+      - 47772     # South Holland
+      - 47806     # Zeeland
+      - 47696     # North Brabant
+      - 47793     # Limburg
+      - 47407     # Flevoland
+      - 47667     # Utrecht
+
   - name: Poland
     features: [49715]
   - name: Portugal
@@ -72,5 +108,8 @@ entities:
         excludes: [relation/7248699]  # Canary Islands
   - name: United Kingdom (UK)
     features:
-      - 62149   # mainland
-      - 1278736 # Gibraltar
+      - 58447     # England
+      - 58437     # Wales
+      - 58446     # Scotland
+      - 156393    # Northern Ireland
+      - 1278736   # Gibraltar

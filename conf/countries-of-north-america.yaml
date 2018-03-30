@@ -10,15 +10,27 @@ entities:
     features: [547469]
   - name: Belize
     features: [287827]
-    # - name: Canada
-    #features:
-    #  - osmid: relation/1428125
-    #    excludes:  # Great lakes
-    #      - relation/4039486
-    #      - relation/4039900
-    #      - relation/1206310
-    #      - relation/1205149
-    #      - relation/1205151
+  - name: Canada
+    features:
+      - 390840  # Nunavut
+      - 391220  # Northwest Territories
+      - 390867  # British Columbia
+      - 61549   # Quebec
+      - 391196  # Newfoundland
+      - 68942   # New Brunswick
+      - 390558  # Nova Scotia
+      - 391115  # Prince Edward Island
+      - 391455  # Yukon
+      - 391186  # Alberta
+      - 391178  # Saskatchewan
+      - 390841  # Manitoba
+      - osmid: relation/68841   # Ontario
+        excludes:               # Great lakes
+          - relation/4039486
+          - relation/4039900
+          - relation/1206310
+          - relation/1205149
+          - relation/1205151
   - name: Costa Rica
     features: [287667]
   - name: Cuba
@@ -53,27 +65,78 @@ entities:
     features: [550725]
   - name: Trinidad and Tobago
     features: [555717]
-# United States dependencies included in country relation:
-#   Gaum
-#   Northern Mariana Islands
-#   Puerto Rico
-#   US Virgin Islands
-#   American Samoa
-#   Midway Atoll
-#   Wake Island
-#   Baker Island
-#   Howland Island
-#   Jarvis Island
-#   Johnston Atoll
-#   Kingman Reef
-#   Navassa Island
-#   Palmyra Atoll
-# - name: United States
-#    features:
-#      - osmid: relation/148838
-#        excludes:  # Great lakes
-#          - relation/4039486
-#          - relation/4039900
-#          - relation/1206310
-#          - relation/1205149
-#          - relation/1205151
+  - name: United States
+    features:
+      - 1116270 # Alaska
+      - 162050  # Florida
+      - 224922  # Louisiana
+      - 165475  # California
+      - 61315   # Massachusetts
+      - osmid: relation/61320 # New York
+        excludes:             # Great Lakes
+          - relation/4039900
+          - relation/1206310
+      - 63512   # Maine
+      - 67213   # New Hampshire
+      - 114690  # Texas
+      - 161943  # Mississippi
+      - 161950  # Alabama
+      - 161957  # Georgia
+      - 162069  # District of Columbia
+      - osmid: relation/162109  # Pennsylvania
+        excludes:               # Great Lakes
+          - relation/4039900
+      - 162110  # Delaware
+      - 162112  # Maryland
+      - 165476  # Oregon
+      - 165479  # Washington
+      - osmid: relation/165789  # Michigan
+        excludes:               # Great Lakes
+          - relation/1205149
+          - relation/4039486
+          - relation/1205151
+      - 165794  # Connecticut
+      - 224040  # South Carolina
+      - 224042  # Virginia
+      - 224045  # North Carolina
+      - 224951  # New Jersey
+      - 392915  # Rhode Island
+      - 60759   # Vermont
+      - osmid: relation/122586  # Illinois
+        excludes:               # Great Lakes
+          - relation/1205149
+      - 161638  # Missouri
+      - 161644  # Kansas
+      - 161645  # Oklahoma
+      - 161646  # Arkansas
+      - 161648  # Nebraska
+      - 161650  # Iowa
+      - 161652  # South Dakota
+      - 161653  # North Dakota
+      - 161655  # Kentucky
+      - osmid: relation/161816  # Indiana
+        excludes:               # Great Lakes
+          - relation/1205149
+      - 161838  # Tennessee
+      - 161961  # Colorado
+      - 161991  # Wyoming
+      - 161993  # Utah
+      - 162014  # New Mexico
+      - 162018  # Arizona
+      - osmid: relation/162061  # Ohio
+        excludes:               # Great Lakes
+          - relation/4039900
+      - 162068  # West Virginia
+      - 162115  # Montana
+      - 162116  # Idaho
+      - osmid: relation/165466  # Wisconsin
+        excludes:               # Great Lakes
+          - relation/4039486
+          - relation/1205149
+      - osmid: relation/165471  # Minnesota
+        excludes:               # Great Lakes
+          - relation/4039486
+      - 165473  # Nevada
+      - 7248455 # Navassa Island
+      - 286898  # US Virgin Islands
+      - 4422604 # Puerto Rico

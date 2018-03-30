@@ -14,7 +14,9 @@ entities:
   - name: Armenia
     features: [364066]
   - name: Azerbaijan
-    features: [364110]
+    features:
+      - osmid: relation/364110
+        excludes: [relation/3987743]  # Caspian Sea
   - name: Bahrain
     features: [378734]
   - name: Bangladesh
@@ -37,7 +39,9 @@ entities:
   - name: Indonesia
     features: [304751]
   - name: Iran
-    features: [304938]
+    features:
+      - osmid: relation/304938
+        excludes: [relation/3987743]  # Caspian Sea
   - name: Iraq
     features: [304934]
   - name: Israel
@@ -47,7 +51,9 @@ entities:
   - name: Jordan
     features: [184818]
   - name: Kazakhstan
-    features: [214665]
+    features:
+      - osmid: relation/214665
+        excludes: [relation/3987743]  # Caspian Sea
   - name: Kuwait
     features: [305099]
   - name: Kyrgyzstan
@@ -97,7 +103,9 @@ entities:
       - osmid: relation/174737
         excludes: [relation/4016746]  # Balkans (incluces european Turkey)
   - name: Turkmenistan
-    features: [223026]
+    features:
+      - osmid: relation/223026
+        excludes: [relation/3987743]  # Caspian Sea
   - name: United Arab Emirates (UAE)
     features: [307763]
   - name: Uzbekistan

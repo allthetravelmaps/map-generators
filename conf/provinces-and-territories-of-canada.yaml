@@ -21,12 +21,12 @@ entities:
     features: [391455]
   - name: Ontario
     features:
-      - osmid: relation/68841
+      - osmid: 68841
         excludes:
-          - relation/4039486
-          - relation/1205151
-          - relation/4039900
-          - relation/1206310
+          - 4039486
+          - 1205151
+          - 4039900
+          - 1206310
   - name: Alberta
     features: [391186]
   - name: Saskatchewan

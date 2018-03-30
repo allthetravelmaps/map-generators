@@ -90,7 +90,7 @@ entities:
     features: [53296]
 
   # breaking up into provinces because there is no 'european netherlands'
-  # relation, and including european & caribbean together covers a lot of water
+  # object, and including european & caribbean together covers a lot of water
   - name: Netherlands
     features:
       - 47826     # Groningen
@@ -140,11 +140,11 @@ entities:
     features: [49715]
   - name: Portugal
     features:
-      - osmid: relation/295480
+      - osmid: 295480
         excludes:
-          - way/46419293      # Archipelago of Madeira
-          - relation/8010660  # Arquipélago dos Açores
-          - relation/2232893  # Savage Islands
+          - way/46419293  # Archipelago of Madeira
+          - 8010660       # Arquipélago dos Açores
+          - 2232893       # Savage Islands
   - name: Romania
     features: [90689]
   - name: Russia
@@ -152,10 +152,10 @@ entities:
       - 1029256   # Central Federal District
       - 1216601   # Northwestern Federal District
       - 1075831   # Volga Federal District
-      - osmid: relation/1059500       # South federal district
-        excludes: [relation/3987743]  # Caspian Sea
-      - osmid: relation/389344        # North Caucasus federal
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 1059500        # South federal district
+        excludes: [3987743]   # Caspian Sea
+      - osmid: 389344         # North Caucasus federal
+        excludes: [3987743]   # Caspian Sea
   - name: San Marino
     features: [54624]
   - name: Serbia
@@ -166,11 +166,11 @@ entities:
     features: [218657]
   - name: Spain
     features:
-      - osmid: relation/1311341
+      - osmid: 1311341
         excludes:
-          - relation/7248699  # Canary Islands
-          - relation/1154756  # Ceuta
-          - relation/1154757  # Melilla
+          - 7248699   # Canary Islands
+          - 1154756   # Ceuta
+          - 1154757   # Melilla
   - name: Sweden  # splitting it up for faster processing
     features:
       - 52824   # Norrbottens län
@@ -198,10 +198,10 @@ entities:
     features: [51701]
   - name: Ukraine
     features:
-      - osmid: relation/60199
+      - osmid: 60199
         excludes:
-          - relation/72639    # Autonomous Republic of Crimea
-          - relation/1574364  # Sevastopol
+          - 72639     # Autonomous Republic of Crimea
+          - 1574364   # Sevastopol
   - name: United Kingdom
     features:
       - 58447     # England

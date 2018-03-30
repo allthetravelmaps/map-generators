@@ -105,7 +105,7 @@ entities:
     features: [53296]
 
   # breaking up into provinces because there is no 'european netherlands'
-  # relation, and including european & caribbean together covers a lot of water
+  # object, and including european & caribbean together covers a lot of water
   - name: Netherlands
     features:
       - 47826     # Groningen
@@ -162,10 +162,10 @@ entities:
       - 1029256   # Central Federal District
       - 1216601   # Northwestern Federal District
       - 1075831   # Volga Federal District
-      - osmid: relation/1059500       # South federal district
-        excludes: [relation/3987743]  # Caspian Sea
-      - osmid: relation/389344        # North Caucasus federal
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 1059500        # South federal district
+        excludes: [3987743]   # Caspian Sea
+      - osmid: 389344         # North Caucasus federal
+        excludes: [3987743]   # Caspian Sea
       - 1113276   # Ural Federal District
       - 1221148   # Siberian Federal District
       - 1221185   # Far Eastern Federal District
@@ -206,10 +206,10 @@ entities:
     features: [51701]
   - name: Ukraine
     features:
-      - osmid: relation/60199
+      - osmid: 60199
         excludes:
-          - relation/72639    # Autonomous Republic of Crimea
-          - relation/1574364  # Sevastopol
+          - 72639     # Autonomous Republic of Crimea
+          - 1574364   # Sevastopol
   - name: United Kingdom
     features:
       - 58447     # England
@@ -256,13 +256,13 @@ entities:
       - 391186  # Alberta
       - 391178  # Saskatchewan
       - 390841  # Manitoba
-      - osmid: relation/68841   # Ontario
-        excludes:               # Great lakes
-          - relation/4039486
-          - relation/4039900
-          - relation/1206310
-          - relation/1205149
-          - relation/1205151
+      - osmid: 68841    # Ontario
+        excludes:       # Great lakes
+          - 4039486
+          - 4039900
+          - 1206310
+          - 1205149
+          - 1205151
   - name: Costa Rica
     features: [287667]
   - name: Cuba
@@ -304,10 +304,10 @@ entities:
       - 224922  # Louisiana
       - 165475  # California
       - 61315   # Massachusetts
-      - osmid: relation/61320 # New York
-        excludes:             # Great Lakes
-          - relation/4039900
-          - relation/1206310
+      - osmid: 61320  # New York
+        excludes:     # Great Lakes
+          - 4039900
+          - 1206310
       - 63512   # Maine
       - 67213   # New Hampshire
       - 114690  # Texas
@@ -315,18 +315,18 @@ entities:
       - 161950  # Alabama
       - 161957  # Georgia
       - 162069  # District of Columbia
-      - osmid: relation/162109  # Pennsylvania
-        excludes:               # Great Lakes
-          - relation/4039900
+      - osmid: 162109   # Pennsylvania
+        excludes:       # Great Lakes
+          - 4039900
       - 162110  # Delaware
       - 162112  # Maryland
       - 165476  # Oregon
       - 165479  # Washington
-      - osmid: relation/165789  # Michigan
-        excludes:               # Great Lakes
-          - relation/1205149
-          - relation/4039486
-          - relation/1205151
+      - osmid: 165789   # Michigan
+        excludes:       # Great Lakes
+          - 1205149
+          - 4039486
+          - 1205151
       - 165794  # Connecticut
       - 224040  # South Carolina
       - 224042  # Virginia
@@ -334,9 +334,9 @@ entities:
       - 224951  # New Jersey
       - 392915  # Rhode Island
       - 60759   # Vermont
-      - osmid: relation/122586  # Illinois
-        excludes:               # Great Lakes
-          - relation/1205149
+      - osmid: 122586   # Illinois
+        excludes:       # Great Lakes
+          - 1205149
       - 161638  # Missouri
       - 161644  # Kansas
       - 161645  # Oklahoma
@@ -346,28 +346,28 @@ entities:
       - 161652  # South Dakota
       - 161653  # North Dakota
       - 161655  # Kentucky
-      - osmid: relation/161816  # Indiana
-        excludes:               # Great Lakes
-          - relation/1205149
+      - osmid: 161816   # Indiana
+        excludes:       # Great Lakes
+          - 1205149
       - 161838  # Tennessee
       - 161961  # Colorado
       - 161991  # Wyoming
       - 161993  # Utah
       - 162014  # New Mexico
       - 162018  # Arizona
-      - osmid: relation/162061  # Ohio
-        excludes:               # Great Lakes
-          - relation/4039900
+      - osmid: 162061   # Ohio
+        excludes:       # Great Lakes
+          - 4039900
       - 162068  # West Virginia
       - 162115  # Montana
       - 162116  # Idaho
-      - osmid: relation/165466  # Wisconsin
-        excludes:               # Great Lakes
-          - relation/4039486
-          - relation/1205149
-      - osmid: relation/165471  # Minnesota
-        excludes:               # Great Lakes
-          - relation/4039486
+      - osmid: 165466   # Wisconsin
+        excludes:       # Great Lakes
+          - 4039486
+          - 1205149
+      - osmid: 165471   # Minnesota
+        excludes:       # Great Lakes
+          - 4039486
       - 165473  # Nevada
       - 166563  # Hawaii
       - 7248455 # Navassa Island
@@ -530,8 +530,8 @@ entities:
     features: [364066]
   - name: Azerbaijan
     features:
-      - osmid: relation/364110
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 364110
+        excludes: [3987743]   # Caspian Sea
   - name: Bahrain
     features: [378734]
   - name: Bangladesh
@@ -543,7 +543,7 @@ entities:
   - name: Cambodia
     features: [49898]
 
-# China dependencies included in country relation:
+# China dependencies included in country object:
 #   Hong Kong
 #   Macau
   - name: China
@@ -557,8 +557,8 @@ entities:
     features: [304751]
   - name: Iran
     features:
-      - osmid: relation/304938
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 304938
+        excludes: [3987743]   # Caspian Sea
   - name: Iraq
     features: [304934]
   - name: Israel
@@ -569,8 +569,8 @@ entities:
     features: [184818]
   - name: Kazakhstan
     features:
-      - osmid: relation/214665
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 214665
+        excludes: [3987743]   # Caspian Sea
   - name: Kuwait
     features: [305099]
   - name: Kyrgyzstan
@@ -619,8 +619,8 @@ entities:
     features: [174737]
   - name: Turkmenistan
     features:
-      - osmid: relation/223026
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 223026
+        excludes: [3987743]   # Caspian Sea
   - name: United Arab Emirates (UAE)
     features: [307763]
   - name: Uzbekistan
@@ -632,7 +632,7 @@ entities:
 
 # Oceania
 
-# Australia dependencies included in country relation:
+# Australia dependencies included in country object:
 #   Christmas Island
 #   Cocos (Keeling) Islands
 #   Norfolk Island

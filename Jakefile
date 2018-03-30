@@ -83,6 +83,8 @@ const getLayerFeaturePath = (layer, entityId, featureId) =>
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
 const getConf = layer =>
   JSON.parse(execSync(`yaml2json < ${getLayerConfPath(layer)}`).toString())
+const normalizeOsmId = osmid =>
+  typeof osmid === 'number' ? `relation/${osmid}` : osmid
 
 /* executable we need to run with extra mem */
 const geojsonClipping = execSync(`which geojson-clipping`, {
@@ -192,10 +194,12 @@ layers.forEach(layer => {
     features.forEach((featureConf, j) => {
       const featureId = j + 1
       const featurePath = getLayerFeaturePath(layer, entityId, featureId)
-      const osmPath = getDownloadsOSMPath(
-        featureConf.osmid || `relation/${featureConf}`
-      )
-      const excludePaths = (featureConf.excludes || []).map(getDownloadsOSMPath)
+      const osmid =
+        typeof featureConf === 'object' ? featureConf.osmid : featureConf
+      const osmPath = getDownloadsOSMPath(normalizeOsmId(osmid))
+      const excludePaths = (featureConf.excludes || [])
+        .map(normalizeOsmId)
+        .map(getDownloadsOSMPath)
 
       desc(`Build ${featurePath}`)
       file(

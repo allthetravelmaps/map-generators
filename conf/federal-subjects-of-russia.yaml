@@ -83,23 +83,23 @@ entities:
     features: [109877]
   - name: Dagestan
     features:
-      - osmid: relation/109876
+      - osmid: 109876
         excludes:
-          - relation/3987743  # Caspian Sea
+          - 3987743   # Caspian Sea
   - name: Rostov Oblast
     features: [85606]
   - name: Volgograd Oblast
     features: [77665]
   - name: Kalmykia
     features:
-      - osmid: relation/108083
+      - osmid: 108083
         excludes:
-          - relation/3987743  # Caspian Sea
+          - 3987743   # Caspian Sea
   - name: Astrakhan Oblast
     features:
-      - osmid: relation/112819
+      - osmid: 112819
         excludes:
-          - relation/3987743  # Caspian Sea
+          - 3987743   # Caspian Sea
   - name: Saratov Oblast
     features: [72193]
   - name: Ulyanovsk Oblast

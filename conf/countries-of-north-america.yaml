@@ -24,13 +24,13 @@ entities:
       - 391186  # Alberta
       - 391178  # Saskatchewan
       - 390841  # Manitoba
-      - osmid: relation/68841   # Ontario
-        excludes:               # Great lakes
-          - relation/4039486
-          - relation/4039900
-          - relation/1206310
-          - relation/1205149
-          - relation/1205151
+      - osmid: 68841  # Ontario
+        excludes:     # Great lakes
+          - 4039486
+          - 4039900
+          - 1206310
+          - 1205149
+          - 1205151
   - name: Costa Rica
     features: [287667]
   - name: Cuba
@@ -72,10 +72,10 @@ entities:
       - 224922  # Louisiana
       - 165475  # California
       - 61315   # Massachusetts
-      - osmid: relation/61320 # New York
-        excludes:             # Great Lakes
-          - relation/4039900
-          - relation/1206310
+      - osmid: 61320  # New York
+        excludes:     # Great Lakes
+          - 4039900
+          - 1206310
       - 63512   # Maine
       - 67213   # New Hampshire
       - 114690  # Texas
@@ -83,18 +83,18 @@ entities:
       - 161950  # Alabama
       - 161957  # Georgia
       - 162069  # District of Columbia
-      - osmid: relation/162109  # Pennsylvania
-        excludes:               # Great Lakes
-          - relation/4039900
+      - osmid: 162109   # Pennsylvania
+        excludes:       # Great Lakes
+          - 4039900
       - 162110  # Delaware
       - 162112  # Maryland
       - 165476  # Oregon
       - 165479  # Washington
-      - osmid: relation/165789  # Michigan
-        excludes:               # Great Lakes
-          - relation/1205149
-          - relation/4039486
-          - relation/1205151
+      - osmid: 165789   # Michigan
+        excludes:       # Great Lakes
+          - 1205149
+          - 4039486
+          - 1205151
       - 165794  # Connecticut
       - 224040  # South Carolina
       - 224042  # Virginia
@@ -102,9 +102,9 @@ entities:
       - 224951  # New Jersey
       - 392915  # Rhode Island
       - 60759   # Vermont
-      - osmid: relation/122586  # Illinois
-        excludes:               # Great Lakes
-          - relation/1205149
+      - osmid: 122586   # Illinois
+        excludes:       # Great Lakes
+          - 1205149
       - 161638  # Missouri
       - 161644  # Kansas
       - 161645  # Oklahoma
@@ -114,28 +114,28 @@ entities:
       - 161652  # South Dakota
       - 161653  # North Dakota
       - 161655  # Kentucky
-      - osmid: relation/161816  # Indiana
-        excludes:               # Great Lakes
-          - relation/1205149
+      - osmid: 161816   # Indiana
+        excludes:       # Great Lakes
+          - 1205149
       - 161838  # Tennessee
       - 161961  # Colorado
       - 161991  # Wyoming
       - 161993  # Utah
       - 162014  # New Mexico
       - 162018  # Arizona
-      - osmid: relation/162061  # Ohio
-        excludes:               # Great Lakes
-          - relation/4039900
+      - osmid: 162061   # Ohio
+        excludes:       # Great Lakes
+          - 4039900
       - 162068  # West Virginia
       - 162115  # Montana
       - 162116  # Idaho
-      - osmid: relation/165466  # Wisconsin
-        excludes:               # Great Lakes
-          - relation/4039486
-          - relation/1205149
-      - osmid: relation/165471  # Minnesota
-        excludes:               # Great Lakes
-          - relation/4039486
+      - osmid: 165466   # Wisconsin
+        excludes:       # Great Lakes
+          - 4039486
+          - 1205149
+      - osmid: 165471   # Minnesota
+        excludes:       # Great Lakes
+          - 4039486
       - 165473  # Nevada
       - 7248455 # Navassa Island
       - 286898  # US Virgin Islands

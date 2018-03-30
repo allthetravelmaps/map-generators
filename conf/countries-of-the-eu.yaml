@@ -70,7 +70,7 @@ entities:
     features: [365307]
 
   # breaking up into provinces because there is no 'european netherlands'
-  # relation, and including european & caribbean together covers a lot of water
+  # object, and including european & caribbean together covers a lot of water
   - name: Netherlands
     features:
       - 47826     # Groningen
@@ -91,7 +91,7 @@ entities:
     features: [49715]
   - name: Portugal
     features:
-      - osmid: relation/295480
+      - osmid: 295480
         excludes:
           - way/46419226      # Azores
           - way/46419293      # Madiera
@@ -104,8 +104,8 @@ entities:
     features: [218657]
   - name: Spain
     features:
-      - osmid: relation/1311341
-        excludes: [relation/7248699]  # Canary Islands
+      - osmid: 1311341
+        excludes: [7248699]  # Canary Islands
   - name: United Kingdom (UK)
     features:
       - 58447     # England

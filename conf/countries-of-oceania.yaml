@@ -9,7 +9,7 @@ entities:
     features: [2184233]
   - name: Niue
     features: [1558556]
-# Australia dependencies included in country relation:
+# Australia dependencies included in country object:
 #   Christmas Island
 #   Cocos (Keeling) Islands
 #   Norfolk Island
@@ -18,8 +18,8 @@ entities:
 #   Heard Island and McDonald Islands
   - name: Australia
     features:
-      - osmid: relation/80500
-        excludes: [relation/2177227]  # Heard Island and McDonald Islands
+      - osmid: 80500
+        excludes: [2177227]   # Heard Island and McDonald Islands
   - name: Fiji
     features: [571747]
   - name: Kiribati

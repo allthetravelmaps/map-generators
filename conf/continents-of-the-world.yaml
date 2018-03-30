@@ -56,16 +56,16 @@ entities:
       - 1403916 # France - mainland and Corse
       - 4016746 # Balkans - includes European mainland of Turkey
       - 1815263 # Imbros - Turkish island closer to European part
-      - osmid: relation/47796         # Netherlands - mainland and Caribbean Netherlands
-        excludes: [relation/1216720]  # Netherlands - Caribbean Netherlands
-      - osmid: relation/192307    # Greece
+      - osmid: 47796              # Netherlands - mainland and Caribbean Netherlands
+        excludes: [1216720]       # Netherlands - Caribbean Netherlands
+      - osmid: 192307             # Greece
         excludes: [way/137410518] # Greece - Kastellorizo
-      - osmid: relation/295480  # Portugal
+      - osmid: 295480             # Portugal
         excludes:
-          - way/46419293        # Portugal - Madiera
-          - way/300680026       # Portugal - Savage Islands territorial waters
-      - osmid: relation/1311341       # Spain
-        excludes: [relation/7248699]  # Spain - Canary Islands
+          - way/46419293          # Portugal - Madiera
+          - way/300680026         # Portugal - Savage Islands territorial waters
+      - osmid: 1311341            # Spain
+        excludes: [7248699]       # Spain - Canary Islands
 
   - name: North America
     features:
@@ -109,20 +109,20 @@ entities:
       - 1401835 # France - Guadeloupe
       - 1891495 # France - Martinique
       - 1891583 # France - Saint Martin
-      - osmid: relation/148838  # USA - mainland and all overseas territories
+      - osmid: 148838     # USA - mainland and all overseas territories
         excludes:
-          - relation/279045     # USA - Hawaii Territorial waters
-          - relation/7248460    # USA - Howland Island
-          - relation/7248461    # USA - Baker Island
-          - relation/7248458    # USA - Johnston Atoll
-          - relation/7248457    # USA - Kingman Reef
-          - relation/7248454    # USA - Palmyra Atoll
-          - relation/7248459    # USA - Jarvis Island
-          - relation/2177187    # USA - American Samoa
-          - relation/6430384    # USA - Wake Island
-          - way/43356824        # USA - Guam (territorial waters)
-          - way/43356823        # USA - Northern Mariana Islands (territorial waters)
-          - way/43356825        #     - ^^ more ...
+          - 279045        # USA - Hawaii Territorial waters
+          - 7248460       # USA - Howland Island
+          - 7248461       # USA - Baker Island
+          - 7248458       # USA - Johnston Atoll
+          - 7248457       # USA - Kingman Reef
+          - 7248454       # USA - Palmyra Atoll
+          - 7248459       # USA - Jarvis Island
+          - 2177187       # USA - American Samoa
+          - 6430384       # USA - Wake Island
+          - way/43356824  # USA - Guam (territorial waters)
+          - way/43356823  # USA - Northern Mariana Islands (territorial waters)
+          - way/43356825  #     - ^^ more ...
           - way/43356822
           - way/43356821
           - way/43356830
@@ -150,14 +150,14 @@ entities:
       - 2185374 # UK - Falkland Islands
       - 1983628 # UK - South Georgia and the South Sandwich Islands
       - 1260551 # France - French Guiana
-      - osmid: relation/272644    # Venezuela
+      - osmid: 272644             # Venezuela
         excludes: [way/245555935] # Venezuela - Isla Aves
-      - osmid: relation/120027        # Colombia
-        excludes: [relation/2181889]  # Colombia - San Andres islands
-      - osmid: relation/167454  # Chile
+      - osmid: 120027             # Colombia
+        excludes: [2181889]       # Colombia - San Andres islands
+      - osmid: 167454             # Chile
         excludes:
-          - way/51943989        # Chile - Eater Island
-          - way/537856050       # Chile - Sala y Gomez Island
+          - way/51943989          # Chile - Eater Island
+          - way/537856050         # Chile - Sala y Gomez Island
 
   - name: Africa
     features:
@@ -220,11 +220,11 @@ entities:
       - 7248699 # Spain - Canary Islands
       - osmid: way/46419293   # Portugal - Madiera
       - osmid: way/300680026  # Portugal - Savage Islands territorial waters
-      - osmid: relation/1473947 # Egypt
+      - osmid: 1473947        # Egypt
         excludes:
-          - relation/3060793    # Egypt - South Sinai Governorate
-          - relation/3060792    # Egypt - North Sianai Governorate
-          - relation/5632534    # Egypt - Sinai Peninsula
+          - 3060793           # Egypt - South Sinai Governorate
+          - 3060792           # Egypt - North Sianai Governorate
+          - 5632534           # Egypt - Sinai Peninsula
 
   - name: Asia
     features:
@@ -286,12 +286,12 @@ entities:
       - 2177207 # Australia - Christmas Island
       - 82636   # Australia - Cocos Islands
       - osmid: way/137410518  # Greece - Kastellorizo
-      - osmid: relation/174737        # Turkey
-        excludes: [relation/4016746]  # Balkans - includes European mainland of Turkey
-      - osmid: relation/304751  # Indonesia
+      - osmid: 174737         # Turkey
+        excludes: [4016746]   # Balkans - includes European mainland of Turkey
+      - osmid: 304751         # Indonesia
         excludes:
-          - relation/4521144    # Indonesia - Papua
-          - relation/4521145    # Indonesia - West Papua
+          - 4521144           # Indonesia - Papua
+          - 4521145           # Indonesia - West Papua
 
   - name: Oceania
     features:
@@ -330,16 +330,16 @@ entities:
       - 4521145 # Indonesia - West Papua
       - osmid: way/51943989   # Chile - Eater Island
       - osmid: way/537856050  # Chile - Sala y Gomez Island
-      - osmid: relation/80500 # Australia - mainland and all islands
+      - osmid: 80500          # Australia - mainland and all islands
         excludes:
-        - relation/2177227    # Australia - Heard Island and McDonald Islands
-        - relation/2177207    # Australia - Christmas Island
-        - relation/82636      # Australia - Cocos Islands
+        - 2177227             # Australia - Heard Island and McDonald Islands
+        - 2177207             # Australia - Christmas Island
+        - 82636               # Australia - Cocos Islands
 
   - name: Antartica
     features:
       - 2186646 # Antartic treaty border
       - 2177227 # Australia - Heard Island and McDonald Islands
       - 2425963 # Norway - Bouvet Island
-      - osmid: relation/2186658       # France - Southern and Antarctic Lands
-        excludes: [relation/6063099]  # France - "Scattered Islands in the Indian Ocean"
+      - osmid: 2186658        # France - Southern and Antarctic Lands
+        excludes: [6063099]   # France - "Scattered Islands in the Indian Ocean"

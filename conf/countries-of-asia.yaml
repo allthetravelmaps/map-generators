@@ -15,8 +15,8 @@ entities:
     features: [364066]
   - name: Azerbaijan
     features:
-      - osmid: relation/364110
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 364110
+        excludes: [3987743]   # Caspian Sea
   - name: Bahrain
     features: [378734]
   - name: Bangladesh
@@ -27,7 +27,7 @@ entities:
     features: [2103120]
   - name: Cambodia
     features: [49898]
-# China dependencies included in country relation:
+# China dependencies included in country object:
 #   Hong Kong
 #   Macau
   - name: China
@@ -40,8 +40,8 @@ entities:
     features: [304751]
   - name: Iran
     features:
-      - osmid: relation/304938
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 304938
+        excludes: [3987743]   # Caspian Sea
   - name: Iraq
     features: [304934]
   - name: Israel
@@ -52,8 +52,8 @@ entities:
     features: [184818]
   - name: Kazakhstan
     features:
-      - osmid: relation/214665
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 214665
+        excludes: [3987743]   # Caspian Sea
   - name: Kuwait
     features: [305099]
   - name: Kyrgyzstan
@@ -100,12 +100,12 @@ entities:
     features: [305142]
   - name: Turkey
     features:
-      - osmid: relation/174737
-        excludes: [relation/4016746]  # Balkans (incluces european Turkey)
+      - osmid: 174737
+        excludes: [4016746]   # Balkans (incluces european Turkey)
   - name: Turkmenistan
     features:
-      - osmid: relation/223026
-        excludes: [relation/3987743]  # Caspian Sea
+      - osmid: 223026
+        excludes: [3987743]   # Caspian Sea
   - name: United Arab Emirates (UAE)
     features: [307763]
   - name: Uzbekistan

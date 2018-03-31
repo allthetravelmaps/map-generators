@@ -224,7 +224,7 @@ layers.forEach(layer => {
           }
 
           const cmd2 = spawn('node', [
-            '--max_old_space_size=8192',
+            '--max_old_space_size=4096',
             geojsonClipping,
             'difference',
             '-b',
@@ -259,7 +259,7 @@ layers.forEach(layer => {
         const cmd = spawn(
           'node',
           [
-            '--max_old_space_size=8192',
+            '--max_old_space_size=16384',
             geojsonClipping,
             'union',
             '-i',
@@ -274,7 +274,10 @@ layers.forEach(layer => {
         cmd.on('exit', onFail(this, [cmd]))
         cmd.on('exit', onSuccess(this))
       },
-      { async: true }
+      {
+        async: true,
+        parallelLimit: maxConcurrency
+      }
     )
 
     entityPaths.push(entityPath)
@@ -309,8 +312,7 @@ layers.forEach(layer => {
       cmd.on('exit', onSuccess(this))
     },
     {
-      async: true,
-      parallelLimit: maxConcurrency
+      async: true
     }
   )
 })

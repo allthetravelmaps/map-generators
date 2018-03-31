@@ -93,9 +93,9 @@ entities:
     features:
       - osmid: 295480
         excludes:
-          - way/46419226      # Azores
-          - way/46419293      # Madiera
-          - way/300680026     # Savage Islands territorial waters
+          - way/46419293      # Archipelago of Madeira
+          - 8010660           # Arquipélago dos Açores
+          - 2232893           # Savage Islands
   - name: Romania
     features: [90689]
   - name: Slovakia
@@ -113,3 +113,7 @@ entities:
       - 58446     # Scotland
       - 156393    # Northern Ireland
       - 1278736   # Gibraltar
+      - 3263728   # Akrotiri and Dhekelia - Military bases in Cyprus
+      - 270009    # Guernsey
+      - 367988    # Jersey
+      - 62269     # Isle of Man

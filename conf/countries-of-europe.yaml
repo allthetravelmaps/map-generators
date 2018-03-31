@@ -39,16 +39,14 @@ entities:
   - name: Estonia
     features: [79510]
   - name: Finland
-    features:
-      - 2375172
-      - 1650407  # Aland Islands
+    features: [54224]
   - name: France
     features:
       - 1403916
         #- 537967    # Saint Barthélemy
         #- 1891583   # Saint Martin
         #- 3406826   # Saint Pierre and Miquelon
-        #- 290162    # Wallis and Futuna
+        #- 3412448   # Wallis and Futuna
         #- 3412620   # French Polynesia
         #- 3407643   # New Caledonia
         #- 2573009   # Clipperton Island
@@ -220,7 +218,7 @@ entities:
         #- 1964272   # Saint Helena, Ascension and Tristan da Cunha
         #- 547479    # Turks and Caicos Islands
         #- 1983628   # South Georgia and the South Sandwich Islands
-      - 3263728   # Akrotiri and Dhekelia
+      - 3263728   # Akrotiri and Dhekelia - Military bases in Cyprus
       - 270009    # Guernsey
       - 367988    # Jersey
       - 62269     # Isle of Man

@@ -37,7 +37,11 @@ entities:
   - name: India
     features: [304716]
   - name: Indonesia
-    features: [304751]
+    features:
+      - osmid: 304751
+        excludes:
+          - 4521144           # Indonesia - Papua
+          - 4521145           # Indonesia - West Papua
   - name: Iran
     features:
       - osmid: 304938

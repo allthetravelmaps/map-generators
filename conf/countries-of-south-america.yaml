@@ -13,7 +13,9 @@ entities:
       - osmid: 167454
         excludes: [1773340]   # Easter Island Province
   - name: Colombia
-    features: [120027]
+    features:
+      - osmid: 120027
+        excludes: [2181889]   # San Andres islands
   - name: Ecuador
     features: [108089]
   - name: Guyana
@@ -27,4 +29,6 @@ entities:
   - name: Uruguay
     features: [287072]
   - name: Venezuela
-    features: [272644]
+    features:
+      - osmid: 272644
+        excludes: [3473022]   # Isla Aves

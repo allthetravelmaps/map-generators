@@ -30,12 +30,8 @@ entities:
     features: [53292]
   - name: Andorra
     features: [9407]
-  - name: Armenia
-    features: [364066]
   - name: Austria
     features: [16239]
-  - name: Azerbaijan
-    features: [364110]
   - name: Belarus
     features: [59065]
   - name: Belgium
@@ -57,26 +53,24 @@ entities:
       - 2184073   # Greenland
   - name: Estonia
     features: [79510]
-
-# Finland dependencies included in country relation:
-#   Aland Islands
   - name: Finland
     features: [54224]
-
-# France dependencies included in country relation:
-#   Saint Barthélemy
-#   Saint Martin
-#   Saint Pierre and Miquelon
-#   Wallis and Futuna
-#   French Polynesia
-#   New Caledonia
-#   Clipperton Island
-#   French Southern and Antarctic Lands (Antartic part excluded)
   - name: France
-    features: [2202162]
-
-  - name: Georgia
-    features: [28699]
+    features:
+      - 1403916
+      - 537967    # Saint Barthélemy
+      - 1891583   # Saint Martin
+      - 3406826   # Saint Pierre and Miquelon
+      - 3412448   # Wallis and Futuna
+      - 3412620   # French Polynesia
+      - 3407643   # New Caledonia
+      - 2573009   # Clipperton Island
+      - 2186658   # French Southern and Antarctic Lands (Antartic part excluded)
+      - 1401835   # Guadeloupe
+      - 1891495   # Martinique
+      - 1260551   # French Guiana
+      - 1785276   # Réunion
+      - 1259885   # Mayotte
   - name: Germany
     features: [51477]
   - name: Greece
@@ -108,19 +102,52 @@ entities:
   - name: Montenegro
     features: [53296]
 
-# Netherlands dependencies included in country relation:
-#   Aruba
-#   Curacao
-#   Sint Maarten
+  # breaking up into provinces because there is no 'european netherlands'
+  # object, and including european & caribbean together covers a lot of water
   - name: Netherlands
-    features: [2323309]
+    features:
+      - 47826     # Groningen
+      - 47381     # Friesland
+      - 47540     # Drenthe
+      - 47608     # Overijssel
+      - 47554     # Gelderland
+      - 47608     # Overijssel
+      - 47654     # North Holland
+      - 47772     # South Holland
+      - 47806     # Zeeland
+      - 47696     # North Brabant
+      - 47793     # Limburg
+      - 47407     # Flevoland
+      - 47667     # Utrecht
+      - 1216720   # Caribbean Netherlands
+      - 1231749   # Aruba
+      - 1216719   # Curacao
+      - 1231790   # Saint Martin
 
-# Norway dependencies included in country relation:
-#   Bouvet Island
-#   Svalbard
-# Norway dependencies excluded as part of Antartca: Peter Island
+  # excludes Peter Island, considering that to be part of Anartica
+  # dividing up into states so that it processing takes up less memory
   - name: Norway
-    features: [2978650]
+    features:
+      - 406567   # Trøndelag
+      - 408105   # Nordland
+      - 407717   # Troms
+      - 406389   # Finnmark
+      - 406868   # Møre og Romsdal
+      - 412377   # Oppland
+      - 407787   # Sogn og Fjordane
+      - 412436   # Hedmark
+      - 406106   # Akershus
+      - 406060   # Østfold
+      - 412297   # Buskerud
+      - 404589   # Vestfold
+      - 405156   # Telemark
+      - 406015   # East Agder
+      - 405929   # West Agder
+      - 405836   # Rogaland
+      - 404144   # Hordaland
+      - 406091   # Oslo
+      - 3245620  # Svalbard and Jan Mayen (islands to the north)
+      - 2425963  # Bouvet Island (island in south atlantic)
 
   - name: Poland
     features: [49715]
@@ -129,7 +156,17 @@ entities:
   - name: Romania
     features: [90689]
   - name: Russia
-    features: [60189]
+    features:
+      - 1029256   # Central Federal District
+      - 1216601   # Northwestern Federal District
+      - 1075831   # Volga Federal District
+      - osmid: 1059500        # South federal district
+        excludes: [3987743]   # Caspian Sea
+      - osmid: 389344         # North Caucasus federal
+        excludes: [3987743]   # Caspian Sea
+      - 1113276   # Ural Federal District
+      - 1221148   # Siberian Federal District
+      - 1221185   # Far Eastern Federal District
   - name: San Marino
     features: [54624]
   - name: Serbia
@@ -140,17 +177,43 @@ entities:
     features: [218657]
   - name: Spain
     features: [1311341]
-  - name: Sweden
-    features: [52822]
+  - name: Sweden  # splitting it up for faster processing
+    features:
+      - 52824   # Norrbottens län
+      - 52825   # Västerbottens län
+      - 52827   # Västernorrlands län
+      - 52832   # Gävleborgs län
+      - 52826   # Jämtlands län
+      - 52834   # Dalecarlia
+      - 54223   # Värmlands län
+      - 54222   # Örebro län
+      - 54367   # Västra Götalands län
+      - 940675  # Östergötlands län
+      - 54374   # Jönköpings län
+      - 54403   # Hallands län
+      - 54412   # Kronobergs län
+      - 54409   # Skåne län
+      - 54413   # Blekinge län
+      - 54417   # Kalmar län
+      - 54386   # Södermanlands län
+      - 941530  # Gotland County
+      - 54221   # Västmanlands län
+      - 54220   # Uppsala län
+      - 54391   # Stockholm County
   - name: Switzerland
     features: [51701]
-  - name: Turkey
-    features: [174737]
   - name: Ukraine
-    features: [60199]
+    features:
+      - osmid: 60199
+        excludes:
+          - 72639     # Autonomous Republic of Crimea
+          - 1574364   # Sevastopol
   - name: United Kingdom
     features:
-      - 62149
+      - 58447     # England
+      - 58437     # Wales
+      - 58446     # Scotland
+      - 156393    # Northern Ireland
       - 2177161   # Anguilla
       - 1993208   # Bermuda
       - 1993867   # British Indian Ocean Territory
@@ -163,7 +226,7 @@ entities:
       - 1964272   # Saint Helena, Ascension and Tristan da Cunha
       - 547479    # Turks and Caicos Islands
       - 1983628   # South Georgia and the South Sandwich Islands
-      - 3263728   # Akrotiri and Dhekelia
+      - 3263728   # Akrotiri and Dhekelia - Military bases in Cyprus
       - 270009    # Guernsey
       - 367988    # Jersey
       - 62269     # Isle of Man
@@ -178,7 +241,26 @@ entities:
   - name: Belize
     features: [287827]
   - name: Canada
-    features: [1428125]
+    features:
+      - 390840  # Nunavut
+      - 391220  # Northwest Territories
+      - 390867  # British Columbia
+      - 61549   # Quebec
+      - 391196  # Newfoundland
+      - 68942   # New Brunswick
+      - 390558  # Nova Scotia
+      - 391115  # Prince Edward Island
+      - 391455  # Yukon
+      - 391186  # Alberta
+      - 391178  # Saskatchewan
+      - 390841  # Manitoba
+      - osmid: 68841    # Ontario
+        excludes:       # Great lakes
+          - 4039486
+          - 4039900
+          - 1206310
+          - 1205149
+          - 1205151
   - name: Costa Rica
     features: [287667]
   - name: Cuba
@@ -213,24 +295,93 @@ entities:
     features: [550725]
   - name: Trinidad and Tobago
     features: [555717]
-
-# United States dependencies included in country relation:
-#   Gaum
-#   Northern Mariana Islands
-#   Puerto Rico
-#   US Virgin Islands
-#   American Samoa
-#   Midway Atoll
-#   Wake Island
-#   Baker Island
-#   Howland Island
-#   Jarvis Island
-#   Johnston Atoll
-#   Kingman Reef
-#   Navassa Island
-#   Palmyra Atoll
   - name: United States
-    features: [148838]
+    features:
+      - 1116270 # Alaska
+      - 162050  # Florida
+      - 224922  # Louisiana
+      - 165475  # California
+      - 61315   # Massachusetts
+      - osmid: 61320  # New York
+        excludes:     # Great Lakes
+          - 4039900
+          - 1206310
+      - 63512   # Maine
+      - 67213   # New Hampshire
+      - 114690  # Texas
+      - 161943  # Mississippi
+      - 161950  # Alabama
+      - 161957  # Georgia
+      - 162069  # District of Columbia
+      - osmid: 162109   # Pennsylvania
+        excludes:       # Great Lakes
+          - 4039900
+      - 162110  # Delaware
+      - 162112  # Maryland
+      - 165476  # Oregon
+      - 165479  # Washington
+      - osmid: 165789   # Michigan
+        excludes:       # Great Lakes
+          - 1205149
+          - 4039486
+          - 1205151
+      - 165794  # Connecticut
+      - 224040  # South Carolina
+      - 224042  # Virginia
+      - 224045  # North Carolina
+      - 224951  # New Jersey
+      - 392915  # Rhode Island
+      - 60759   # Vermont
+      - osmid: 122586   # Illinois
+        excludes:       # Great Lakes
+          - 1205149
+      - 161638  # Missouri
+      - 161644  # Kansas
+      - 161645  # Oklahoma
+      - 161646  # Arkansas
+      - 161648  # Nebraska
+      - 161650  # Iowa
+      - 161652  # South Dakota
+      - 161653  # North Dakota
+      - 161655  # Kentucky
+      - osmid: 161816   # Indiana
+        excludes:       # Great Lakes
+          - 1205149
+      - 161838  # Tennessee
+      - 161961  # Colorado
+      - 161991  # Wyoming
+      - 161993  # Utah
+      - 162014  # New Mexico
+      - 162018  # Arizona
+      - osmid: 162061   # Ohio
+        excludes:       # Great Lakes
+          - 4039900
+      - 162068  # West Virginia
+      - 162115  # Montana
+      - 162116  # Idaho
+      - osmid: 165466   # Wisconsin
+        excludes:       # Great Lakes
+          - 4039486
+          - 1205149
+      - osmid: 165471   # Minnesota
+        excludes:       # Great Lakes
+          - 4039486
+      - 165473  # Nevada
+      - 166563  # Hawaii
+      - 7248455 # Navassa Island
+      - 286898  # US Virgin Islands
+      - 4422604 # Puerto Rico
+      - 8161698 # Midway Atoll
+      - 7248458 # Johnston Atoll
+      - 7248457 # Kingman Reef
+      - 7248454 # Palmyra Atoll
+      - 7248459 # Jarvis Island
+      - 7248460 # Howland Island
+      - 7248461 # Baker Island
+      - 2177187 # American Samoa
+      - 6430384 # Wake Island
+      - 306004  # Northern Mariana Islands
+      - 306001  # Guam
 
 # South America
   - name: Argentina
@@ -373,6 +524,12 @@ entities:
 # Asia
   - name: Afghanistan
     features: [303427]
+  - name: Armenia
+    features: [364066]
+  - name: Azerbaijan
+    features:
+      - osmid: 364110
+        excludes: [3987743]   # Caspian Sea
   - name: Bahrain
     features: [378734]
   - name: Bangladesh
@@ -384,18 +541,22 @@ entities:
   - name: Cambodia
     features: [49898]
 
-# China dependencies included in country relation:
+# China dependencies included in country object:
 #   Hong Kong
 #   Macau
   - name: China
     features: [270056]
 
+  - name: Georgia
+    features: [28699]
   - name: India
     features: [304716]
   - name: Indonesia
     features: [304751]
   - name: Iran
-    features: [304938]
+    features:
+      - osmid: 304938
+        excludes: [3987743]   # Caspian Sea
   - name: Iraq
     features: [304934]
   - name: Israel
@@ -405,7 +566,9 @@ entities:
   - name: Jordan
     features: [184818]
   - name: Kazakhstan
-    features: [214665]
+    features:
+      - osmid: 214665
+        excludes: [3987743]   # Caspian Sea
   - name: Kuwait
     features: [305099]
   - name: Kyrgyzstan
@@ -450,8 +613,12 @@ entities:
     features: [2067731]
   - name: Timor-Leste
     features: [305142]
+  - name: Turkey
+    features: [174737]
   - name: Turkmenistan
-    features: [223026]
+    features:
+      - osmid: 223026
+        excludes: [3987743]   # Caspian Sea
   - name: United Arab Emirates (UAE)
     features: [307763]
   - name: Uzbekistan
@@ -463,7 +630,7 @@ entities:
 
 # Oceania
 
-# Australia dependencies included in country relation:
+# Australia dependencies included in country object:
 #   Christmas Island
 #   Cocos (Keeling) Islands
 #   Norfolk Island

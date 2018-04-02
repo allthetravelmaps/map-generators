@@ -34,21 +34,66 @@ entities:
       - 53296   # Montenegro
       - 49715   # Poland
       - 90689   # Romania
-      - 389344  # Russia - North Caucasus federal district
-      - 1059500 # Russia - South federal district
       - 1029256 # Russia - Central Federal District
       - 1075831 # Russia - Volga Federal District
       - 1216601 # Russia - Northwestern Federal District
+      - osmid: 1059500        # South federal district
+        excludes: [3987743]   # Caspian Sea
+      - osmid: 389344         # North Caucasus federal
+        excludes: [3987743]   # Caspian Sea
       - 54624   # San Marino
       - 1741311 # Serbia
       - 14296   # Slovakia
       - 218657  # Slovenia
-      - 52822   # Sweden
+      - 52824   # Sweden - Norrbottens län
+      - 52825   # Sweden - Västerbottens län
+      - 52827   # Sweden - Västernorrlands län
+      - 52832   # Sweden - Gävleborgs län
+      - 52826   # Sweden - Jämtlands län
+      - 52834   # Sweden - Dalecarlia
+      - 54223   # Sweden - Värmlands län
+      - 54222   # Sweden - Örebro län
+      - 54367   # Sweden - Västra Götalands län
+      - 940675  # Sweden - Östergötlands län
+      - 54374   # Sweden - Jönköpings län
+      - 54403   # Sweden - Hallands län
+      - 54412   # Sweden - Kronobergs län
+      - 54409   # Sweden - Skåne län
+      - 54413   # Sweden - Blekinge län
+      - 54417   # Sweden - Kalmar län
+      - 54386   # Sweden - Södermanlands län
+      - 941530  # Sweden - Gotland County
+      - 54221   # Sweden - Västmanlands län
+      - 54220   # Sweden - Uppsala län
+      - 54391   # Sweden - Stockholm County
       - 51701   # Switzerland
-      - 60199   # Ukraine
-      - 1059668 # Norway - mainland
+      - osmid: 60199  # Ukraine
+        excludes:
+          - 72639     # Ukraine - Autonomous Republic of Crimea
+          - 1574364   # Ukraine - Sevastopol
+      - 406567  # Norway - Trøndelag
+      - 408105  # Norway - Nordland
+      - 407717  # Norway - Troms
+      - 406389  # Norway - Finnmark
+      - 406868  # Norway - Møre og Romsdal
+      - 412377  # Norway - Oppland
+      - 407787  # Norway - Sogn og Fjordane
+      - 412436  # Norway - Hedmark
+      - 406106  # Norway - Akershus
+      - 406060  # Norway - Østfold
+      - 412297  # Norway - Buskerud
+      - 404589  # Norway - Vestfold
+      - 405156  # Norway - Telemark
+      - 406015  # Norway - East Agder
+      - 405929  # Norway - West Agder
+      - 405836  # Norway - Rogaland
+      - 404144  # Norway - Hordaland
+      - 406091  # Norway - Oslo
       - 3245620 # Norway - Svalbard and Jan Mayen islands
-      - 62149   # UK - mainland
+      - 58447   # UK - England
+      - 58437   # UK - Wales
+      - 58446   # UK - Scotland
+      - 156393  # UK - Northern Ireland
       - 1278736 # UK - Gibraltar
       - 367988  # UK - Jersey
       - 62269   # UK - Isle of Man
@@ -56,16 +101,31 @@ entities:
       - 1403916 # France - mainland and Corse
       - 4016746 # Balkans - includes European mainland of Turkey
       - 1815263 # Imbros - Turkish island closer to European part
-      - osmid: relation/47796         # Netherlands - mainland and Caribbean Netherlands
-        excludes: [relation/1216720]  # Netherlands - Caribbean Netherlands
-      - osmid: relation/192307    # Greece
+      - 47826   # Netherlands - Groningen
+      - 47381   # Netherlands - Friesland
+      - 47540   # Netherlands - Drenthe
+      - 47608   # Netherlands - Overijssel
+      - 47554   # Netherlands - Gelderland
+      - 47608   # Netherlands - Overijssel
+      - 47654   # Netherlands - North Holland
+      - 47772   # Netherlands - South Holland
+      - 47806   # Netherlands - Zeeland
+      - 47696   # Netherlands - North Brabant
+      - 47793   # Netherlands - Limburg
+      - 47407   # Netherlands - Flevoland
+      - 47667   # Netherlands - Utrecht
+      - osmid: 192307             # Greece
         excludes: [way/137410518] # Greece - Kastellorizo
-      - osmid: relation/295480  # Portugal
+      - osmid: 295480             # Portugal
         excludes:
-          - way/46419293        # Portugal - Madiera
-          - way/300680026       # Portugal - Savage Islands territorial waters
-      - osmid: relation/1311341       # Spain
-        excludes: [relation/7248699]  # Spain - Canary Islands
+          - way/46419293          # Portugal - Archipelago of Madeira
+          - 8010660               # Portugal - Arquipélago dos Açores
+          - 2232893               # Portugal - Savage Islands
+      - osmid: 1311341            # Spain
+        excludes:
+          - 7248699               # Spain - Canary Islands
+          - 1154756               # Spain - Ceuta
+          - 1154757               # Spain - Melilla
 
   - name: North America
     features:
@@ -73,7 +133,25 @@ entities:
       - 547511  # Barbados
       - 547469  # The Bahamas
       - 287827  # Belize
-      - 1428125 # Canada
+      - 390840  # Canada - Nunavut
+      - 391220  # Canada - Northwest Territories
+      - 390867  # Canada - British Columbia
+      - 61549   # Canada - Quebec
+      - 391196  # Canada - Newfoundland
+      - 68942   # Canada - New Brunswick
+      - 390558  # Canada - Nova Scotia
+      - 391115  # Canada - Prince Edward Island
+      - 391455  # Canada - Yukon
+      - 391186  # Canada - Alberta
+      - 391178  # Canada - Saskatchewan
+      - 390841  # Canada - Manitoba
+      - osmid: 68841    # Canada - Ontario
+        excludes:       # Canada - Great lakes
+          - 4039486
+          - 4039900
+          - 1206310
+          - 1205149
+          - 1205151
       - 3406826 # France - Saint Pierre and Miquelon
       - 287667  # Costa Rica
       - 307833  # Cuba
@@ -109,28 +187,79 @@ entities:
       - 1401835 # France - Guadeloupe
       - 1891495 # France - Martinique
       - 1891583 # France - Saint Martin
-      - osmid: relation/148838  # USA - mainland and all overseas territories
-        excludes:
-          - relation/279045     # USA - Hawaii Territorial waters
-          - relation/7248460    # USA - Howland Island
-          - relation/7248461    # USA - Baker Island
-          - relation/7248458    # USA - Johnston Atoll
-          - relation/7248457    # USA - Kingman Reef
-          - relation/7248454    # USA - Palmyra Atoll
-          - relation/7248459    # USA - Jarvis Island
-          - relation/2177187    # USA - American Samoa
-          - relation/6430384    # USA - Wake Island
-          - way/43356824        # USA - Guam (territorial waters)
-          - way/43356823        # USA - Northern Mariana Islands (territorial waters)
-          - way/43356825        #     - ^^ more ...
-          - way/43356822
-          - way/43356821
-          - way/43356830
-          - way/43356828
-          - way/43356827
-          - way/43356826
-          - way/43356832
-      - osmid: way/245555935 # Venezuela - Isla Aves
+      - 1116270 # US - Alaska
+      - 162050  # US - Florida
+      - 224922  # US - Louisiana
+      - 165475  # US - California
+      - 61315   # US - Massachusetts
+      - osmid: 61320  # US - New York
+        excludes:     # US - Great Lakes
+          - 4039900
+          - 1206310
+      - 63512   # US - Maine
+      - 67213   # US - New Hampshire
+      - 114690  # US - Texas
+      - 161943  # US - Mississippi
+      - 161950  # US - Alabama
+      - 161957  # US - Georgia
+      - 162069  # US - District of Columbia
+      - osmid: 162109   # US - Pennsylvania
+        excludes:       # US - Great Lakes
+          - 4039900
+      - 162110  # US - Delaware
+      - 162112  # US - Maryland
+      - 165476  # US - Oregon
+      - 165479  # US - Washington
+      - osmid: 165789   # US - Michigan
+        excludes:       # US - Great Lakes
+          - 1205149
+          - 4039486
+          - 1205151
+      - 165794  # US - Connecticut
+      - 224040  # US - South Carolina
+      - 224042  # US - Virginia
+      - 224045  # US - North Carolina
+      - 224951  # US - New Jersey
+      - 392915  # US - Rhode Island
+      - 60759   # US - Vermont
+      - osmid: 122586   # US - Illinois
+        excludes:       # US - Great Lakes
+          - 1205149
+      - 161638  # US - Missouri
+      - 161644  # US - Kansas
+      - 161645  # US - Oklahoma
+      - 161646  # US - Arkansas
+      - 161648  # US - Nebraska
+      - 161650  # US - Iowa
+      - 161652  # US - South Dakota
+      - 161653  # US - North Dakota
+      - 161655  # US - Kentucky
+      - osmid: 161816   # US - Indiana
+        excludes:       # US - Great Lakes
+          - 1205149
+      - 161838  # US - Tennessee
+      - 161961  # US - Colorado
+      - 161991  # US - Wyoming
+      - 161993  # US - Utah
+      - 162014  # US - New Mexico
+      - 162018  # US - Arizona
+      - osmid: 162061   # US - Ohio
+        excludes:       # US - Great Lakes
+          - 4039900
+      - 162068  # US - West Virginia
+      - 162115  # US - Montana
+      - 162116  # US - Idaho
+      - osmid: 165466   # US - Wisconsin
+        excludes:       # US - Great Lakes
+          - 4039486
+          - 1205149
+      - osmid: 165471   # US - Minnesota
+        excludes:       # US - Great Lakes
+          - 4039486
+      - 165473  # US - Nevada
+      - 7248455 # US - Navassa Island
+      - 286898  # US - US Virgin Islands
+      - 4422604 # US - Puerto Rico
 
   - name: South America
     features:
@@ -150,14 +279,12 @@ entities:
       - 2185374 # UK - Falkland Islands
       - 1983628 # UK - South Georgia and the South Sandwich Islands
       - 1260551 # France - French Guiana
-      - osmid: relation/272644    # Venezuela
-        excludes: [way/245555935] # Venezuela - Isla Aves
-      - osmid: relation/120027        # Colombia
-        excludes: [relation/2181889]  # Colombia - San Andres islands
-      - osmid: relation/167454  # Chile
-        excludes:
-          - way/51943989        # Chile - Eater Island
-          - way/537856050       # Chile - Sala y Gomez Island
+      - osmid: 272644             # Venezuela
+        excludes: [3473022]       # Venezuela - Isla Aves
+      - osmid: 120027             # Colombia
+        excludes: [2181889]       # Colombia - San Andres islands
+      - osmid: 167454             # Chile
+        excludes: [1773340]       # Chile - Eater Island Province
 
   - name: Africa
     features:
@@ -216,21 +343,27 @@ entities:
       - 3630439 # Morocco
       - 5441968 # Morocco - Western Sarah / Sahrawi Arab Democratic Republic
       - 6063099 # France - "Scattered Islands in the Indian Ocean"
+      - 1785276 # France - Réunion
+      - 1259885 # France - Mayotte
       - 1964272 # UK - Saint Helena, Ascension and Tristan da Cunha
       - 7248699 # Spain - Canary Islands
-      - osmid: way/46419293   # Portugal - Madiera
-      - osmid: way/300680026  # Portugal - Savage Islands territorial waters
-      - osmid: relation/1473947 # Egypt
+      - 1154756 # Spain - Ceuta
+      - 1154757 # Spain - Melilla
+      - way/46419293          # Portugal - Archipelago of Madeira
+      - 8010660               # Portugal - Arquipélago dos Açores
+      - 2232893               # Portugal - Savage Islands
+      - osmid: 1473947        # Egypt
         excludes:
-          - relation/3060793    # Egypt - South Sinai Governorate
-          - relation/3060792    # Egypt - North Sianai Governorate
-          - relation/5632534    # Egypt - Sinai Peninsula
+          - 3060793           # Egypt - South Sinai Governorate
+          - 3060792           # Egypt - North Sianai Governorate
+          - 5632534           # Egypt - Sinai Peninsula
 
   - name: Asia
     features:
       - 303427  # Afghanistan
       - 364066  # Armenia
-      - 364110  # Azerbaijan
+      - osmid: 364110         # Azerbaijan
+        excludes: [3987743]   # Caspian Sea
       - 378734  # Bahrain
       - 184640  # Bangladesh
       - 184629  # Bhutan
@@ -240,12 +373,14 @@ entities:
       - 307787  # Cyprus
       - 28699   # Georgia
       - 304716  # India
-      - 304938  # Iran
+      - osmid: 304938         # Iran
+        excludes: [3987743]   # Caspian Sea
       - 304934  # Iraq
       - 1473946 # Israel
       - 382313  # Japan
       - 184818  # Jordan
-      - 214665  # Kazakhstan
+      - osmid: 214665         # Kazakhstan
+        excludes: [3987743]   # Caspian Sea
       - 305099  # Kuwait
       - 178009  # Kyrgyzstan
       - 49903   # Laos
@@ -268,7 +403,8 @@ entities:
       - 214626  # Tajikistan
       - 2067731 # Thailand
       - 305142  # Timor-Leste
-      - 223026  # Turkmenistan
+      - osmid: 223026         # Turkmenistan
+        excludes: [3987743]   # Caspian Sea
       - 307763  # United Arab Emirates (UAE)
       - 196240  # Uzbekistan
       - 49915   # Vietnam
@@ -276,7 +412,7 @@ entities:
       - 1703814 # Palestine
       - 449220  # Taiwan
       - 1993867 # UK - British Indian Ocean Territory
-      - 3263728 # UK - British bases in Cyprus
+      - 3263728 # UK - Akrotiri and Dhekelia - Military bases in Cyprus
       - 3060793 # Egypt - South Sinai Governorate
       - 3060792 # Egypt - North Sianai Governorate
       - 5632534 # Egypt - Sinai Peninsula
@@ -286,12 +422,12 @@ entities:
       - 2177207 # Australia - Christmas Island
       - 82636   # Australia - Cocos Islands
       - osmid: way/137410518  # Greece - Kastellorizo
-      - osmid: relation/174737        # Turkey
-        excludes: [relation/4016746]  # Balkans - includes European mainland of Turkey
-      - osmid: relation/304751  # Indonesia
+      - osmid: 174737         # Turkey
+        excludes: [4016746]   # Balkans - includes European mainland of Turkey
+      - osmid: 304751         # Indonesia
         excludes:
-          - relation/4521144    # Indonesia - Papua
-          - relation/4521145    # Indonesia - West Papua
+          - 4521144           # Indonesia - Papua
+          - 4521145           # Indonesia - West Papua
 
   - name: Oceania
     features:
@@ -315,31 +451,31 @@ entities:
       - 3412448 # France - Wallis and Futuna
       - 3412620 # France - French Polynesia
       - 3407643 # France - New Caledonia
-      - 279045  # USA - Hawaii Territorial waters
-      - 7248460 # USA - Howland Island
-      - 7248461 # USA - Baker Island
-      - 7248458 # USA - Johnston Atoll
-      - 7248457 # USA - Kingman Reef
-      - 7248454 # USA - Palmyra Atoll
-      - 7248459 # USA - Jarvis Island
-      - 2177187 # USA - American Samoa
-      - 6430384 # USA - Wake Island
-      - 306001  # USA - Guam
-      - 306004  # USA - Northern Mariana Islands
+      - 166563  # US - Hawaii
+      - 8161698 # US - Midway Atoll
+      - 7248458 # US - Johnston Atoll
+      - 7248457 # US - Kingman Reef
+      - 7248454 # US - Palmyra Atoll
+      - 7248459 # US - Jarvis Island
+      - 7248460 # US - Howland Island
+      - 7248461 # US - Baker Island
+      - 2177187 # US - American Samoa
+      - 6430384 # US - Wake Island
+      - 306004  # US - Northern Mariana Islands
+      - 306001  # US - Guam
       - 4521144 # Indonesia - Papua
       - 4521145 # Indonesia - West Papua
-      - osmid: way/51943989   # Chile - Eater Island
-      - osmid: way/537856050  # Chile - Sala y Gomez Island
-      - osmid: relation/80500 # Australia - mainland and all islands
+      - 1773340 # Chile - Eater Island Province
+      - osmid: 80500          # Australia - mainland and all islands
         excludes:
-        - relation/2177227    # Australia - Heard Island and McDonald Islands
-        - relation/2177207    # Australia - Christmas Island
-        - relation/82636      # Australia - Cocos Islands
+        - 2177227             # Australia - Heard Island and McDonald Islands
+        - 2177207             # Australia - Christmas Island
+        - 82636               # Australia - Cocos Islands
 
   - name: Antartica
     features:
       - 2186646 # Antartic treaty border
       - 2177227 # Australia - Heard Island and McDonald Islands
       - 2425963 # Norway - Bouvet Island
-      - osmid: relation/2186658       # France - Southern and Antarctic Lands
-        excludes: [relation/6063099]  # France - "Scattered Islands in the Indian Ocean"
+      - osmid: 2186658        # France - Southern and Antarctic Lands
+        excludes: [6063099]   # France - "Scattered Islands in the Indian Ocean"

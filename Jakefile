@@ -1,9 +1,21 @@
+/* global jake:false, desc:false, directory:false, fail:false, file:false */
+/* global rule:false, task:false */
+
 const assert = require('assert')
-const { execSync, spawn } = require('child_process')
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 const process = require('process')
 const readline = require('readline')
+const { execSync, spawn } = require('child_process')
+
+const maxConcurrency = os.cpus().length
+
+/* Defaults to 10.
+ * The most readables we have piped to stderr within a
+ * task is 3 (currently).
+ * One additional for node itself. */
+process.stderr.setMaxListeners(maxConcurrency * 3 + 1)
 
 /* double check we don't rm -rf anything we don't want to */
 const assertAndRm = (val, ref) => {
@@ -12,10 +24,11 @@ const assertAndRm = (val, ref) => {
 }
 
 /* fail the task if an exitCode is non-zero */
-const onFail = (task, childProcess, deleteTarget = true) => {
-  const childCMD = childProcess.spawnargs.join(' ')
+const onFail = (task, childProcesses, deleteTarget = true) => {
+  const failedExe = childProcesses[childProcesses.length - 1].spawnargs[0]
+  const fullCmd = childProcesses.map(cp => cp.spawnargs.join(' ')).join(' | ')
   const target = task.name
-  const msg = `'${target}' failed while executing '${childCMD}'`
+  const msg = `'${target}' failed. ${failedExe} failed while excecuting '${fullCmd}'`
   return exitCode => {
     if (exitCode === 0) return
     if (deleteTarget && fs.existsSync(target)) fs.unlinkSync(target)
@@ -35,7 +48,7 @@ const serveMBTiles = mbtiles => {
   jake.logger.log(`Serving ${mbtiles} ... (cntrl-c to quit)`)
 
   const cmd = spawn('tileserver-gl-light', [mbtiles], { stdio: 'inherit' })
-  cmd.on('exit', onFail(this, cmd, false))
+  cmd.on('exit', onFail(this, [cmd], false))
 }
 
 /* directory structure */
@@ -43,12 +56,20 @@ const downloadsDir = 'downloads'
 const osmDownloadsDir = `${downloadsDir}/osm`
 const getDownloadsOSMPath = osmId =>
   `${osmDownloadsDir}/${osmId.replace('/', '.')}.geojson`
+const waterDownloadsPath = `${downloadsDir}/water/water-polygons-split-4326.zip`
+const waterRemoteUrl =
+  'http://data.openstreetmapdata.com/water-polygons-split-4326.zip'
 
 const allMBTiles = 'all.mbtiles'
 const allStaticDir = 'all.static'
 
 const confDir = 'conf'
 const getLayerConfPath = layer => `${confDir}/${layer}.yaml`
+
+const waterDir = 'water'
+const waterFeaturesDir = `${waterDir}/features`
+const waterShpPath = `${waterDir}/water-polygons-split-4326/water_polygons.shp`
+const waterGeojsonPath = `${waterDir}/water.geojson`
 
 const layersDir = 'layers'
 const getLayerDir = layer => `${layersDir}/${layer}`
@@ -62,6 +83,78 @@ const getLayerFeaturePath = (layer, entityId, featureId) =>
 const getLayers = () => fs.readdirSync(confDir).map(fn => fn.slice(0, -5))
 const getConf = layer =>
   JSON.parse(execSync(`yaml2json < ${getLayerConfPath(layer)}`).toString())
+const normalizeOsmId = osmid =>
+  typeof osmid === 'number' ? `relation/${osmid}` : osmid
+
+/* executable we need to run with extra mem */
+const geojsonClipping = execSync(`which geojson-clipping`, {
+  encoding: 'utf-8'
+}).trim()
+
+/* downloading OSM water: http://openstreetmapdata.com/data/water-polygons */
+desc('Download OSM water from openstreetmapdata.com')
+file(
+  waterDownloadsPath,
+  [],
+  function () {
+    jake.logger.log(`Downloading ${this.name} ...`)
+    jake.mkdirP(path.dirname(this.name))
+    const cmd = spawn('curl', [waterRemoteUrl])
+    const streamOut = fs.createWriteStream(this.name)
+    cmd.stderr.pipe(process.stderr)
+    cmd.stdout.pipe(streamOut)
+
+    cmd.on('exit', onFail(this, [cmd]))
+    streamOut.on('finish', () => onSuccess(this)(0))
+  },
+  { async: true }
+)
+
+desc('Unzip downloaded water data zipfile')
+file(
+  waterShpPath,
+  [waterDownloadsPath],
+  function () {
+    jake.logger.log(`Unzipping water ...`)
+    jake.mkdirP(waterDir)
+
+    const cmd = spawn('unzip', [waterDownloadsPath, '-d', waterDir], {
+      stdio: 'inherit'
+    })
+    cmd.on('exit', onFail(this, [cmd]))
+    cmd.on('exit', exitCode => {
+      if (exitCode !== 0) return
+      /* update file timestamps so jake doesn't re-do this step unnecessarily */
+      const cmd2 = spawn('touch', [this.name])
+      cmd2.on('exit', onFail(this, [cmd]))
+      cmd2.on('exit', onSuccess(this))
+    })
+  },
+  { async: true }
+)
+
+desc('Convert water data to geojson')
+file(
+  waterGeojsonPath,
+  [waterShpPath],
+  function () {
+    jake.logger.log(`Converting water data to geojson ...`)
+
+    const cmd = spawn('mapshaper', [
+      waterShpPath,
+      '-o',
+      'format=geojson',
+      waterGeojsonPath
+    ])
+    const streamOut = fs.createWriteStream(this.name)
+    cmd.stderr.pipe(process.stderr)
+    cmd.stdout.pipe(streamOut)
+
+    cmd.on('exit', onFail(this, [cmd]))
+    streamOut.on('finish', () => onSuccess(this)(0))
+  },
+  { async: true }
+)
 
 /* downloading features from OSM */
 desc(`Create ${osmDownloadsDir} dir`)
@@ -80,9 +173,10 @@ rule(
 
     const cmd = spawn('get-overpass', [osmId])
     const streamOut = fs.createWriteStream(this.name)
+    cmd.stderr.pipe(process.stderr)
     cmd.stdout.pipe(streamOut)
 
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     streamOut.on('finish', () => onSuccess(this)(0))
   }
 )
@@ -100,10 +194,12 @@ layers.forEach(layer => {
     features.forEach((featureConf, j) => {
       const featureId = j + 1
       const featurePath = getLayerFeaturePath(layer, entityId, featureId)
-      const osmPath = getDownloadsOSMPath(
-        featureConf.osmid || `relation/${featureConf}`
-      )
-      const excludePaths = (featureConf.excludes || []).map(getDownloadsOSMPath)
+      const osmid =
+        typeof featureConf === 'object' ? featureConf.osmid : featureConf
+      const osmPath = getDownloadsOSMPath(normalizeOsmId(osmid))
+      const excludePaths = (featureConf.excludes || [])
+        .map(normalizeOsmId)
+        .map(getDownloadsOSMPath)
 
       desc(`Build ${featurePath}`)
       file(
@@ -113,14 +209,37 @@ layers.forEach(layer => {
           jake.logger.log(`Building ${this.name} ...`)
           jake.mkdirP(path.dirname(featurePath))
 
-          const streamIn = fs.createReadStream(osmPath)
-          const cmd = spawn('geojson-cli-difference', excludePaths)
-          const streamOut = fs.createWriteStream(this.name)
-          streamIn.pipe(cmd.stdin)
-          cmd.stdout.pipe(streamOut)
+          // in the event that we need to subract both some land features
+          // and water, do the land features first to the bounding box can
+          // be smaller for the water subtraction
+          let cmd1
+          if (excludePaths.length > 0) {
+            cmd1 = spawn(
+              geojsonClipping,
+              ['difference', '-s', osmPath, ...excludePaths],
+              { stdio: ['inherit', 'pipe', 'pipe'] } // without this it waits for input in stdin
+            )
+          } else {
+            cmd1 = spawn('cat', [osmPath])
+          }
 
-          cmd.on('exit', onFail(this, cmd))
-          streamOut.on('finish', () => onSuccess(this)(0))
+          const cmd2 = spawn('node', [
+            '--max_old_space_size=4096',
+            geojsonClipping,
+            'difference',
+            '-b',
+            waterFeaturesDir,
+            '-o',
+            this.name
+          ])
+
+          cmd1.stdout.pipe(cmd2.stdin)
+          cmd1.stderr.pipe(process.stderr)
+          cmd2.stderr.pipe(process.stderr)
+
+          cmd1.on('exit', onFail(this, [cmd1]))
+          cmd2.on('exit', onFail(this, [cmd1, cmd2]))
+          cmd2.on('exit', onSuccess(this))
         },
         { async: true }
       )
@@ -137,33 +256,27 @@ layers.forEach(layer => {
         jake.logger.log(`Building ${this.name} ...`)
         jake.mkdirP(path.dirname(entityPath))
 
-        const cmd1 = spawn('mapshaper', [
-          '-i',
-          'combine-files',
-          ...featurePaths,
-          '-drop',
-          'fields=*',
-          '-merge-layers',
-          '-dissolve',
-          '-o',
-          'geojson-type=Feature',
-          '-'
-        ])
-        const cmd2 = spawn('geojson-cli-bbox', ['add'])
-        const cmd3 = spawn('jq', ['-c', `. + {"id": ${entityId}}`])
-        const streamOut = fs.createWriteStream(this.name)
-        cmd1.stdout.pipe(cmd2.stdin)
-        cmd2.stdout.pipe(cmd3.stdin)
-        cmd3.stdout.pipe(streamOut)
+        const cmd = spawn(
+          'node',
+          [
+            '--max_old_space_size=16384',
+            geojsonClipping,
+            'union',
+            '-i',
+            entityId,
+            '-o',
+            this.name,
+            ...featurePaths
+          ],
+          { stdio: 'inherit' } // without this it waits for input in stdin
+        )
 
-        cmd1.on('exit', onFail(this, cmd1))
-        cmd2.on('exit', onFail(this, cmd2))
-        cmd3.on('exit', onFail(this, cmd3))
-        streamOut.on('finish', () => onSuccess(this)(0))
+        cmd.on('exit', onFail(this, [cmd]))
+        cmd.on('exit', onSuccess(this))
       },
       {
         async: true,
-        parallelLimit: 8
+        parallelLimit: maxConcurrency
       }
     )
 
@@ -195,12 +308,11 @@ layers.forEach(layer => {
         ],
         { stdio: 'inherit' }
       )
-      cmd.on('exit', onFail(this, cmd))
+      cmd.on('exit', onFail(this, [cmd]))
       cmd.on('exit', onSuccess(this))
     },
     {
-      async: true,
-      parallelLimit: 8
+      async: true
     }
   )
 })
@@ -230,7 +342,7 @@ file(
       ],
       { stdio: 'inherit' }
     )
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     cmd.on('exit', onSuccess(this))
   },
   { async: true }
@@ -252,7 +364,7 @@ task(
     const cmd = spawn('tile-join', ['-e', allStaticDir, allMBTiles], {
       stdio: 'inherit'
     })
-    cmd.on('exit', onFail(this, cmd))
+    cmd.on('exit', onFail(this, [cmd]))
     cmd.on('exit', onSuccess(this))
   },
   { async: true }
@@ -262,6 +374,32 @@ layers.forEach(layer => {
   desc(`Build layer ${layer}`)
   task(`build-layer/${layer}`, [getLayerMBTilesPath(layer)])
 })
+
+desc('Explode water feature collection to individual features')
+task(
+  'build-water',
+  [waterGeojsonPath],
+  function () {
+    jake.logger.log('Exploding water feature collection')
+
+    const cmd1 = spawn('cat', [waterGeojsonPath])
+    const cmd2 = spawn('geojson-cli-explode', [
+      '-d',
+      waterFeaturesDir,
+      '--include-bboxes-in-filenames'
+    ])
+
+    cmd1.stdout.pipe(cmd2.stdin)
+
+    cmd1.stderr.pipe(process.stderr)
+    cmd2.stderr.pipe(process.stderr)
+
+    cmd1.on('exit', onFail(this, [cmd1]))
+    cmd2.on('exit', onFail(this, [cmd1, cmd2]))
+    cmd2.on('exit', onSuccess(this))
+  },
+  { async: true }
+)
 
 desc(`Build all layers in one mbtiles file, ${allMBTiles}`)
 task('build', [allMBTiles])
@@ -284,6 +422,11 @@ layers.forEach(layer => {
   task(`clean-layer/${layer}`, [], function () {
     assertAndRm(getLayerDir(layer), `${layersDir}/${layer}`)
   })
+})
+
+desc('Delete build products for water')
+task('clean-water', [], function () {
+  assertAndRm(waterDir, 'water')
 })
 
 desc(`Delete ${allMBTiles} and ${layersDir}`)
@@ -345,7 +488,7 @@ task(
             { stdio: 'inherit' }
           )
 
-          cmd.on('exit', onFail(this, cmd, false))
+          cmd.on('exit', onFail(this, [cmd], false))
           cmd.on('exit', exitCode => {
             if (exitCode !== 0) return
             console.log('Upload finished successfully')

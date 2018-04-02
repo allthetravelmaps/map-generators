@@ -3,20 +3,77 @@ desc: >
   The 50 states and one federal district (AKA the District of Columbia)
   of the United States of America.
 entities:
-  - name: Vermont
-    features: [60759]
+  - name: Alaska
+    features: [1116270]
+  - name: Florida
+    features: [162050]
+  - name: Louisiana
+    features: [224922]
+  - name: California
+    features: [165475]
   - name: Massachusetts
     features: [61315]
   - name: New York
-    features: [61320]
+    features:
+      - osmid: 61320
+        excludes:
+          - 4039900
+          - 1206310
   - name: Maine
     features: [63512]
   - name: New Hampshire
     features: [67213]
   - name: Texas
     features: [114690]
+  - name: Mississippi
+    features: [161943]
+  - name: Alabama
+    features: [161950]
+  - name: Georgia
+    features: [161957]
+  - name: District of Columbia
+    features: [162069]
+  - name: Pennsylvania
+    features:
+      - osmid: 162109
+        excludes:
+          - 4039900
+  - name: Delaware
+    features: [162110]
+  - name: Maryland
+    features: [162112]
+  - name: Oregon
+    features: [165476]
+  - name: Washington
+    features: [165479]
+  - name: Michigan
+    features:
+      - osmid: 165789
+        excludes:
+          - 1205149
+          - 4039486
+          - 1205151
+  - name: Connecticut
+    features: [165794]
+  - name: Hawaii
+    features: [166563]
+  - name: South Carolina
+    features: [224040]
+  - name: Virginia
+    features: [224042]
+  - name: North Carolina
+    features: [224045]
+  - name: New Jersey
+    features: [224951]
+  - name: Rhode Island
+    features: [392915]
+  - name: Vermont
+    features: [60759]
   - name: Illinois
-    features: [122586]
+    features:
+      - osmid: 122586
+        excludes:
+          - 1205149
   - name: Missouri
     features: [161638]
   - name: Kansas
@@ -36,15 +93,12 @@ entities:
   - name: Kentucky
     features: [161655]
   - name: Indiana
-    features: [161816]
+    features:
+      - osmid: 161816
+        excludes:
+          - 1205149
   - name: Tennessee
     features: [161838]
-  - name: Mississippi
-    features: [161943]
-  - name: Alabama
-    features: [161950]
-  - name: Georgia
-    features: [161957]
   - name: Colorado
     features: [161961]
   - name: Wyoming
@@ -55,53 +109,27 @@ entities:
     features: [162014]
   - name: Arizona
     features: [162018]
-  - name: Florida
-    features: [162050]
   - name: Ohio
-    features: [162061]
+    features:
+      - osmid: 162061
+        excludes:
+          - 4039900
   - name: West Virginia
     features: [162068]
-  - name: District of Columbia
-    features: [162069]
-  - name: Pennsylvania
-    features: [162109]
-  - name: Delaware
-    features: [162110]
-  - name: Maryland
-    features: [162112]
   - name: Montana
     features: [162115]
   - name: Idaho
     features: [162116]
   - name: Wisconsin
-    features: [165466]
+    features:
+      - osmid: 165466
+        excludes:
+          - 4039486
+          - 1205149
   - name: Minnesota
-    features: [165471]
+    features:
+      - osmid: 165471
+        excludes:
+          - 4039486
   - name: Nevada
     features: [165473]
-  - name: California
-    features: [165475]
-  - name: Oregon
-    features: [165476]
-  - name: Washington
-    features: [165479]
-  - name: Michigan
-    features: [165789]
-  - name: Connecticut
-    features: [165794]
-  - name: Hawaii
-    features: [166563]
-  - name: South Carolina
-    features: [224040]
-  - name: Virginia
-    features: [224042]
-  - name: North Carolina
-    features: [224045]
-  - name: Louisiana
-    features: [224922]
-  - name: New Jersey
-    features: [224951]
-  - name: Rhode Island
-    features: [392915]
-  - name: Alaska
-    features: [1116270]

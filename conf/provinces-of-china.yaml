@@ -1,0 +1,69 @@
+name: Provinces of China
+desc: The 22 provinces, 4 municipalities, 5 autonomous regions and 2 special administrative regions of China.
+entities:
+  - name: Tibet Autonomous Region
+    features: [153292]
+  - name: Xinjiang
+    features: [153310]
+  - name: Qinghai
+    features: [153269]
+  - name: Inner Mongolia
+    features: [161349]
+  - name: Ningxia Hui
+    features: [913101]
+  - name: Gansu
+    features: [153314]
+  - name: Yunnan
+    features: [913094]
+  - name: Sichuan
+    features: [913068]
+  - name: Guizhou
+    features: [286937]
+  - name: Guangxi
+    features: [286342]
+  - name: Hunan
+    features: [913073]
+  - name: Guangdong
+    features: [911844]
+  - name: Hainan
+    features: [2128285]
+  - name: Fujian
+    features: [553303]
+  - name: Jiangxi
+    features: [913109]
+  - name: Zhejiang
+    features: [553302]
+  - name: Hubei
+    features: [913106]
+  - name: Henan
+    features: [407492]
+  - name: Anhui
+    features: [913011]
+  - name: Jiangsu
+    features: [913012]
+  - name: Shandong
+    features: [913006]
+  - name: Hebei
+    features: [912998]
+  - name: Beijing
+    features: [912940]
+  - name: Tianjin
+    features: [912999]
+  - name: Liaoning
+    features: [912942]
+  - name: Jilin
+    features: [198590]
+  - name: Heilongjiang
+    features: [199073]
+  - name: Chongqing
+    features: [913069]
+  - name: Hong Kong
+    features: [913110]
+  - name: Macau
+    features: [1867188]
+  - name: Shanghai
+    features: [913067]
+  - name: Shanxi
+    features: [913105]
+  - name: Shaanxi
+    features: [913100]

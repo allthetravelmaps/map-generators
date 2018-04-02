@@ -1,0 +1,34 @@
+name: Countries of South America
+desc: >
+  The 12 independent countries with capital cites in South America.
+entities:
+  - name: Argentina
+    features: [286393]
+  - name: Bolivia
+    features: [252645]
+  - name: Brazil
+    features: [59470]
+  - name: Chile
+    features:
+      - osmid: 167454
+        excludes: [1773340]   # Easter Island Province
+  - name: Colombia
+    features:
+      - osmid: 120027
+        excludes: [2181889]   # San Andres islands
+  - name: Ecuador
+    features: [108089]
+  - name: Guyana
+    features: [287083]
+  - name: Paraguay
+    features: [287077]
+  - name: Peru
+    features: [288247]
+  - name: Suriname
+    features: [287082]
+  - name: Uruguay
+    features: [287072]
+  - name: Venezuela
+    features:
+      - osmid: 272644
+        excludes: [3473022]   # Isla Aves

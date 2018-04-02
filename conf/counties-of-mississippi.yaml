@@ -1,0 +1,167 @@
+name: Counties of Mississippi
+desc: The 82 counties of California, USA.
+entities:
+  - name: Jackson
+    features: [1832970]
+  - name: Harrison
+    features: [1832969]
+  - name: Hancock
+    features: [1832968]
+  - name: Forrest
+    features: [1832965]
+  - name: George
+    features: [1832966]
+  - name: Perry
+    features: [1832973]
+  - name: Stone
+    features: [1832974]
+  - name: Pearl River
+    features: [1832972]
+  - name: Greene
+    features: [1832967]
+  - name: Lamar
+    features: [1832971]
+  - name: Marion
+    features: [1832992]
+  - name: Pike
+    features: [1833646]
+  - name: Amite
+    features: [1833611]
+  - name: Wilkinson
+    features: [1833664]
+  - name: Adams
+    features: [1833609]
+  - name: Franklin
+    features: [1833621]
+  - name: Lincoln
+    features: [1833636]
+  - name: Lawrence
+    features: [1832991]
+  - name: Jefferson Davis
+    features: [1832989]
+  - name: Covington
+    features: [1832988]
+  - name: Jones
+    features: [1832990]
+  - name: Wayne
+    features: [1832993]
+  - name: Walthall
+    features: [1833661]
+  - name: Clarke
+    features: [1833618]
+  - name: Jasper
+    features: [1833628]
+  - name: Smith
+    features: [1833655]
+  - name: Simpson
+    features: [1833654]
+  - name: Copiah
+    features: [1833620]
+  - name: Claiborne
+    features: [1833617]
+  - name: Warren
+    features: [1833662]
+  - name: Hinds
+    features: [1833623]
+  - name: Rankin
+    features: [1833650]
+  - name: Scott
+    features: [1833651]
+  - name: Newton
+    features: [1833642]
+  - name: Lauderdale
+    features: [1833632]
+  - name: Kemper
+    features: [1833630]
+  - name: Neshoba
+    features: [1833641]
+  - name: Leake
+    features: [1833633]
+  - name: Madison
+    features: [1833638]
+  - name: Washington
+    features: [1828966]
+  - name: Lowndes
+    features: [1833637]
+  - name: Noxubee
+    features: [1833643]
+  - name: Oktibbeha
+    features: [1833644]
+  - name: Winston
+    features: [1833665]
+  - name: Choctaw
+    features: [1833616]
+  - name: Attala
+    features: [1833612]
+  - name: Montgomery
+    features: [1833640]
+  - name: Carroll
+    features: [1833614]
+  - name: Holmes
+    features: [1833624]
+  - name: Leflore
+    features: [1833635]
+  - name: Humphreys
+    features: [1833625]
+  - name: Sunflower
+    features: [1833656]
+  - name: Bolivar
+    features: [1829138]
+  - name: Coahoma
+    features: [1829176]
+  - name: Quitman
+    features: [1833649]
+  - name: Tallahatchie
+    features: [1833657]
+  - name: Grenada
+    features: [1833622]
+  - name: Yalobusha
+    features: [1833666]
+  - name: Calhoun
+    features: [1833613]
+  - name: Chickasaw
+    features: [1833615]
+  - name: Pontotoc
+    features: [1833647]
+  - name: Lee
+    features: [1833634]
+  - name: Monroe
+    features: [1833639]
+  - name: Itawamba
+    features: [1833627]
+  - name: Webster
+    features: [1833663]
+  - name: Clay
+    features: [1833619]
+  - name: Tishomingo
+    features: [1833659]
+  - name: Prentiss
+    features: [1833648]
+  - name: Alcorn
+    features: [1833610]
+  - name: Tippah
+    features: [1829180]
+  - name: Union
+    features: [1833660]
+  - name: Benton
+    features: [1829175]
+  - name: Marshall
+    features: [1829179]
+  - name: Tate
+    features: [1833658]
+  - name: DeSoto
+    features: [1829177]
+  - name: Tunica
+    features: [1829181]
+  - name: Panola
+    features: [1833645]
+  - name: Lafayette
+    features: [1833631]
+  - name: Jeffereson
+    features: [1833629]
+  - name: Yazoo
+    features: [1833667]
+  - name: Sharkey
+    features: [1833652]
+  - name: Issaquena
+    features: [1833626]

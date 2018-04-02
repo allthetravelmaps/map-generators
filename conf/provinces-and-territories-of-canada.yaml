@@ -1,16 +1,12 @@
 name: Provinces and Territories of Canada
 desc: The 10 provinces and 3 territories of Canada.
 entities:
+  - name: Nunavut
+    features: [390840]
+  - name: Northwest Territories
+    features: [391220]
   - name: British Columbia
     features: [390867]
-  - name: Alberta
-    features: [391186]
-  - name: Saskatchewan
-    features: [391178]
-  - name: Manitoba
-    features: [390841]
-  - name: Ontario
-    features: [68841]
   - name: Quebec
     features: [61549]
   - name: Newfoundland
@@ -21,9 +17,19 @@ entities:
     features: [390558]
   - name: Prince Edward Island
     features: [391115]
-  - name: Nunavut
-    features: [390840]
-  - name: Northwest Territories
-    features: [391220]
   - name: Yukon
     features: [391455]
+  - name: Ontario
+    features:
+      - osmid: 68841
+        excludes:
+          - 4039486
+          - 1205151
+          - 4039900
+          - 1206310
+  - name: Alberta
+    features: [391186]
+  - name: Saskatchewan
+    features: [391178]
+  - name: Manitoba
+    features: [390841]

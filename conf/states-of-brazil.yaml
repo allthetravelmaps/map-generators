@@ -1,0 +1,58 @@
+name: States of Brazil
+desc: >
+  The 26 states and one federal district of Brazil.
+entities:
+  - name: Rio Grande do Sur
+    features: [242620]
+  - name: Santa Catarina
+    features: [296584]
+  - name: Paraná
+    features: [297640]
+  - name: São Paulo
+    features: [298204]
+  - name: Minas Gerais
+    features: [315173]
+  - name: Rio de Janeiro
+    features: [57963]
+  - name: Espírito Santo
+    features: [54882]
+  - name: Bahia
+    features: [362413]
+  - name: Sergipe
+    features: [303940]
+  - name: Alagoas
+    features: [303781]
+  - name: Pernambuco
+    features: [303702]
+  - name: Paraíba
+    features: [301464]
+  - name: Ceará
+    features: [302635]
+  - name: Río Grande do Norte
+    features: [301079]
+  - name: Piauí
+    features: [302819]
+  - name: Maranhão
+    features: [332924]
+  - name: Tocantins
+    features: [336819]
+  - name: Distrito Federal - Brasilia
+    features: [421151]
+  - name: Goiás
+    features: [334443]
+  - name: Mato Grosso do Sul
+    features: [334051]
+  - name: Mato Grosso
+    features: [333597]
+  - name: Rondônia
+    features: [325866]
+  - name: Amazonas
+    features: [332476]
+  - name: Roraima
+    features: [326287]
+  - name: Amapá
+    features: [331463]
+  - name: Acre
+    features: [326266]
+  - name: Pará
+    features: [185579]

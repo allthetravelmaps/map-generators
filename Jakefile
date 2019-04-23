@@ -224,7 +224,7 @@ layers.forEach(layer => {
           }
 
           const cmd2 = spawn('node', [
-            '--max_old_space_size=4096',
+            '--max_old_space_size=6144',
             geojsonClipping,
             'difference',
             '-b',

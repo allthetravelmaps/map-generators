@@ -522,7 +522,7 @@ task('clean-downloads', [], function () {
 })
 
 desc('Delete all build products')
-task('clean-everything', ['clean-static', 'clean', 'clean-downloads'])
+task('clean-everything', ['clean-static', 'clean', 'clean-downloads', 'clean-water'])
 
 desc(`Build master mbtiles file, ${allMBTiles}`)
 task('default', ['build'])
